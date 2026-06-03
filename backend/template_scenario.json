@@ -1,0 +1,38 @@
+{
+  "scenarioId": "my-custom-scenario",
+  "name": "Назва нового сценарію",
+  "type": "dialogue",
+  "category": "general",
+  "duration": "5 хв",
+  "difficulty": 50,
+  "description": "Опис вашого інтерактивного сценарію",
+  "nodes": {
+    "start": {
+      "text": "Привіт! Це стартовий вузол сценарію. Як ти почуваєшся?",
+      "options": [
+        {
+          "text": "Добре",
+          "next": "good_node",
+          "weight": 10
+        },
+        {
+          "text": "Погано",
+          "next": "bad_node",
+          "weight": -10
+        }
+      ]
+    },
+    "good_node": {
+      "text": "Чудово! Це фінальний успішний вузол.",
+      "options": [],
+      "isFinal": true,
+      "score": 100
+    },
+    "bad_node": {
+      "text": "О ні, це фінальний неуспішний вузол.",
+      "options": [],
+      "isFinal": true,
+      "score": 30
+    }
+  }
+}

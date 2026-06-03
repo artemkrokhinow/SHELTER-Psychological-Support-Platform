@@ -1,0 +1,377 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+/* Soften bright white text globally to reduce eye strain */
+.text-white {
+  color: #e2e8f0 !important;
+}
+
+.text-slate-200 {
+  color: #cbd5e1 !important;
+}
+
+/* Custom animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideInFromBottom {
+  from {
+    opacity: 0;
+    transform: translateY(1rem);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes zoomIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-in {
+  animation-duration: 0.5s;
+  animation-fill-mode: both;
+}
+
+.fade-in {
+  animation-name: fadeIn;
+}
+
+.slide-in-from-bottom-4 {
+  animation-name: slideInFromBottom;
+}
+
+.zoom-in {
+  animation-name: zoomIn;
+}
+
+
+body,
+input,
+button,
+select,
+textarea {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif !important;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.font-montserrat,
+.font-comfortaa,
+.font-inter,
+.font-quicksand {
+  font-family: 'Inter', sans-serif !important;
+}
+
+:root {
+  --color-bg: #0B0F1A;
+  --color-emerald: #10B981;
+  --color-blue: #3B82F6;
+  --color-amber: #F59E0B;
+  --color-sos: #D17A6A;
+  /* Terracotta */
+}
+
+/* --- ROBUST ROUNDING & PREMIUM ANIMATIONS --- */
+
+.robust-card {
+  border-radius: 48px !important;
+  overflow: hidden !important;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.robust-card:hover {
+  transform: translateY(-12px) scale(1.02) translateZ(0) !important;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4) !important;
+}
+
+.robust-card .card-bg-layer {
+  position: absolute;
+  inset: 0;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  z-index: 0;
+}
+
+.robust-card:hover .card-bg-layer {
+  transform: scale(1.15) rotate(2deg) !important;
+}
+
+.robust-card:active {
+  transform: translateY(-6px) scale(0.98) translateZ(0) !important;
+}
+
+.robust-rounded-64 {
+  border-radius: 64px !important;
+  overflow: hidden !important;
+  transform: translateZ(0);
+}
+
+.robust-rounded-48 {
+  border-radius: 48px !important;
+  overflow: hidden !important;
+  transform: translateZ(0);
+}
+
+.robust-rounded-32 {
+  border-radius: 32px !important;
+  overflow: hidden !important;
+  transform: translateZ(0);
+}
+
+.robust-rounded-20 {
+  border-radius: 20px !important;
+  overflow: hidden !important;
+  transform: translateZ(0);
+}
+
+/* Global Font Override to Inter */
+*:not(code):not(pre):not(kbd):not(samp):not(.monospace):not([class*="code"]):not([class*="mono"]) {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif !important;
+}
+
+/* Premium Light Theme overrides */
+.light-theme {
+  --color-bg: #f8fafc;
+  background-color: #f8fafc !important;
+  color: #1e293b !important;
+}
+
+.light-theme body {
+  background-color: #f8fafc !important;
+  color: #1e293b !important;
+}
+
+.light-theme main {
+  background-color: #f8fafc !important;
+}
+
+.light-theme footer {
+  background-color: #f1f5f9 !important;
+  border-top-color: #e2e8f0 !important;
+  color: #64748b !important;
+}
+
+/* Sidebar & Header */
+.light-theme aside,
+.light-theme .bg-\[\#0f1423\],
+.light-theme .bg-slate-900\/50 {
+  background-color: #ffffff !important;
+  border-color: #e2e8f0 !important;
+}
+
+.light-theme header {
+  background-color: rgba(248, 250, 252, 0.8) !important;
+  border-bottom-color: #e2e8f0 !important;
+}
+
+.light-theme header input {
+  color: #0f172a !important;
+}
+
+.light-theme header input::placeholder {
+  color: #94a3b8 !important;
+}
+
+.light-theme .bg-slate-900,
+.light-theme .bg-slate-900\/60,
+.light-theme .bg-slate-900\/40,
+.light-theme .bg-slate-900\/30 {
+  background-color: #ffffff !important;
+  border-color: #e2e8f0 !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02) !important;
+}
+
+.light-theme .bg-slate-800,
+.light-theme .bg-slate-800\/50,
+.light-theme .bg-slate-800\/40 {
+  background-color: #f1f5f9 !important;
+  border-color: #e2e8f0 !important;
+}
+
+/* Sidebar Hover Items */
+.light-theme .hover\:bg-slate-800:hover {
+  background-color: #f1f5f9 !important;
+  color: #0f172a !important;
+}
+
+/* Quest View quote box & timeline line */
+.light-theme .bg-slate-950\/50,
+.light-theme .bg-slate-950 {
+  background-color: #f8fafc !important;
+  border-color: #e2e8f0 !important;
+}
+
+.light-theme .before\:bg-slate-800::before {
+  background-color: #e2e8f0 !important;
+}
+
+/* Sound Visualizer & Volume Slider */
+.light-theme .bg-\[\#0f172a\] {
+  background-color: #f1f5f9 !important;
+}
+
+.light-theme .border-\[\#1e293b\] {
+  border-color: #e2e8f0 !important;
+}
+
+.light-theme .bg-slate-900\/80 {
+  background-color: #ffffff !important;
+  border-color: #e2e8f0 !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02) !important;
+}
+
+/* Media Library Filters */
+.light-theme .hover\:text-white:hover {
+  color: #0f172a !important;
+}
+
+/* Advice Card Overrides */
+.light-theme .advice-card {
+  background-color: #ffffff !important;
+  border-color: #e2e8f0 !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02) !important;
+}
+
+.light-theme .advice-card:not(.placeholder):not(.expanded):hover {
+  background-color: #f8fafc !important;
+  border-color: #cbd5e1 !important;
+}
+
+.light-theme .advice-card.read:not(.expanded) {
+  background-color: #f1f5f9 !important;
+  border-color: #e2e8f0 !important;
+}
+
+.light-theme .advice-card.expanded {
+  background-color: #f8fafc !important;
+  border-color: #10b981 !important;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.08) !important;
+}
+
+.light-theme .advice-card-title {
+  color: #0f172a !important;
+}
+
+.light-theme .advice-card.read:not(.expanded) .advice-card-title {
+  color: #64748b !important;
+}
+
+.light-theme .advice-card-text {
+  color: #475569 !important;
+}
+
+.light-theme .advice-card-text strong {
+  color: #0f172a !important;
+}
+
+.light-theme .advice-card-desc {
+  color: #059669 !important;
+}
+
+.light-theme .advice-card-action {
+  color: #64748b !important;
+}
+
+.light-theme .advice-card.expanded .advice-card-action {
+  color: #10b981 !important;
+}
+
+.light-theme .advice-card-text h2,
+.light-theme .advice-card-text h3 {
+  color: #334155 !important;
+}
+
+/* Typography Overrides */
+.light-theme .text-white {
+  color: #0f172a !important;
+}
+
+.light-theme .text-slate-300 {
+  color: #334155 !important;
+}
+
+.light-theme .text-slate-400 {
+  color: #475569 !important;
+}
+
+.light-theme .text-slate-500 {
+  color: #64748b !important;
+}
+
+/* Border Overrides */
+.light-theme .border-slate-900,
+.light-theme .border-slate-800,
+.light-theme .border-slate-800\/50,
+.light-theme .border-slate-700,
+.light-theme .border-slate-700\/30 {
+  border-color: #e2e8f0 !important;
+}
+
+/* Chat Page */
+.light-theme .bg-\[\#0b0f1a\] {
+  background-color: #f8fafc !important;
+}
+
+.light-theme .bg-\[\#070a12\] {
+  background-color: #f1f5f9 !important;
+}
+
+.light-theme .bg-\[\#070a12\]\/80 {
+  background-color: rgba(241, 245, 249, 0.8) !important;
+}
+
+.light-theme .bg-\[\#0b0f1a\]\/40 {
+  background-color: rgba(255, 255, 255, 0.5) !important;
+}
+
+.light-theme .chat-container {
+  background-color: #f8fafc !important;
+}
+
+/* Interactive elements */
+.light-theme .bg-white.text-black {
+  background-color: #0f172a !important;
+  color: #ffffff !important;
+}
+
+.light-theme .bg-white.text-black:hover {
+  background-color: #1e293b !important;
+}
+
+.light-theme .recharts-cartesian-grid-horizontal line {
+  stroke: #e2e8f0 !important;
+}
+/* Library Volume Slider Custom Shadows */
+.dr-lib-slider {
+  box-shadow: 0 20px 40px -10px rgba(0,0,0,0.8), inset 0 2px 4px rgba(255,255,255,0.05);
+}
+
+.light-theme .dr-lib-slider {
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05), inset 0 2px 4px rgba(255, 255, 255, 0.5) !important;
+}

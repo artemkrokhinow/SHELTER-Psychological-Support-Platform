@@ -1,0 +1,76 @@
+:root {
+    --dr-bg: #F0F2F5;
+    --dr-surface: #FFFFFF;
+    --dr-primary: #5C6BC0;
+    --dr-primary-hover: #3F51B5;
+    --dr-danger: #E53935;
+    --dr-text-main: #1C1E21;
+    --dr-text-muted: #65676B;
+    --dr-border: #DADDE1;
+    --dr-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    --dr-radius: 12px;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--dr-bg);
+    color: var(--dr-text-main);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+}
+
+.dr-loader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-size: 1.2rem;
+    color: var(--dr-primary);
+    font-weight: 600;
+}
+
+.dr-sos-fab {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 70px;
+    height: 70px;
+    background: var(--dr-danger);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 10px 30px rgba(229, 57, 53, 0.4);
+    z-index: 2000;
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.dr-sos-fab:hover { transform: scale(1.1) rotate(5deg); }
+
+.dr-sos-text {
+    color: white;
+    font-weight: 900;
+    font-size: 1.1rem;
+    letter-spacing: 1px;
+}
+
+.dr-back-btn {
+    padding: 10px 20px;
+    background: var(--dr-surface);
+    border: 1px solid var(--dr-border);
+    border-radius: var(--dr-radius);
+    color: var(--dr-text-main);
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.dr-back-btn:hover { background: #f8f9fa; }

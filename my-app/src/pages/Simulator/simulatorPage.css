@@ -1,0 +1,190 @@
+.dr-sim-page {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  position: relative;
+}
+
+/* Інструкція зліва */
+.dr-sorting-sidebar {
+  position: absolute;
+  top: 6rem;
+  left: 3rem;
+  max-width: 280px;
+  z-index: 30;
+}
+
+.dr-sorting-title {
+  font-size: 2rem;
+  font-weight: 900;
+  color: #1a2b48;
+  line-height: 1.1;
+  margin-bottom: 0.8rem;
+  text-transform: uppercase;
+}
+
+.dr-sorting-desc {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #1a2b48;
+  opacity: 0.7;
+  line-height: 1.4;
+}
+
+/* Шапка і Прогрес */
+.dr-trainer-progress-track {
+  height: 6px;
+  background: rgba(0, 0, 0, 0.05);
+  width: 100%;
+}
+
+.dr-trainer-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #42A5F5, #29B6F6);
+  transition: width 0.5s ease;
+}
+
+.dr-trainer-header {
+  padding: 1rem 2rem;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+  flex-shrink: 0;
+  height: 96px;
+}
+
+.dr-back-btn {
+  background: white;
+  border: 1px solid #e2e8f0;
+  padding: 0.5rem 1.2rem;
+  border-radius: 100px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* Зона чату (зсунута вправо) */
+.dr-chat-area {
+  flex: 1;
+  overflow-y: auto;
+  padding: 2rem;
+}
+
+.dr-message-column {
+  max-width: 700px;
+  margin: 0 auto 0 35%; /* Зсув вправо для балансу з інструкцією */
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.dr-bubble {
+  max-width: 85%;
+  padding: 1rem 1.5rem;
+  border-radius: 24px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+}
+
+.dr-bubble.bot {
+  background: white;
+  align-self: flex-start;
+  border-bottom-left-radius: 4px;
+}
+
+.dr-bubble.user {
+  background: #1E88E5;
+  color: white;
+  align-self: flex-end;
+  border-bottom-right-radius: 4px;
+}
+
+/* Нижня панель з кнопками */
+.dr-choice-panel {
+  padding: 2.5rem;
+  background: linear-gradient(to top, white 90%, transparent);
+}
+
+.dr-options-stack {
+  max-width: 900px;
+  margin-left: 35%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+/* ВИДИМІ КНОПКИ */
+.dr-choice-btn {
+  background: white;
+  border: 2px solid var(--tile-color, #e3f2fd);
+  padding: 1.2rem 2rem;
+  border-radius: 20px;
+  font-weight: 700;
+  color: var(--tile-color, #1e88e5);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  max-width: 450px;
+  text-align: left;
+  position: relative;
+  overflow: hidden;
+}
+
+.dr-choice-btn:hover {
+  background: var(--tile-color, #1e88e5);
+  color: white;
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+  border-color: transparent;
+}
+
+/* Утиліти */
+.dr-completion-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(26, 43, 72, 0.4);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.dr-completion-menu {
+  background: white;
+  padding: 3rem;
+  border-radius: 32px;
+  text-align: center;
+  max-width: 450px;
+}
+
+.dr-completion-btn {
+  margin-top: 1rem;
+  padding: 1rem 2rem;
+  border-radius: 100px;
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+}
+
+.dr-completion-btn.primary { background: #1e88e5; color: white; width: 100%; }
+
+.dr-sos-fab-trainer {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  width: 60px;
+  height: 60px;
+  background: #E63946;
+  border-radius: 50%;
+  color: white;
+  font-weight: 900;
+  border: none;
+  cursor: pointer;
+}
+
+@media (max-width: 1024px) {
+  .dr-sorting-sidebar { display: none; }
+  .dr-message-column, .dr-options-stack { margin: 0 auto; }
+}

@@ -1,0 +1,302 @@
+/* Shelter App Styles - Optimized for FPS */
+
+/* Base styles */
+.shelter-app {
+  display: flex;
+  height: 100vh;
+  background-color: #0b0f1a;
+  color: #94a3b8;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", sans-serif;
+  overflow: hidden;
+  /* Use hardware acceleration for the whole app container */
+  transform: translateZ(0);
+}
+
+/* Sidebar */
+.shelter-sidebar {
+  width: 288px;
+  border-right: 1px solid #1e293b;
+  display: flex;
+  flex-direction: column;
+  background-color: #0b0f1a;
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+  z-index: 20;
+}
+
+.shelter-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 32px;
+}
+
+.shelter-logo-icon {
+  width: 48px;
+  height: 48px;
+  background-color: white;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #0b0f1a;
+  box-shadow: 0 8px 16px -4px rgba(0, 0, 0, 0.3);
+}
+
+.shelter-logo-text {
+  font-size: 24px;
+  font-weight: 900;
+  color: white;
+  font-family: 'Inter', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: -0.025em;
+}
+
+.shelter-nav {
+  flex: 1;
+  padding: 0 16px;
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.shelter-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+  font-weight: bold;
+  font-size: 14px;
+  letter-spacing: 0.025em;
+  will-change: transform;
+}
+
+.shelter-nav-item:hover {
+  background-color: #1e293b;
+  color: #94a3b8;
+  transform: translateX(4px);
+}
+
+.shelter-nav-item.active {
+  background-color: #10b981;
+  color: white;
+  box-shadow: 0 12px 20px -8px rgba(16, 185, 129, 0.4);
+}
+
+/* Main content */
+.shelter-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  background: #0b0f1a; /* Simplified background for better scroll performance */
+}
+
+.shelter-header {
+  height: 96px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 32px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  /* Optimized blur: lower radius is much faster */
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  background-color: rgba(11, 15, 26, 0.7);
+  border-bottom: 1px solid rgba(30, 41, 59, 0.5);
+}
+
+.shelter-search {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background-color: rgba(30, 41, 59, 0.4);
+  padding: 12px 24px;
+  border-radius: 9999px;
+  border: 1px solid #1e293b;
+  width: 100%;
+  max-width: 400px;
+}
+
+.shelter-search-input {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  font-size: 14px;
+  width: 100%;
+  color: white;
+  font-weight: 500;
+}
+
+.shelter-content {
+  flex: 1;
+  padding: 32px;
+}
+
+/* Typography */
+.shelter-title {
+  font-size: 60px;
+  font-weight: 900;
+  color: white;
+  font-family: 'Inter', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: -0.05em;
+  line-height: 1;
+  margin-bottom: 16px;
+}
+
+/* Cards */
+.shelter-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 32px;
+  margin-top: 40px;
+}
+
+.shelter-card {
+  height: 320px;
+  border-radius: 48px;
+  overflow: hidden;
+  cursor: pointer;
+  box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.3);
+  transition: transform 0.4s cubic-bezier(0.2, 0, 0.2, 1);
+  position: relative;
+  will-change: transform;
+}
+
+.shelter-card:hover {
+  transform: translateY(-8px) scale(1.02);
+}
+
+.shelter-card-content {
+  position: relative;
+  padding: 40px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: white;
+}
+
+.shelter-card-icon {
+  padding: 16px;
+  background-color: rgba(255, 255, 255, 0.15);
+  border-radius: 16px;
+  width: fit-content;
+  /* Removed expensive blur from small icon container */
+  box-shadow: inset 0 2px 4px 0 rgba(255, 255, 255, 0.05);
+}
+
+/* Login */
+.shelter-login-card {
+  width: 100%;
+  max-width: 448px;
+  background-color: rgba(30, 41, 59, 0.6);
+  border: 1px solid #1e293b;
+  padding: 40px;
+  border-radius: 48px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5);
+  position: relative;
+  z-index: 10;
+  animation: fadeIn 0.6s ease-out;
+  will-change: transform, opacity;
+}
+
+.shelter-input {
+  width: 100%;
+  background-color: rgba(15, 23, 42, 0.6);
+  border: 1px solid #1e293b;
+  border-radius: 24px;
+  padding: 16px 24px;
+  color: white;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.shelter-button {
+  width: 100%;
+  background: linear-gradient(135deg, #10b981, #14b8a6);
+  color: #0b0f1a;
+  padding: 16px;
+  border-radius: 24px;
+  font-weight: 900;
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  box-shadow: 0 12px 24px -8px rgba(16, 185, 129, 0.3);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+  border: none;
+  will-change: transform;
+}
+
+.shelter-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 32px -10px rgba(16, 185, 129, 0.4);
+}
+
+/* SOS Button */
+.shelter-sos-button {
+  background-color: #D17A6A;
+  color: white;
+  padding: 12px 32px;
+  border-radius: 16px;
+  font-weight: 900;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  box-shadow: 0 12px 20px -8px rgba(220, 38, 38, 0.3);
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+  will-change: transform;
+}
+
+/* Animations - Optimized with transform and will-change */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes breathingSync {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.15); }
+}
+
+@keyframes visualizerScale {
+    0% { transform: scaleY(0.4); opacity: 0.6; }
+    100% { transform: scaleY(1); opacity: 1; }
+}
+
+.shelter-fade-in {
+  animation: fadeIn 0.4s ease-out both;
+  will-change: transform, opacity;
+}
+
+/* Responsive - Keep essential performance only */
+@media (max-width: 768px) {
+  .shelter-header {
+    backdrop-filter: none; /* Disable blur on mobile for massive FPS boost */
+    background-color: #0b0f1a;
+  }
+}
+
+/* 3D Utilities */
+.backface-hidden {
+  backface-visibility: hidden !important;
+  -webkit-backface-visibility: hidden !important;
+  transform: translateZ(0); /* Force GPU */
+}
+
+.preserve-3d {
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
