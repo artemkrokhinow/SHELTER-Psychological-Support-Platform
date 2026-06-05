@@ -243,13 +243,13 @@ const HomeView = ({
           </div>
           
           <div className="flex gap-4">
-            <div className="bg-slate-900/40 p-4 rounded-3xl border border-slate-800 backdrop-blur-md text-center min-w-[100px]">
-                <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-1">Серія</p>
-                <p className="text-3xl font-black text-white">{streak} дні</p>
+            <div className="w-[140px] bg-slate-900/40 p-4 rounded-3xl border border-slate-800 backdrop-blur-md text-center shrink-0">
+                <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-1 truncate">Серія</p>
+                <p className="text-3xl font-black text-white truncate">{streak} дні</p>
             </div>
-            <div className="bg-emerald-500/10 p-4 rounded-3xl border border-emerald-500/20 backdrop-blur-md text-center min-w-[100px]">
-                <p className="text-[10px] font-black text-emerald-500 uppercase tracking-widest mb-1">Стійкість</p>
-                <p className="text-3xl font-black text-emerald-400">{Math.round(resilience)}%</p>
+            <div className="w-[140px] bg-emerald-500/10 p-4 rounded-3xl border border-emerald-500/20 backdrop-blur-md text-center shrink-0">
+                <p className="text-[10px] font-black text-emerald-500 uppercase tracking-widest mb-1 truncate">Стійкість</p>
+                <p className="text-3xl font-black text-emerald-400 truncate">{Math.round(resilience)}%</p>
             </div>
           </div>
         </section>
