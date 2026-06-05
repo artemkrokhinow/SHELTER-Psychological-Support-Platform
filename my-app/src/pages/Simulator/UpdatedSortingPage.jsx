@@ -102,8 +102,8 @@ export default function UpdatedSortingPage({ isEmbedded, embeddedId, onBack, onC
                 setBoxes(dbBoxes.map(b => ({ ...b, items: [], isHighlighted: false })));
                 setItems(dbItems.map((item, index) => ({
                     ...item,
-                    id: item.id || index,
-                    categoryId: item.categoryId || item.category,
+                    id: item.id !== undefined ? item.id : index,
+                    categoryId: item.categoryId !== undefined ? item.categoryId : item.category,
                     scale: 1,
                     isAbsolute: false
                 })).sort(() => Math.random() - 0.5));
