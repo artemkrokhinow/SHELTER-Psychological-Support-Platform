@@ -14,6 +14,8 @@ const MainSidebar = React.memo(({
     logout,
     tourStep = '0'
 }) => {
+    const [showLogoutConfirm, setShowLogoutConfirm] = React.useState(false);
+
     return (
         <aside className={`w-72 border-r border-slate-800 flex flex-col bg-[#0b0f1a] z-20 shadow-2xl transition-all duration-500 transform-gpu will-change-[filter,transform,opacity] ${showSOS ? 'blur-md grayscale opacity-50 scale-95 pointer-events-none' : ''}`}>
             <div className="p-8 flex items-center gap-3">
@@ -50,9 +52,20 @@ const MainSidebar = React.memo(({
                         <button onClick={() => window.location.href='/auth'} className="w-full flex items-center justify-center gap-2 p-3 rounded-[16px] bg-emerald-500 text-[#0b0f1a] font-black text-xs uppercase tracking-widest hover:bg-emerald-400 transition-colors">Зареєструватись</button>
                     </div>
                 ) : (
-                    <button onClick={logout} className="w-full flex items-center gap-4 p-4 rounded-[20px] text-slate-500 hover:text-rose-500 hover:bg-rose-500/10 transition-colors font-bold text-xs uppercase tracking-widest text-left">
-                        <LogOut size={18} /> <span className="hidden lg:block">Вийти</span>
-                    </button>
+                    showLogoutConfirm ? (
+                        <div className="flex gap-2">
+                            <button onClick={logout} className="flex-1 flex items-center justify-center p-4 rounded-[20px] bg-rose-500/20 text-rose-500 hover:bg-rose-500 hover:text-white transition-colors font-bold text-xs uppercase tracking-widest">
+                                Вийти
+                            </button>
+                            <button onClick={() => setShowLogoutConfirm(false)} className="flex-1 flex items-center justify-center p-4 rounded-[20px] bg-slate-800 text-slate-400 hover:bg-slate-700 hover:text-white transition-colors font-bold text-xs uppercase tracking-widest">
+                                Скасувати
+                            </button>
+                        </div>
+                    ) : (
+                        <button onClick={() => setShowLogoutConfirm(true)} className="w-full flex items-center gap-4 p-4 rounded-[20px] text-slate-500 hover:text-rose-500 hover:bg-rose-500/10 transition-colors font-bold text-xs uppercase tracking-widest text-left">
+                            <LogOut size={18} /> <span className="hidden lg:block">Вийти</span>
+                        </button>
+                    )
                 )}
             </div>
         </aside>
