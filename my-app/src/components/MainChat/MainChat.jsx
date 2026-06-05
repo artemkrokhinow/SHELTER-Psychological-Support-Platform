@@ -402,7 +402,7 @@ export default function MainChat({ onBack, username, resilience, onComplete, onM
                 const badgeText = isPositive ? "+4 Стійкості нараховано" : "-4 Стійкості нараховано";
 
                 return (
-                <div className="absolute inset-0 z-[100] flex items-center justify-center p-6 bg-[#0b0f1a]/80 backdrop-blur-2xl animate-in fade-in duration-500 overflow-hidden">
+                <div className="absolute inset-0 z-[100] flex items-center justify-center p-6 bg-[#0b0f1a]/95 backdrop-blur-sm animate-in fade-in duration-500 overflow-hidden">
                     {particles.map(p => (
                         <div
                             key={p.id}
@@ -432,7 +432,7 @@ export default function MainChat({ onBack, username, resilience, onComplete, onM
                         
                         <h2 className="text-3xl font-black text-white italic uppercase tracking-tighter mb-1">{titleText}</h2>
                         
-                        <div className={`inline-flex items-center gap-2 ${classes.badgeBg} border ${classes.badgeBorder} ${classes.badgeText} px-4 py-2 rounded-full text-xs font-black uppercase tracking-wider mb-6 animate-pulse`}>
+                        <div className={`inline-flex items-center gap-2 ${classes.badgeBg} border ${classes.badgeBorder} ${classes.badgeText} px-4 py-2 rounded-full text-xs font-black uppercase tracking-wider mb-6`}>
                             <Zap size={14} className="fill-current" />
                             {badgeText}
                         </div>
