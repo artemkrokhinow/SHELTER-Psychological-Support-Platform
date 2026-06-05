@@ -425,7 +425,7 @@ const ShelterAppComplete = () => {
     }
   }, [isTestFinished, lastCompletedActivity, tourStep]);
 
-  const isSpecialMode = isChatMode || isSimulatorMode || isFindDifferencesMode || isSortingMode;
+  const isSpecialMode = isChatMode || isSimulatorMode || isFindDifferencesMode || isSortingMode || isMistakesAnalysisMode;
 
   
   const token = localStorage.getItem("dr_token");
