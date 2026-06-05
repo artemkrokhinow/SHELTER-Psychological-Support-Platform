@@ -71,12 +71,7 @@ export default function MistakesAnalysis({ data, onBack }) {
         <div className="flex flex-col h-full bg-[#0b0f1a] overflow-hidden">
             {}
             <div className="flex items-center gap-4 p-5 border-b border-slate-800/50 bg-[#0f1423] shrink-0">
-                <button
-                    onClick={onBack}
-                    className="w-10 h-10 flex items-center justify-center bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-full transition-colors shadow-lg"
-                >
-                    <ChevronLeft size={20} />
-                </button>
+
                 <div className="flex-1 min-w-0">
                     <h2 className="text-lg font-black text-white flex items-center gap-2 uppercase italic tracking-tighter">
                         <BookOpen className="text-amber-500 shrink-0" size={20} />
