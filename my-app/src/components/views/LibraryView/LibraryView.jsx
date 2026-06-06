@@ -211,9 +211,28 @@ const LibraryView = ({
         ));
     }, []);
 
+    const getDurationLabel = (item) => {
+        const textLen = (item.content || '').replace(/<[^>]*>?/gm, '').length + (item.desc || '').length;
+        if (item.type === 'Стаття' && !item.url && textLen < 250) {
+            const seconds = Math.max(15, Math.ceil(textLen / 5) * 5); // Approximate reading time in chunks of 5s
+            return `${seconds} сек`;
+        }
+        if (item.duration) {
+            const val = String(item.duration).trim();
+            if (/^\d+$/.test(val)) return `${val} хв`;
+            return val;
+        }
+        if (item.type === 'Стаття') {
+            const mins = Math.max(1, Math.ceil(textLen / 1000));
+            return `${mins} хв`;
+        }
+        return '5 хв';
+    };
+
     const memoizedFilteredMedia = React.useMemo(() => {
         return filteredMedia.map((item) => {
             const isHighlighted = tourStep === '7_do_library';
+            const durationLabel = getDurationLabel(item);
             const mid = item.materialId || item.id || item._id;
             const isExpanded = expandedId === mid;
 
@@ -223,7 +242,7 @@ const LibraryView = ({
                     <div className="border p-8 flex flex-col h-full robust-rounded-48 opacity-0 pointer-events-none">
                         <div className="flex justify-between items-start mb-10">
                             <div className="p-4 rounded-2xl w-14 h-14"></div>
-                            <div className="px-3 py-1 rounded-full text-[9px] font-black uppercase">10 хв</div>
+                            <div className="px-3 py-1 rounded-full text-[9px] font-black uppercase">{durationLabel}</div>
                         </div>
                         <div className="flex flex-col flex-1">
                             <div className="flex items-center gap-2 mb-1">
@@ -248,7 +267,7 @@ const LibraryView = ({
                     >
                         <div className="flex justify-between items-start mb-10 relative z-10">
                             <div className={`p-4 rounded-2xl ${item.color} text-white shadow-lg`}>{item.icon}</div>
-                            <div className="bg-slate-800 px-3 py-1 rounded-full text-[9px] font-black uppercase text-slate-400">{item.duration}</div>
+                            <div className="bg-slate-800 px-3 py-1 rounded-full text-[9px] font-black uppercase text-slate-400">{durationLabel}</div>
                         </div>
                         <div className="relative z-10 flex flex-col flex-1">
                             <div className="flex items-center gap-2 mb-1">
