@@ -198,15 +198,15 @@ const LibraryView = ({
         return filteredMedia.map((item) => {
             const isHighlighted = tourStep === '7_do_library';
             return (
-                <div key={item.id} onClick={() => handleMaterialClick(item)} className={`group border p-8 robust-rounded-48 hover:border-emerald-500/50 transition-all cursor-pointer relative text-left ${isHighlighted ? 'bg-slate-900/90 border-emerald-500 shadow-[0_0_40px_rgba(16,185,129,0.3)] scale-[1.05] z-[9999] relative ring-4 ring-emerald-500 animate-pulse pointer-events-auto' : 'bg-slate-900/40 border-slate-800 shadow-xl'}`}>
+                <div key={item.id} onClick={() => handleMaterialClick(item)} className={`group border p-8 flex flex-col h-full robust-rounded-48 hover:border-emerald-500/50 transition-all cursor-pointer relative text-left ${isHighlighted ? 'bg-slate-900/90 border-emerald-500 shadow-[0_0_40px_rgba(16,185,129,0.3)] scale-[1.05] z-[9999] relative ring-4 ring-emerald-500 animate-pulse pointer-events-auto' : 'bg-slate-900/40 border-slate-800 shadow-xl'}`}>
                     <div className="flex justify-between items-start mb-10 relative z-10">
                         <div className={`p-4 rounded-2xl ${item.color} text-white shadow-lg`}>{item.icon}</div>
                         <div className="bg-slate-800 px-3 py-1 rounded-full text-[9px] font-black uppercase text-slate-400">{item.duration}</div>
                     </div>
-                    <div className="relative z-10">
+                    <div className="relative z-10 flex flex-col flex-1">
                         <p className="text-[10px] font-black text-emerald-500 uppercase tracking-widest mb-1">{item.type}</p>
-                        <h4 className="text-xl font-bold text-white mb-2 tracking-tight group-hover:text-emerald-400 transition-colors uppercase leading-none">{item.title}</h4>
-                        <div className="flex items-center gap-2 text-slate-500 text-xs font-bold uppercase mt-6 group-hover:gap-4 transition-all">Відкрити контент <ChevronRight size={14} /></div>
+                        <h4 className="text-xl font-bold text-white tracking-tight group-hover:text-emerald-400 transition-colors uppercase leading-none">{item.title}</h4>
+                        <div className="mt-auto pt-6 flex items-center gap-2 text-slate-500 text-xs font-bold uppercase group-hover:gap-4 transition-all">Відкрити контент <ChevronRight size={14} /></div>
                     </div>
                 </div>
             );
