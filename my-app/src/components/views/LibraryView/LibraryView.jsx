@@ -205,7 +205,7 @@ const LibraryView = ({
                     <p className="text-[9px] font-black text-emerald-400 uppercase tracking-widest mb-1 opacity-80 flex items-center gap-2">
                         <Camera size={10} /> Фото-заземлення
                     </p>
-                    <h5 className="text-lg font-black text-white uppercase tracking-tight leading-none">{photo.title}</h5>
+                    <h5 className="text-lg font-black text-white force-white uppercase tracking-tight leading-none">{photo.title}</h5>
                 </div>
             </div>
         ));
@@ -249,7 +249,7 @@ const LibraryView = ({
                             <div className="flex items-center gap-2 mb-1">
                                 <p className="text-[10px] font-black uppercase tracking-widest">{item.type}</p>
                                 {item.type === 'Стаття' && !item.url && (
-                                    <span className="text-[8px] font-black bg-slate-800/80 px-2 py-0.5 rounded-md uppercase tracking-wider">
+                                    <span className="text-[8px] font-black bg-slate-800 px-2 py-0.5 rounded-md uppercase tracking-wider">
                                         {(item.content || '').replace(/<[^>]*>?/gm, '').length + (item.desc || '').length < 250 ? 'Швидке читання' : 'Розгорнуто'}
                                     </span>
                                 )}
@@ -274,7 +274,7 @@ const LibraryView = ({
                             <div className="flex items-center gap-2 mb-1">
                                 <p className="text-[10px] font-black text-emerald-500 uppercase tracking-widest">{item.type}</p>
                                 {item.type === 'Стаття' && !item.url && (
-                                    <span className="text-[8px] font-black bg-slate-800/80 text-slate-300 px-2 py-0.5 rounded-md uppercase tracking-wider">
+                                    <span className="text-[8px] font-black bg-slate-800 text-slate-300 px-2 py-0.5 rounded-md uppercase tracking-wider">
                                         {(item.content || '').replace(/<[^>]*>?/gm, '').length + (item.desc || '').length < 250 ? 'Швидке читання' : 'Розгорнуто'}
                                     </span>
                                 )}

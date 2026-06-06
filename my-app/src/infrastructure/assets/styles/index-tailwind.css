@@ -312,6 +312,11 @@ h6,
   color: #0f172a !important;
 }
 
+.force-white,
+.light-theme .force-white {
+  color: #ffffff !important;
+}
+
 .light-theme .text-slate-300 {
   color: #334155 !important;
 }
