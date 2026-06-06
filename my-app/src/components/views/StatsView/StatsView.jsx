@@ -25,7 +25,7 @@ const StatsView = ({ userId, userStats, resilience = 50, resilienceMultiplier = 
     
     const getTreeIcon = () => {
         if (resilience <= 30) {
-            return <Sprout size={160} className="text-emerald-500 animate-pulse" />;
+            return <Sprout size={160} className="text-emerald-500" />;
         } else if (resilience <= 60) {
             return <Shrub size={160} className="text-emerald-500 animate-in zoom-in duration-500" />;
         } else if (resilience <= 85) {

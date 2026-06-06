@@ -104,7 +104,7 @@ export default function BlueView({ answers }) {
 				{}
 				<div
 					key={step}
-					className={`w-full bg-slate-900/60 border ${task.border} rounded-[40px] p-12 backdrop-blur-xl text-center shadow-2xl animate-in zoom-in-95 duration-500`}
+					className={`w-full bg-slate-900/60 border ${task.border} rounded-[40px] p-12  text-center shadow-2xl animate-in zoom-in-95 duration-500`}
 				>
 					<div className="text-8xl mb-8 animate-in zoom-in duration-500">
 						{task.icon}

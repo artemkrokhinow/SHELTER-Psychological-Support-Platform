@@ -214,7 +214,7 @@ const HomeView = ({
         {showStabilizationHint && !searchTerm && (
             <div className="relative overflow-hidden bg-rose-500/10 border border-rose-500/20 p-8 rounded-[48px] animate-in slide-in-from-top-10 duration-700 shadow-[0_0_50px_rgba(244,63,94,0.1)]">
                 <div className="relative z-10 flex flex-col md:flex-row items-center gap-8">
-                    <div className="w-20 h-20 bg-rose-500 rounded-3xl flex items-center justify-center text-white shadow-xl animate-pulse">
+                    <div className="w-20 h-20 bg-rose-500 rounded-3xl flex items-center justify-center text-white shadow-xl">
                         <Activity size={40} />
                     </div>
                     <div className="flex-1 text-center md:text-left space-y-2">
@@ -229,7 +229,7 @@ const HomeView = ({
                     </button>
                 </div>
                 {}
-                <div className="absolute top-0 right-0 w-64 h-64 bg-rose-500/10 rounded-full blur-3xl -mr-32 -mt-32"></div>
+                <div className="absolute top-0 right-0 w-64 h-64 bg-rose-500/10 rounded-full blur-sm -mr-32 -mt-32"></div>
             </div>
         )}
 
@@ -243,11 +243,11 @@ const HomeView = ({
           </div>
           
           <div className="flex gap-4">
-            <div className="w-[140px] bg-slate-900/40 p-4 rounded-3xl border border-slate-800 backdrop-blur-md text-center shrink-0">
+            <div className="w-[140px] bg-slate-900/40 p-4 rounded-3xl border border-slate-800  text-center shrink-0">
                 <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-1 truncate">Серія</p>
                 <p className="text-3xl font-black text-white truncate">{streak} дні</p>
             </div>
-            <div className="w-[140px] bg-emerald-500/10 p-4 rounded-3xl border border-emerald-500/20 backdrop-blur-md text-center shrink-0">
+            <div className="w-[140px] bg-emerald-500/10 p-4 rounded-3xl border border-emerald-500/20  text-center shrink-0">
                 <p className="text-[10px] font-black text-emerald-500 uppercase tracking-widest mb-1 truncate">Стійкість</p>
                 <p className="text-3xl font-black text-emerald-400 truncate">{Math.round(resilience)}%</p>
             </div>
@@ -344,7 +344,7 @@ const HomeView = ({
                 <div className="absolute inset-0 bg-white/0 group-hover:bg-white/5 transition-colors duration-500"></div>
                 
                 <div className="relative p-10 h-full flex flex-col justify-between text-white z-10">
-                    <div className="p-4 bg-white/20 rounded-2xl w-fit backdrop-blur-md shadow-inner transition-all duration-500 group-hover:scale-110 group-hover:bg-white/30 group-hover:rotate-12">
+                    <div className="p-4 bg-white/20 rounded-2xl w-fit shadow-inner transition-all duration-500 group-hover:scale-110 group-hover:bg-white/30 group-hover:rotate-12">
                         {card.icon}
                     </div>
                     <div className="transition-all duration-500 group-hover:translate-x-2">

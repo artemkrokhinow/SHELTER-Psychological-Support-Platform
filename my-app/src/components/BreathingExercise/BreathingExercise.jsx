@@ -120,7 +120,7 @@ export default function BreathingExercise({
                         ></div>
 
                         {}
-                        <div className="relative z-10 flex flex-col items-center justify-center w-64 h-64 rounded-full bg-[#0b0f1a]/40 border border-emerald-500/10 backdrop-blur-sm shadow-2xl">
+                        <div className="relative z-10 flex flex-col items-center justify-center w-64 h-64 rounded-full bg-[#0b0f1a]/40 border border-emerald-500/10  shadow-2xl">
                             <Wind size={36} className="text-emerald-400 mb-4 opacity-80" />
                             <span className="text-[100px] font-black text-white italic leading-none drop-shadow-2xl">{seconds}</span>
                             <span
@@ -186,7 +186,7 @@ export default function BreathingExercise({
 
                 {}
                 {showFinishPrompt && (
-                    <div className="absolute inset-0 bg-[#070a12]/80 backdrop-blur-md flex items-center justify-center z-[110] animate-in fade-in duration-500">
+                    <div className="absolute inset-0 bg-[#070a12]/80  flex items-center justify-center z-[110] animate-in fade-in duration-500">
                         <div className="bg-slate-900/90 border border-slate-700 rounded-[40px] p-12 max-w-md w-full text-center shadow-2xl animate-in slide-in-from-bottom-8 duration-700">
                             <div className="w-20 h-20 bg-emerald-500/10 rounded-3xl flex items-center justify-center mx-auto mb-8">
                                 <Heart size={40} className="text-emerald-500" />

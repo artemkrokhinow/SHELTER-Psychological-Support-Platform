@@ -402,7 +402,7 @@ export default function MainChat({ onBack, username, resilience, onComplete, onM
                 const badgeText = isPositive ? "+4 Стійкості нараховано" : "-4 Стійкості нараховано";
 
                 return (
-                <div className="absolute inset-0 z-[100] flex items-center justify-center p-6 bg-[#0b0f1a]/95 backdrop-blur-sm animate-in fade-in duration-500 overflow-hidden">
+                <div className="absolute inset-0 z-[100] flex items-center justify-center p-6 bg-[#0b0f1a]/95  animate-in fade-in duration-500 overflow-hidden">
                     {particles.map(p => (
                         <div
                             key={p.id}

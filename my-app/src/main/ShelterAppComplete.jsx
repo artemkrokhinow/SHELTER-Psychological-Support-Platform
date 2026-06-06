@@ -658,12 +658,12 @@ const ShelterAppComplete = () => {
       />
 
       {tourStep !== '0' && (
-        <div className="fixed inset-0 z-[9900] bg-[#0b0f1a]/80 backdrop-blur-sm pointer-events-auto transition-all duration-500" />
+        <div className="fixed inset-0 z-[9900] bg-[#0b0f1a]/80  pointer-events-auto transition-all duration-500" />
       )}
 
       {showSOS && (
         <div className="fixed inset-0 z-[200] flex items-center justify-center p-6 animate-in fade-in duration-300">
-          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => { setShowSOS(false); setTimeout(() => setShowSOSPhones(false), 300); }}></div>
+          <div className="absolute inset-0 bg-black/60 " onClick={() => { setShowSOS(false); setTimeout(() => setShowSOSPhones(false), 300); }}></div>
           <div className="relative bg-[#0f1423] p-8 sm:p-10 rounded-[36px] w-full max-w-lg shadow-[0_0_80px_rgba(16,185,129,0.15)] text-left animate-in zoom-in-95 duration-300">
             
             <div className="flex justify-between items-start mb-8">

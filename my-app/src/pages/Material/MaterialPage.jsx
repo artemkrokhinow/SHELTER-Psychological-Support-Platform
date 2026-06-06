@@ -137,7 +137,7 @@ export default function MaterialPage() {
             </aside>
 
             <main className="flex-1 flex flex-col overflow-y-auto bg-[#0b0f1a]">
-                <header className="h-24 px-8 flex items-center justify-between sticky top-0 z-10 backdrop-blur-md bg-[#0b0f1a]/60 border-b border-slate-800/50">
+                <header className="h-24 px-8 flex items-center justify-between sticky top-0 z-10  bg-[#0b0f1a]/60 border-b border-slate-800/50">
                     <div className="flex items-center gap-4 bg-slate-900/40 px-6 py-3 rounded-full border border-slate-800 w-full max-w-md opacity-20 pointer-events-none">
                         <span className="text-xs font-bold uppercase tracking-widest">Перегляд матеріалу...</span>
                     </div>
@@ -181,7 +181,7 @@ export default function MaterialPage() {
                             </section>
 
                             {material.type === 'video' && material.url && (
-                                <section className="bg-slate-900/40 border border-slate-800 rounded-[40px] p-8 backdrop-blur-xl shadow-2xl animate-in fade-in slide-in-from-bottom duration-700">
+                                <section className="bg-slate-900/40 border border-slate-800 rounded-[40px] p-8  shadow-2xl animate-in fade-in slide-in-from-bottom duration-700">
                                     {isYouTubeUrl(material.url) ? (
                                         <iframe
                                             src={getYouTubeEmbedUrl(material.url)}
@@ -196,13 +196,13 @@ export default function MaterialPage() {
                             )}
 
                             {material.type === 'audio' && material.url && (
-                                <section className="bg-slate-900/40 border border-slate-800 rounded-[40px] p-8 backdrop-blur-xl shadow-2xl animate-in fade-in slide-in-from-bottom duration-700">
+                                <section className="bg-slate-900/40 border border-slate-800 rounded-[40px] p-8  shadow-2xl animate-in fade-in slide-in-from-bottom duration-700">
                                     <audio ref={audioRef} src={material.url} controls className="w-full" />
                                 </section>
                             )}
 
                             {(material.desc || material.content) && (
-                                <section className="bg-slate-900/40 border border-slate-800 rounded-[40px] p-8 backdrop-blur-xl shadow-2xl animate-in fade-in slide-in-from-bottom duration-700">
+                                <section className="bg-slate-900/40 border border-slate-800 rounded-[40px] p-8  shadow-2xl animate-in fade-in slide-in-from-bottom duration-700">
                                     <h2 className="text-2xl font-black text-white italic uppercase tracking-tighter mb-6 flex items-center gap-3">
                                         <BookOpen size={24} className="text-emerald-500" />
                                         {material.type === 'video' || material.type === 'audio' ? 'Опис практики' : 'Матеріал'}
@@ -232,7 +232,7 @@ export default function MaterialPage() {
                                         Завершити ознайомлення
                                     </button>
                                 ) : (
-                                    <div className="bg-slate-900/40 border border-slate-800 rounded-[40px] p-8 backdrop-blur-xl shadow-2xl text-center">
+                                    <div className="bg-slate-900/40 border border-slate-800 rounded-[40px] p-8  shadow-2xl text-center">
                                         <p className="text-white mb-6 uppercase font-black tracking-widest text-xs">Як змінився ваш стан?</p>
                                         <div className="flex gap-4 justify-center">
                                             <button onClick={() => handleComplete(2)} className="bg-emerald-500 hover:bg-emerald-400 text-[#0b0f1a] px-8 py-3 rounded-2xl font-black uppercase text-xs shadow-xl transition-all">😊 Полегчало</button>

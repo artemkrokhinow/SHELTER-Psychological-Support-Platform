@@ -123,7 +123,7 @@ export default function AuthPage() {
                 </div>
 
                 {}
-                <div className="bg-slate-900/60 border border-slate-800 rounded-[40px] p-8 backdrop-blur-xl shadow-2xl">
+                <div className="bg-slate-900/60 border border-slate-800 rounded-[40px] p-8  shadow-2xl">
                     {}
                     <div className="flex bg-slate-800/50 rounded-2xl p-1 mb-8">
                         <button

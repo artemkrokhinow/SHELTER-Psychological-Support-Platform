@@ -121,7 +121,7 @@ const AdviceView = ({ resilience = 50 }) => {
                                     </div>
 
                                     <div
-                                        className={`advice-card ${isExpanded ? 'expanded' : ''} ${isRead && !isExpanded ? 'read' : ''} bg-slate-900 bg-gradient-to-br ${cardColor} backdrop-blur-md border border-white/5 hover:border-white/10`}
+                                        className={`advice-card ${isExpanded ? 'expanded' : ''} ${isRead && !isExpanded ? 'read' : ''} bg-slate-900 bg-gradient-to-br ${cardColor} border border-white/5 hover:border-white/10`}
                                         onClick={() => handleCardClick(m)}
                                     >
                                         <div className="advice-card-header">

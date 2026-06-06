@@ -100,7 +100,7 @@ const DiaryView = ({ userId, onAddEntry }) => {
                 <h2 className="text-5xl font-black text-white italic uppercase tracking-tighter leading-none">Щоденник рефлексії</h2>
             </div>
 
-            <div className="bg-slate-900/40 border border-slate-800 p-8 rounded-[40px] backdrop-blur-xl shadow-2xl space-y-6">
+            <div className="bg-slate-900/40 border border-slate-800 p-8 rounded-[40px]  shadow-2xl space-y-6">
                 <div className="flex items-center gap-3 mb-2">
                     <div className="w-10 h-10 bg-emerald-500/10 rounded-xl flex items-center justify-center">
                         <BookOpen size={20} className="text-emerald-500" />
@@ -189,7 +189,7 @@ const DiaryView = ({ userId, onAddEntry }) => {
                         return (
                             <div
                                 key={entry._id || idx}
-                                className="group bg-slate-900/40 border border-slate-800 rounded-[32px] p-6 backdrop-blur-xl transition-all hover:border-slate-700 animate-in fade-in duration-300 relative overflow-hidden"
+                                className="group bg-slate-900/40 border border-slate-800 rounded-[32px] p-6  transition-all hover:border-slate-700 animate-in fade-in duration-300 relative overflow-hidden"
                             >
                                 <div className="flex items-start justify-between gap-4 relative z-10">
                                     <div className="flex items-center gap-3">
