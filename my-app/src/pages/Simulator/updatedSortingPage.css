@@ -343,3 +343,88 @@
 .dr-completion-btn.secondary:hover {
   background: rgba(255, 255, 255, 0.05);
 }
+
+/* ==============================================================
+   LIGHT THEME OVERRIDES
+   ============================================================== */
+
+/* Fix layout background being dark while <main> is light */
+.light-theme .dr-updated-sorting-layout {
+  background: #f8fafc;
+  color: #0f172a;
+}
+
+.light-theme .dr-updated-sorting-layout::before {
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.1) 0%, transparent 70%);
+}
+
+.light-theme .dr-sorting-header {
+  background: rgba(255, 255, 255, 0.8) !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.light-theme .dr-scenario-title {
+  color: #0f172a;
+}
+
+.light-theme .dr-stat-item {
+  background: #ffffff;
+  border-color: rgba(0, 0, 0, 0.1);
+  color: #10b981;
+}
+
+/* Inner game area and items */
+.light-theme .dr-game-main {
+  background: transparent !important; /* prevent default main white background from creating dark side bars */
+}
+
+.light-theme .dr-sorting-area {
+  background: rgba(241, 245, 249, 0.8);
+  border-color: rgba(0, 0, 0, 0.1);
+}
+
+.light-theme .dr-sorting-item {
+  background: #ffffff;
+  border-color: rgba(0, 0, 0, 0.1);
+  color: #1e293b;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+}
+
+.light-theme .dr-sorting-item:hover {
+  border-color: #10b981;
+  box-shadow: 0 10px 15px -3px rgba(16, 185, 129, 0.1);
+}
+
+.light-theme .dr-sorting-box {
+  background: #ffffff;
+  border-color: rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.light-theme .dr-box-count {
+  color: #64748b;
+}
+
+.light-theme .dr-completion-card {
+  background: #ffffff;
+  border-color: rgba(0, 0, 0, 0.1);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
+}
+
+.light-theme .dr-completion-card h2 {
+  color: #0f172a;
+}
+
+.light-theme .dr-stat-row {
+  background: #f1f5f9;
+  color: #1e293b;
+}
+
+.light-theme .dr-completion-btn.secondary {
+  color: #0f172a;
+  border-color: rgba(0, 0, 0, 0.1);
+}
+
+.light-theme .dr-completion-btn.secondary:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
