@@ -208,7 +208,7 @@ const ShelterAppComplete = () => {
         const materials = await api.getMaterials();
         if (Array.isArray(materials)) {
           const adviceTitles = ["Гігієна сну в стресі", "Емоційний інтелект", "Медітація для новачків", "Як працює кортизол"];
-          const mappedData = materials
+            const mappedData = materials
             .filter(m => !adviceTitles.includes(m.title))
             .map(m => ({
               id: m._id,
@@ -217,7 +217,10 @@ const ShelterAppComplete = () => {
               cat: m.category || 'Загальне',
               duration: m.duration || '10 хв',
               icon: m.type === 'text' ? <FileText size={20} /> : m.type === 'video' ? <Video size={20} /> : <Headphones size={20} />,
-              color: m.category === 'anxiety' ? 'bg-blue-500' : m.category === 'stress' ? 'bg-emerald-500' : m.category === 'apathy' ? 'bg-rose-500' : 'bg-purple-500'
+              color: m.category === 'anxiety' ? 'bg-blue-500' : m.category === 'stress' ? 'bg-emerald-500' : m.category === 'apathy' ? 'bg-rose-500' : 'bg-purple-500',
+              url: m.url,
+              content: m.content,
+              desc: m.desc
             }));
           setMediaLibraryData(mappedData);
         }

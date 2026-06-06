@@ -25,6 +25,7 @@ const LibraryView = ({
     const [activeNoise, setActiveNoise] = useState(null);
     const [isNoisePlaying, setIsNoisePlaying] = useState(false);
     const [volume, setVolume] = useState(0.1);
+    const [expandedId, setExpandedId] = useState(null);
     
     
     const audioCtx = useRef(null);
@@ -150,6 +151,20 @@ const LibraryView = ({
 
     const handleMaterialClick = (material) => {
       const mid = material.materialId || material.id || material._id;
+
+      const isShortArticle = material.type === 'Стаття' && !material.url;
+      if (isShortArticle) {
+          if (expandedId === mid) {
+              setExpandedId(null);
+          } else {
+              setExpandedId(mid);
+              if (userId) {
+                  api.recordMaterialView(userId, mid).catch(() => {});
+              }
+          }
+          return;
+      }
+
       if (userId) {
         api.recordMaterialView(userId, mid)
           .then(() => {
@@ -197,8 +212,11 @@ const LibraryView = ({
     const memoizedFilteredMedia = React.useMemo(() => {
         return filteredMedia.map((item) => {
             const isHighlighted = tourStep === '7_do_library';
+            const mid = item.materialId || item.id || item._id;
+            const isExpanded = expandedId === mid;
+
             return (
-                <div key={item.id} onClick={() => handleMaterialClick(item)} className={`group border p-8 flex flex-col h-full robust-rounded-48 hover:border-emerald-500/50 transition-all cursor-pointer relative text-left ${isHighlighted ? 'bg-slate-900/90 border-emerald-500 shadow-[0_0_40px_rgba(16,185,129,0.3)] scale-[1.05] z-[9999] relative ring-4 ring-emerald-500 animate-pulse pointer-events-auto' : 'bg-slate-900/40 border-slate-800 shadow-xl'}`}>
+                <div key={item.id} onClick={() => handleMaterialClick(item)} className={`group border p-8 flex flex-col robust-rounded-48 transition-all cursor-pointer relative text-left ${isExpanded ? 'col-span-1 md:col-span-2 lg:col-span-3 border-emerald-500/50 bg-slate-900 shadow-2xl' : 'h-full hover:border-emerald-500/50 bg-slate-900/40 border-slate-800 shadow-xl'} ${isHighlighted ? 'bg-slate-900/90 border-emerald-500 shadow-[0_0_40px_rgba(16,185,129,0.3)] scale-[1.05] z-[9999] relative ring-4 ring-emerald-500 animate-pulse pointer-events-auto' : ''}`}>
                     <div className="flex justify-between items-start mb-10 relative z-10">
                         <div className={`p-4 rounded-2xl ${item.color} text-white shadow-lg`}>{item.icon}</div>
                         <div className="bg-slate-800 px-3 py-1 rounded-full text-[9px] font-black uppercase text-slate-400">{item.duration}</div>
@@ -206,12 +224,24 @@ const LibraryView = ({
                     <div className="relative z-10 flex flex-col flex-1">
                         <p className="text-[10px] font-black text-emerald-500 uppercase tracking-widest mb-1">{item.type}</p>
                         <h4 className="text-xl font-bold text-white tracking-tight group-hover:text-emerald-400 transition-colors uppercase leading-none">{item.title}</h4>
-                        <div className="mt-auto pt-6 flex items-center gap-2 text-slate-500 text-xs font-bold uppercase group-hover:gap-4 transition-all">Відкрити контент <ChevronRight size={14} /></div>
+                        
+                        {isExpanded && (
+                            <div className="mt-8 text-slate-300 leading-relaxed text-sm animate-in fade-in slide-in-from-top-4 duration-500" onClick={(e) => e.stopPropagation()}>
+                                {item.desc && <p className="mb-6 text-emerald-400/90 font-medium italic p-6 bg-emerald-500/5 rounded-2xl border border-emerald-500/10">{item.desc}</p>}
+                                {item.content && item.content !== item.desc && (
+                                    <div className="space-y-4" dangerouslySetInnerHTML={{ __html: item.content }} />
+                                )}
+                            </div>
+                        )}
+
+                        <div className="mt-auto pt-6 flex items-center gap-2 text-slate-500 text-xs font-bold uppercase group-hover:gap-4 transition-all">
+                            {isExpanded ? 'Згорнути контент' : 'Відкрити контент'} <ChevronRight size={14} className={`transition-transform duration-300 ${isExpanded ? '-rotate-90 text-emerald-500' : ''}`} />
+                        </div>
                     </div>
                 </div>
             );
         });
-    }, [filteredMedia, tourStep, handleMaterialClick]);
+    }, [filteredMedia, tourStep, handleMaterialClick, expandedId]);
 
     return (
       <div className="p-8 space-y-16 animate-in fade-in slide-in-from-bottom-4 duration-500 pb-24">
