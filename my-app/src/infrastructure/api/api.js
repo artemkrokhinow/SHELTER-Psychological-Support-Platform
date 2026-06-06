@@ -309,11 +309,12 @@ export const api = {
 	},
 
 	completeScenario: (scenarioId, score) => {
-		const userMode = isGuest() ? "guest" : "registered";
-
 		return fetch(`${API_URL}/auth/complete-scenario`, {
 			method: "POST",
-			headers: getHeaders(),
+			headers: {
+				"Content-Type": "application/json",
+				"x-auth-token": localStorage.getItem("dr_token"),
+			},
 			credentials: "include",
 			body: JSON.stringify({ scenarioId, score }),
 		})

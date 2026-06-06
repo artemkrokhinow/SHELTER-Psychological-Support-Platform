@@ -12,6 +12,20 @@ const { genSalt, hash, compare } = bcrypt;
 const router = express.Router();
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
+// Helper: guest cookie options. In production (cross-domain Render), must use
+// sameSite: "none" + secure: true, otherwise browsers block the cookie.
+const guestCookieOptions = () => {
+	const isProd = process.env.NODE_ENV === "production";
+	return {
+		expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+		httpOnly: false,
+		secure: isProd,
+		sameSite: isProd ? "none" : "lax",
+		path: "/",
+	};
+};
+
+
 const sendTokenResponse = (user, statusCode, res) => {
 	const token = jwt.sign(
 		{ id: user._id },
@@ -247,12 +261,7 @@ router.post("/guest", async (req, res) => {
 			
 			res
 				.status(200)
-				.cookie("dr_guest", existingCookie, {
-					expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
-					secure: process.env.NODE_ENV === "production",
-					sameSite: "lax",
-					path: "/",
-				})
+				.cookie("dr_guest", existingCookie, guestCookieOptions())
 				.json({
 					user: { id: existingData.id, username: existingData.username, isGuest: true },
 				});
@@ -282,12 +291,7 @@ router.post("/guest", async (req, res) => {
 
 		res
 			.status(200)
-			.cookie("dr_guest", JSON.stringify(guestDataToSave), {
-				expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
-				secure: process.env.NODE_ENV === "production",
-				sameSite: "lax",
-				path: "/",
-			})
+			.cookie("dr_guest", JSON.stringify(guestDataToSave), guestCookieOptions())
 			.json({
 				id: guestData.id,
 				username: guestData.username,
@@ -355,12 +359,7 @@ router.post("/guest/update", (req, res) => {
 		};
 
 		res
-			.cookie("dr_guest", JSON.stringify(updatedDataToSave), {
-				expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
-				secure: process.env.NODE_ENV === "production",
-				sameSite: "lax",
-				path: "/",
-			})
+			.cookie("dr_guest", JSON.stringify(updatedDataToSave), guestCookieOptions())
 			.json(updatedData);
 	} catch (err) {
 		res.status(500).json({ message: err.message });
@@ -484,12 +483,7 @@ router.post("/guest/update-resilience", (req, res) => {
 		const cookieString = JSON.stringify(guestDataToSave);
 		
 		res
-			.cookie("dr_guest", cookieString, {
-				expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
-				secure: false, 
-				sameSite: "lax",
-				path: "/",
-			})
+			.cookie("dr_guest", cookieString, guestCookieOptions())
 			.json(guestData);
 	} catch (err) {
 		console.error('❌ GUEST BACKEND ERROR:', err);
@@ -545,12 +539,7 @@ router.post("/guest/diagnostic", (req, res) => {
 		};
 
 		res
-			.cookie("dr_guest", JSON.stringify(updatedDataToSave), {
-				expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
-				secure: false,
-				sameSite: "lax",
-				path: "/",
-			})
+			.cookie("dr_guest", JSON.stringify(updatedDataToSave), guestCookieOptions())
 			.json({ success: true, score, multiplier, stats: updatedData.stats });
 	} catch (err) {
 		res.status(500).json({ message: err.message });
@@ -585,12 +574,7 @@ router.post("/guest/diary", (req, res) => {
 		}
 
 		res
-			.cookie("dr_guest", JSON.stringify(guestData), {
-				expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
-				secure: process.env.NODE_ENV === "production",
-				sameSite: "lax",
-				path: "/",
-			})
+			.cookie("dr_guest", JSON.stringify(guestData), guestCookieOptions())
 			.json({ success: true, entry: newEntry });
 	} catch (err) {
 		res.status(500).json({ message: err.message });
@@ -893,12 +877,7 @@ router.post("/complete-scenario", async (req, res) => {
 				});
 			}
 			
-			res.cookie("dr_guest", JSON.stringify(guestData), {
-				expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
-				secure: process.env.NODE_ENV === "production",
-				sameSite: "lax",
-				path: "/",
-			});
+			res.cookie("dr_guest", JSON.stringify(guestData), guestCookieOptions());
 
 			return res.json({
 				completedScenarios: guestData.completedScenarios,
