@@ -24,7 +24,7 @@ const MainHeader = React.memo(({
         }
     };
 
-    const showSearch = currentView === 'dashboard' || currentView === 'library';
+    const showSearch = currentView === 'home' || currentView === 'library';
 
     return (
         <header className="h-24 shrink-0 px-8 flex items-center justify-between sticky top-0 z-10  bg-[#0b0f1a]/60 border-b border-slate-800/50">
