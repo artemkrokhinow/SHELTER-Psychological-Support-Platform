@@ -465,6 +465,7 @@ const ShelterAppComplete = () => {
             searchTerm={searchTerm}
             setSearchTerm={setSearchTerm}
             setShowSOS={setShowSOS}
+            currentView={currentView}
         />
 
         <div className="flex-1 relative">
