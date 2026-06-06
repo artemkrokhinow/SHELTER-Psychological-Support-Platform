@@ -10,6 +10,7 @@ import { calculateResilienceChange } from "../utils/resilienceLogic.js";
 
 const { genSalt, hash, compare } = bcrypt;
 const router = express.Router();
+const guestSessions = new Map();
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
 // Helper: guest cookie options. In production (cross-domain Render), must use
@@ -256,9 +257,8 @@ router.post("/guest", async (req, res) => {
 	try {
 		
 		const existingCookie = req.cookies?.dr_guest;
-		if (existingCookie) {
-			const existingData = JSON.parse(existingCookie);
-			
+		if (existingCookie && guestSessions.has(existingCookie)) {
+			const existingData = guestSessions.get(existingCookie);
 			res
 				.status(200)
 				.cookie("dr_guest", existingCookie, guestCookieOptions())
@@ -285,13 +285,10 @@ router.post("/guest", async (req, res) => {
 			history: [],
 		};
 
-		const guestDataToSave = {
-			...guestData
-		};
-
+		guestSessions.set(guestId, guestData);
 		res
 			.status(200)
-			.cookie("dr_guest", JSON.stringify(guestDataToSave), guestCookieOptions())
+			.cookie("dr_guest", guestId, guestCookieOptions())
 			.json({
 				id: guestData.id,
 				username: guestData.username,
@@ -308,7 +305,8 @@ router.get("/guest/me", (req, res) => {
 		if (!guestCookie) {
 			return res.status(404).json({ message: "Guest not found" });
 		}
-		const guestData = JSON.parse(guestCookie);
+		const guestData = guestSessions.get(guestCookie);
+		if (!guestData) return res.status(404).json({ message: "Session expired" });
 		res.json(guestData);
 	} catch (err) {
 		res.status(500).json({ message: err.message });
@@ -321,7 +319,8 @@ router.post("/guest/update", (req, res) => {
 		if (!guestCookie) {
 			return res.status(404).json({ message: "Guest not found" });
 		}
-		const currentData = JSON.parse(guestCookie);
+		const currentData = guestSessions.get(guestCookie);
+		if (!currentData) return res.status(404).json({ message: "Session expired" });
 		const updatedData = { 
 			...currentData, 
 			...req.body,
@@ -355,191 +354,12 @@ router.post("/guest/update", (req, res) => {
 		
 		const updatedDataToSave = {
 			...updatedData,
-			history: (updatedData.history || []).slice(0, 10),
+			history: (updatedData.history || []).slice(0, 50),
 		};
+		guestSessions.set(guestCookie, updatedDataToSave);
 
 		res
-			.cookie("dr_guest", JSON.stringify(updatedDataToSave), guestCookieOptions())
-			.json(updatedData);
-	} catch (err) {
-		res.status(500).json({ message: err.message });
-	}
-});
-
-router.get("/guest/stats", (req, res) => {
-	try {
-		const guestCookie = req.cookies?.dr_guest;
-		if (!guestCookie) {
-			return res.status(404).json({ message: "Guest not found" });
-		}
-		const guestData = JSON.parse(guestCookie);
-		res.json(guestData.stats || { resilience: 50, stabilityDays: 0 });
-	} catch (err) {
-		res.status(500).json({ message: err.message });
-	}
-});
-
-router.get("/guest/stats-volume", (req, res) => {
-	try {
-		const guestCookie = req.cookies?.dr_guest;
-		if (!guestCookie) {
-			return res.status(404).json({ message: "Guest not found" });
-		}
-		const guestData = JSON.parse(guestCookie);
-		const history = guestData.history || [];
-		const now = new Date();
-		const getStats = (days) => {
-			const cutoff = new Date();
-			cutoff.setDate(now.getDate() - days);
-			const filtered = history.filter((h) => new Date(h.date) >= cutoff);
-			const plus = filtered
-				.filter((h) => h.change > 0)
-				.reduce((acc, curr) => acc + curr.change, 0);
-			const minus = filtered
-				.filter((h) => h.change < 0)
-				.reduce((acc, curr) => acc + curr.change, 0);
-			return { plus, minus, total: plus + minus };
-		};
-
-		res.json({
-			today: getStats(1),
-			week: getStats(7),
-			allTime: guestData.stats || { resilience: 50, stabilityDays: 0 },
-			history: history,
-		});
-	} catch (err) {
-		res.status(500).json({ message: err.message });
-	}
-});
-
-router.post("/guest/update-resilience", (req, res) => {
-	try {
-		const { type, name, itemId, metadata = {} } = req.body;
-		
-		const guestCookie = req.cookies?.dr_guest;
-		if (!guestCookie) {
-			return res.status(404).json({ message: "Guest not found" });
-		}
-		
-		const guestData = JSON.parse(guestCookie);
-
-		
-		if (itemId && type) {
-			if (type === 'material' || type === 'complete_material' || type === 'material_view') {
-				if (!guestData.completedMaterials) guestData.completedMaterials = [];
-				if (!guestData.completedMaterials.includes(itemId)) {
-					guestData.completedMaterials.push(itemId);
-				}
-			} else if (type === 'scenario' || type === 'complete_scenario' || type === 'complete_exercise') {
-				if (!guestData.completedScenarios) guestData.completedScenarios = [];
-				if (!guestData.completedScenarios.find(s => s.scenarioId === itemId)) {
-					guestData.completedScenarios.push({ scenarioId: itemId, date: new Date() });
-				}
-			}
-		}
-
-		
-		let currentRes = Number(guestData.stats?.resilience);
-		if (isNaN(currentRes)) currentRes = 50;
-
-		const calculatedChange = calculateResilienceChange(type, { ...metadata, currentResilience: currentRes });
-
-		const multiplier = guestData.stats?.resilienceMultiplier || 1.0;
-		let finalChange = calculatedChange * multiplier;
-		if (calculatedChange < 0) {
-			finalChange = Math.min(-1, Math.round(finalChange));
-		} else if (calculatedChange > 0) {
-			finalChange = Math.max(1, Math.round(finalChange));
-		} else {
-			finalChange = 0;
-		}
-
-		currentRes = Math.max(0, Math.min(100, Math.round(currentRes + finalChange)));
-
-		if (!guestData.stats) guestData.stats = {};
-		guestData.stats.resilience = currentRes;
-
-		if (!guestData.history) guestData.history = [];
-		if (!metadata.hidden) {
-			const historyEntry = {
-				activityType: type,
-				activityName: name,
-				change: finalChange,
-				newScore: currentRes,
-				date: new Date(),
-			};
-			guestData.history.unshift(historyEntry);
-		}
-
-		if (guestData.history.length > 10) {
-			guestData.history = guestData.history.slice(0, 10);
-		}
-
-		const guestDataToSave = {
-			...guestData,
-			history: (guestData.history || []).slice(0, 10),
-		};
-
-		const cookieString = JSON.stringify(guestDataToSave);
-		
-		res
-			.cookie("dr_guest", cookieString, guestCookieOptions())
-			.json(guestData);
-	} catch (err) {
-		console.error('❌ GUEST BACKEND ERROR:', err);
-		res.status(500).json({ message: err.message });
-	}
-});
-
-router.post("/guest/diagnostic", (req, res) => {
-	try {
-		const { answers } = req.body;
-		if (!answers || !Array.isArray(answers) || answers.length === 0) {
-			return res.status(400).json({ message: "Answers are required" });
-		}
-
-		const guestCookie = req.cookies?.dr_guest;
-		if (!guestCookie) {
-			return res.status(404).json({ message: "Guest not found" });
-		}
-		const currentData = JSON.parse(guestCookie);
-
-		const score = Math.round(answers.reduce((a, b) => a + b, 0) / answers.length);
-		let multiplier = 1.0;
-		if (score < 50) {
-			multiplier = Number((0.1 + (score / 50) * 0.4).toFixed(2));
-		} else {
-			multiplier = Number((1.1 + ((score - 50) / 50) * 0.4).toFixed(2));
-		}
-
-		const updatedData = {
-			...currentData,
-			stats: {
-				...(currentData.stats || {}),
-				resilienceMultiplier: multiplier
-			},
-			diagnostic: {
-				answers,
-				completedAt: new Date()
-			}
-		};
-
-		if (!updatedData.history) updatedData.history = [];
-		updatedData.history.unshift({
-			activityType: 'diagnostic',
-			activityName: 'Діагностика стану',
-			change: 0,
-			newScore: updatedData.stats.resilience || 50,
-			date: new Date()
-		});
-
-		const updatedDataToSave = {
-			...updatedData,
-			history: (updatedData.history || []).slice(0, 10),
-		};
-
-		res
-			.cookie("dr_guest", JSON.stringify(updatedDataToSave), guestCookieOptions())
+			.cookie("dr_guest", guestCookie, guestCookieOptions())
 			.json({ success: true, score, multiplier, stats: updatedData.stats });
 	} catch (err) {
 		res.status(500).json({ message: err.message });
@@ -554,7 +374,8 @@ router.post("/guest/diary", (req, res) => {
 			return res.status(404).json({ message: "Guest not found" });
 		}
 		const { mood, content, tags = [] } = req.body;
-		const guestData = JSON.parse(guestCookie);
+		const guestData = guestSessions.get(guestCookie);
+		if (!guestData) return res.status(404).json({ message: "Session expired" });
 
 		if (!guestData.diaryEntries) guestData.diaryEntries = [];
 
@@ -569,12 +390,13 @@ router.post("/guest/diary", (req, res) => {
 		guestData.diaryEntries.unshift(newEntry);
 
 		
-		if (guestData.diaryEntries.length > 20) {
-			guestData.diaryEntries = guestData.diaryEntries.slice(0, 20);
+		if (guestData.diaryEntries.length > 100) {
+			guestData.diaryEntries = guestData.diaryEntries.slice(0, 100);
 		}
+		guestSessions.set(guestCookie, guestData);
 
 		res
-			.cookie("dr_guest", JSON.stringify(guestData), guestCookieOptions())
+			.cookie("dr_guest", guestCookie, guestCookieOptions())
 			.json({ success: true, entry: newEntry });
 	} catch (err) {
 		res.status(500).json({ message: err.message });
@@ -588,7 +410,8 @@ router.get("/guest/diary", (req, res) => {
 		if (!guestCookie) {
 			return res.json({ entries: [], total: 0 });
 		}
-		const guestData = JSON.parse(guestCookie);
+		const guestData = guestSessions.get(guestCookie);
+		if (!guestData) return res.status(404).json({ message: "Session expired" });
 		const entries = guestData.diaryEntries || [];
 		res.json({ entries, total: entries.length });
 	} catch (err) {
@@ -845,7 +668,8 @@ router.post("/complete-scenario", async (req, res) => {
 
 		
 		if (guestCookie && (!token || token === 'guest_mode')) {
-			const guestData = JSON.parse(guestCookie);
+			const guestData = guestSessions.get(guestCookie);
+			if (!guestData) return res.status(404).json({ message: "Session expired" });
 
 			if (!guestData.completedScenarios) {
 				guestData.completedScenarios = [];
@@ -877,7 +701,8 @@ router.post("/complete-scenario", async (req, res) => {
 				});
 			}
 			
-			res.cookie("dr_guest", JSON.stringify(guestData), guestCookieOptions());
+			guestSessions.set(guestCookie, guestData);
+			res.cookie("dr_guest", guestCookie, guestCookieOptions());
 
 			return res.json({
 				completedScenarios: guestData.completedScenarios,
