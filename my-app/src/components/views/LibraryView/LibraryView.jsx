@@ -226,7 +226,14 @@ const LibraryView = ({
                             <div className="px-3 py-1 rounded-full text-[9px] font-black uppercase">10 хв</div>
                         </div>
                         <div className="flex flex-col flex-1">
-                            <p className="text-[10px] font-black uppercase tracking-widest mb-1">{item.type}</p>
+                            <div className="flex items-center gap-2 mb-1">
+                                <p className="text-[10px] font-black uppercase tracking-widest">{item.type}</p>
+                                {item.type === 'Стаття' && !item.url && (
+                                    <span className="text-[8px] font-black bg-slate-800/80 px-2 py-0.5 rounded-md uppercase tracking-wider">
+                                        {(item.content || '').replace(/<[^>]*>?/gm, '').length + (item.desc || '').length < 250 ? 'Швидке читання' : 'Розгорнуто'}
+                                    </span>
+                                )}
+                            </div>
                             <h4 className="text-xl font-bold tracking-tight uppercase leading-none">{item.title}</h4>
                             <div className="mt-auto pt-6 flex items-center gap-2 text-xs font-bold uppercase">Відкрити контент</div>
                         </div>
@@ -244,7 +251,14 @@ const LibraryView = ({
                             <div className="bg-slate-800 px-3 py-1 rounded-full text-[9px] font-black uppercase text-slate-400">{item.duration}</div>
                         </div>
                         <div className="relative z-10 flex flex-col flex-1">
-                            <p className="text-[10px] font-black text-emerald-500 uppercase tracking-widest mb-1">{item.type}</p>
+                            <div className="flex items-center gap-2 mb-1">
+                                <p className="text-[10px] font-black text-emerald-500 uppercase tracking-widest">{item.type}</p>
+                                {item.type === 'Стаття' && !item.url && (
+                                    <span className="text-[8px] font-black bg-slate-800/80 text-slate-300 px-2 py-0.5 rounded-md uppercase tracking-wider">
+                                        {(item.content || '').replace(/<[^>]*>?/gm, '').length + (item.desc || '').length < 250 ? 'Швидке читання' : 'Розгорнуто'}
+                                    </span>
+                                )}
+                            </div>
                             <h4 className={`text-xl font-bold tracking-tight uppercase leading-none transition-colors ${isExpanded ? 'text-emerald-400' : 'text-white group-hover:text-emerald-400'}`}>{item.title}</h4>
                             
                             <div className={`overflow-hidden transition-all duration-500 ${isExpanded ? 'max-h-[1000px] opacity-100 mt-8 mb-4' : 'max-h-0 opacity-0 mt-0 mb-0'}`} onClick={(e) => e.stopPropagation()}>
