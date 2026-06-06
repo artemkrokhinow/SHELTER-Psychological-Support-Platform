@@ -284,7 +284,7 @@ const LibraryView = ({
                             <div className={`overflow-hidden transition-all duration-500 ${isExpanded ? 'max-h-[1000px] opacity-100 mt-8 mb-4' : 'max-h-0 opacity-0 mt-0 mb-0'}`} onClick={(e) => e.stopPropagation()}>
                                 {item.desc && <p className="mb-6 text-emerald-400/90 font-medium italic p-6 bg-emerald-500/5 rounded-2xl border border-emerald-500/10">{item.desc}</p>}
                                 {item.content && item.content !== item.desc && (
-                                    <div className="space-y-4 text-slate-300 leading-relaxed text-sm" dangerouslySetInnerHTML={{ __html: item.content }} />
+                                    <div className="whitespace-pre-wrap space-y-4 text-slate-300 leading-relaxed text-sm" dangerouslySetInnerHTML={{ __html: item.content }} />
                                 )}
                             </div>
 

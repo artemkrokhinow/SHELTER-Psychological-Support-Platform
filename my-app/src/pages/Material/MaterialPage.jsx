@@ -30,7 +30,7 @@ export default function MaterialPage() {
     const formatText = (htmlContent) => {
         if (!htmlContent) return null;
         if (typeof htmlContent === 'string' && (htmlContent.includes('<') || htmlContent.includes('>'))) {
-            return <div dangerouslySetInnerHTML={{ __html: htmlContent.replace(/data-[^=]*=(["']([^"'])*["'])/g, '') }} />;
+            return <div className="whitespace-pre-wrap space-y-4" dangerouslySetInnerHTML={{ __html: htmlContent.replace(/data-[^=]*=(["']([^"'])*["'])/g, '') }} />;
         }
         return htmlContent.split('\n').map((paragraph, index) => <p key={index} className="mb-4">{paragraph}</p>);
     };
