@@ -223,7 +223,8 @@ const LibraryView = ({
             return val;
         }
         if (item.type === 'Стаття') {
-            const mins = Math.max(1, Math.ceil(textLen / 1000));
+            const rawMins = Math.ceil(textLen / 1000);
+            const mins = Math.min(5, Math.max(3, rawMins));
             return `${mins} хв`;
         }
         return '5 хв';
