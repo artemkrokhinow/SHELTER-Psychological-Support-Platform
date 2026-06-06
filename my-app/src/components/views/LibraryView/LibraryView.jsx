@@ -152,7 +152,9 @@ const LibraryView = ({
     const handleMaterialClick = (material) => {
       const mid = material.materialId || material.id || material._id;
 
-      const isShortArticle = material.type === 'Стаття' && !material.url;
+      const contentLen = (material.content || '').replace(/<[^>]*>?/gm, '').length;
+      const descLen = (material.desc || '').length;
+      const isShortArticle = material.type === 'Стаття' && !material.url && (contentLen + descLen) < 250;
       if (isShortArticle) {
           if (expandedId === mid) {
               setExpandedId(null);
