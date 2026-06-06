@@ -42,6 +42,15 @@ export default function MaterialPage() {
         return videoId ? `https://www.youtube.com/embed/${videoId[1]}` : url;
     };
 
+    const getTypeLabel = (type) => {
+        if (!type) return '';
+        const t = type.toLowerCase();
+        if (t === 'video') return 'Відео';
+        if (t === 'audio') return 'Аудіо';
+        if (t === 'text' || t === 'article') return 'Стаття';
+        return type;
+    };
+
     const handleVideoPlay = () => setIsPlaying(true);
     const handleVideoPause = () => setIsPlaying(false);
     const handleVideoEnded = () => setIsPlaying(false);
@@ -151,7 +160,7 @@ export default function MaterialPage() {
                     </div>
                 </header>
 
-                <div className="flex-1 p-8 space-y-8 animate-in fade-in duration-700 pb-20">
+                <div className="flex-1 p-8 space-y-8 animate-in fade-in duration-700 pb-20 max-w-4xl mx-auto w-full">
                     {loading ? (
                         <div className="flex items-center justify-center h-full">
                             <div className="w-12 h-12 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin"></div>
@@ -170,7 +179,7 @@ export default function MaterialPage() {
                                             {material.title}
                                         </h1>
                                         <div className="flex items-center gap-4 mt-2">
-                                            <span className="text-[10px] font-black text-emerald-500 uppercase tracking-widest">{material.type}</span>
+                                            <span className="text-[10px] font-black text-emerald-500 uppercase tracking-widest">{getTypeLabel(material.type)}</span>
                                             <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest">
                                                 <Clock size={12} className="inline mr-1" />
                                                 {material.duration || '10 хв'}
