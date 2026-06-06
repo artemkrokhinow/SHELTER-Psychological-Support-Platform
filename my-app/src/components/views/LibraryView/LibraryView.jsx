@@ -188,10 +188,10 @@ const LibraryView = ({
     const memoizedPhotos = React.useMemo(() => {
         return [
             { title: 'Ранковий вітер у травах', img: grounding6 },
-            { title: 'Мерехтіння води', img: grounding1 },
+            { title: 'Мерехтіння води', img: grounding5 },
             { title: 'Лісовий туман', img: grounding4 },
             { title: 'Гірський струмок', img: grounding2 },
-            { title: 'Вечірнє багаття', img: grounding5 },
+            { title: 'Вечірнє багаття', img: grounding1 },
             { title: 'Дощ за склом', img: grounding3 }
         ].map((photo, i) => (
             <div key={i} className="relative aspect-[16/10] rounded-[32px] overflow-hidden group shadow-2xl border border-slate-800 bg-slate-900">
