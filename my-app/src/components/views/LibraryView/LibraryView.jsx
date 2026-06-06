@@ -218,26 +218,46 @@ const LibraryView = ({
             const isExpanded = expandedId === mid;
 
             return (
-                <div key={item.id} onClick={() => handleMaterialClick(item)} className={`group border p-8 flex flex-col robust-rounded-48 transition-all cursor-pointer relative text-left ${isExpanded ? 'col-span-1 md:col-span-2 lg:col-span-3 border-emerald-500/50 bg-slate-900 shadow-2xl' : 'h-full hover:border-emerald-500/50 bg-slate-900/40 border-slate-800 shadow-xl'} ${isHighlighted ? 'bg-slate-900/90 border-emerald-500 shadow-[0_0_40px_rgba(16,185,129,0.3)] scale-[1.05] z-[9999] relative ring-4 ring-emerald-500 animate-pulse pointer-events-auto' : ''}`}>
-                    <div className="flex justify-between items-start mb-10 relative z-10">
-                        <div className={`p-4 rounded-2xl ${item.color} text-white shadow-lg`}>{item.icon}</div>
-                        <div className="bg-slate-800 px-3 py-1 rounded-full text-[9px] font-black uppercase text-slate-400">{item.duration}</div>
+                <div key={item.id} className="relative w-full h-full">
+                    {/* Placeholder */}
+                    <div className="border p-8 flex flex-col h-full robust-rounded-48 opacity-0 pointer-events-none">
+                        <div className="flex justify-between items-start mb-10">
+                            <div className="p-4 rounded-2xl w-14 h-14"></div>
+                            <div className="px-3 py-1 rounded-full text-[9px] font-black uppercase">10 хв</div>
+                        </div>
+                        <div className="flex flex-col flex-1">
+                            <p className="text-[10px] font-black uppercase tracking-widest mb-1">{item.type}</p>
+                            <h4 className="text-xl font-bold tracking-tight uppercase leading-none">{item.title}</h4>
+                            <div className="mt-auto pt-6 flex items-center gap-2 text-xs font-bold uppercase">Відкрити контент</div>
+                        </div>
                     </div>
-                    <div className="relative z-10 flex flex-col flex-1">
-                        <p className="text-[10px] font-black text-emerald-500 uppercase tracking-widest mb-1">{item.type}</p>
-                        <h4 className="text-xl font-bold text-white tracking-tight group-hover:text-emerald-400 transition-colors uppercase leading-none">{item.title}</h4>
-                        
-                        {isExpanded && (
-                            <div className="mt-8 text-slate-300 leading-relaxed text-sm animate-in fade-in slide-in-from-top-4 duration-500" onClick={(e) => e.stopPropagation()}>
+
+                    {/* Actual Card */}
+                    <div 
+                        onClick={() => handleMaterialClick(item)} 
+                        className={`absolute top-0 left-0 w-full min-h-full group border p-8 flex flex-col robust-rounded-48 transition-all duration-500 cursor-pointer text-left 
+                        ${isExpanded ? 'z-50 border-emerald-500/50 bg-slate-900 shadow-[0_24px_64px_rgba(0,0,0,0.75),0_0_0_1px_rgba(16,185,129,0.12)]' : 'z-10 hover:border-emerald-500/50 bg-slate-900/40 border-slate-800 shadow-xl'} 
+                        ${isHighlighted ? 'bg-slate-900/90 border-emerald-500 shadow-[0_0_40px_rgba(16,185,129,0.3)] scale-[1.05] z-[9999] ring-4 ring-emerald-500 animate-pulse pointer-events-auto' : ''}`}
+                    >
+                        <div className="flex justify-between items-start mb-10 relative z-10">
+                            <div className={`p-4 rounded-2xl ${item.color} text-white shadow-lg`}>{item.icon}</div>
+                            <div className="bg-slate-800 px-3 py-1 rounded-full text-[9px] font-black uppercase text-slate-400">{item.duration}</div>
+                        </div>
+                        <div className="relative z-10 flex flex-col flex-1">
+                            <p className="text-[10px] font-black text-emerald-500 uppercase tracking-widest mb-1">{item.type}</p>
+                            <h4 className={`text-xl font-bold tracking-tight uppercase leading-none transition-colors ${isExpanded ? 'text-emerald-400' : 'text-white group-hover:text-emerald-400'}`}>{item.title}</h4>
+                            
+                            <div className={`overflow-hidden transition-all duration-500 ${isExpanded ? 'max-h-[1000px] opacity-100 mt-8 mb-4' : 'max-h-0 opacity-0 mt-0 mb-0'}`} onClick={(e) => e.stopPropagation()}>
                                 {item.desc && <p className="mb-6 text-emerald-400/90 font-medium italic p-6 bg-emerald-500/5 rounded-2xl border border-emerald-500/10">{item.desc}</p>}
                                 {item.content && item.content !== item.desc && (
-                                    <div className="space-y-4" dangerouslySetInnerHTML={{ __html: item.content }} />
+                                    <div className="space-y-4 text-slate-300 leading-relaxed text-sm" dangerouslySetInnerHTML={{ __html: item.content }} />
                                 )}
                             </div>
-                        )}
 
-                        <div className="mt-auto pt-6 flex items-center gap-2 text-slate-500 text-xs font-bold uppercase group-hover:gap-4 transition-all">
-                            {isExpanded ? 'Згорнути контент' : 'Відкрити контент'} <ChevronRight size={14} className={`transition-transform duration-300 ${isExpanded ? '-rotate-90 text-emerald-500' : ''}`} />
+                            <div className={`mt-auto pt-6 flex items-center gap-2 text-xs font-bold uppercase transition-colors ${isExpanded ? 'text-emerald-500/55 hover:text-emerald-400' : 'text-slate-500 group-hover:gap-4 group-hover:text-slate-400'}`}>
+                                {isExpanded ? 'Згорнути контент' : 'Відкрити контент'} 
+                                <ChevronRight size={14} className={`transition-transform duration-300 ${isExpanded ? '-rotate-90' : ''}`} />
+                            </div>
                         </div>
                     </div>
                 </div>
