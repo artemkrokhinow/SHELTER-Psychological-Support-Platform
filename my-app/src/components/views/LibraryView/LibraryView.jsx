@@ -213,35 +213,37 @@ const LibraryView = ({
 
     const getDurationLabel = (item) => {
         let val = String(item.duration || '').trim();
+        const textLen = (item.content || '').replace(/<[^>]*>?/gm, '').length + (item.desc || '').length;
+        const isShortText = item.type === 'Стаття' && !item.url && textLen < 250;
 
-        // If backend explicitly provided a value (and it's not the default "10 хв"), use it.
-        // Wait, ShelterAppComplete sets "10 хв" as default. Let's try to recalculate if it's the exact default "10 хв",
-        // or we just trust the backend. If backend sends "210 сек", we convert it.
+        // If it's a short text, it must be in seconds
+        if (isShortText) {
+            const secMatch = val.match(/^(\d+)\s*с/i);
+            if (secMatch) return `${secMatch[1]} сек`;
+
+            if (/^\d+$/.test(val)) {
+                const num = parseInt(val, 10);
+                if (num >= 60) return `${Math.ceil(num/60)} хв`;
+                return `${num} сек`;
+            }
+
+            const totalSeconds = Math.max(15, Math.ceil(textLen / 15));
+            if (totalSeconds < 60) return `${Math.ceil(totalSeconds / 5) * 5} сек`;
+        }
+
         const secMatch = val.match(/^(\d+)\s*с/i);
         if (secMatch) {
             const secs = parseInt(secMatch[1], 10);
-            if (secs >= 60) {
-                return `${Math.ceil(secs / 60)} хв`;
-            }
+            if (secs >= 60) return `${Math.ceil(secs / 60)} хв`;
             return `${secs} сек`;
         }
 
         if (/^\d+$/.test(val)) return `${val} хв`;
 
-        // If it's a generic "10 хв" default and it's an article, we can try to auto-calculate it better
         if (val === '10 хв' && item.type === 'Стаття') {
-            const textLen = (item.content || '').replace(/<[^>]*>?/gm, '').length + (item.desc || '').length;
-            // 15 chars per second reading speed
-            const totalSeconds = Math.max(15, Math.ceil(textLen / 15));
-            
-            if (totalSeconds < 60) {
-                // Round to nearest 5
-                return `${Math.ceil(totalSeconds / 5) * 5} сек`;
-            } else {
-                const rawMins = Math.ceil(totalSeconds / 60);
-                const mins = Math.min(5, Math.max(1, rawMins));
-                return `${mins} хв`;
-            }
+            const rawMins = Math.ceil(textLen / 1000);
+            const mins = Math.min(5, Math.max(3, rawMins));
+            return `${mins} хв`;
         }
 
         return val;
