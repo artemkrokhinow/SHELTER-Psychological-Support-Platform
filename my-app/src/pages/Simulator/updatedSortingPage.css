@@ -430,3 +430,156 @@
 .light-theme .dr-updated-sorting-layout .dr-completion-btn.secondary:hover {
   background: rgba(0, 0, 0, 0.05);
 }
+
+/* ==============================================================
+   MOBILE RESPONSIVENESS
+   ============================================================== */
+@media (max-width: 768px) {
+  .dr-updated-sorting-layout {
+    height: 100%;
+    min-height: 100dvh;
+    overflow: hidden;
+    position: absolute;
+    inset: 0;
+  }
+
+  .dr-sorting-header {
+    padding: 1rem;
+    flex: none;
+  }
+  
+  .dr-scenario-title {
+    font-size: 1.2rem;
+  }
+  
+  .dr-header-stats {
+    gap: 0.5rem;
+  }
+  
+  .dr-stat-item {
+    padding: 0.4rem 0.6rem;
+    font-size: 0.8rem;
+  }
+  
+  .dr-game-main {
+    padding: 0.5rem 1rem 1rem 1rem;
+    gap: 1rem;
+    flex: 1;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Deck of cards container */
+  .dr-sorting-area {
+    padding: 0;
+    min-height: 120px;
+    border-radius: 20px;
+    flex: none;
+    display: grid;
+    place-items: center;
+    border: none;
+    background: transparent;
+  }
+  
+  .dr-sorting-item {
+    grid-column: 1;
+    grid-row: 1;
+    width: 100%;
+    margin: 0;
+    padding: 1.2rem 1rem;
+    font-size: 0.95rem;
+    border-radius: 16px;
+    max-width: 100%;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    background: #1e293b !important; /* Fully opaque to hide cards underneath */
+  }
+  
+  /* Stack effect: top 3 cards visible */
+  .dr-sorting-item:nth-child(1) {
+    z-index: 10;
+    transform: translateY(0) scale(1);
+    opacity: 1;
+    color: white !important;
+  }
+  .dr-sorting-item:nth-child(1):hover {
+    transform: translateY(-2px) scale(1.02);
+  }
+  
+  .dr-sorting-item:nth-child(2) {
+    z-index: 9;
+    transform: translateY(10px) scale(0.95);
+    opacity: 1;
+    color: transparent !important; /* Hide text to prevent bleeding */
+    pointer-events: none;
+  }
+  
+  .dr-sorting-item:nth-child(3) {
+    z-index: 8;
+    transform: translateY(20px) scale(0.9);
+    opacity: 0.6;
+    color: transparent !important;
+    pointer-events: none;
+  }
+  
+  .dr-sorting-item:nth-child(n+4) {
+    z-index: 1;
+    opacity: 0;
+    pointer-events: none;
+  }
+  
+  /* Drop zones fit exactly in remaining space */
+  .dr-sorting-dock {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+    gap: 0.5rem;
+    min-height: 0;
+    margin-top: 0;
+  }
+  
+  .dr-box-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.5rem;
+  }
+  
+  .dr-box-label {
+    font-size: 0.65rem;
+    padding: 0.4rem 0.5rem;
+    text-align: center;
+    word-break: break-word;
+    letter-spacing: 0.05em;
+  }
+  
+  .dr-box-count {
+    align-self: center;
+    font-size: 0.75rem;
+  }
+  
+  .dr-sorting-box {
+    padding: 1rem;
+    min-height: 0;
+    height: 100%;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  
+  .dr-box-content {
+    flex: 1;
+    overflow-y: auto;
+    min-height: 0;
+  }
+  
+  .dr-updated-sorting-layout .dr-completion-card {
+    padding: 2rem;
+    border-radius: 32px;
+  }
+  
+  .dr-updated-sorting-layout .dr-completion-card h2 {
+    font-size: 1.8rem;
+  }
+}

@@ -227,7 +227,7 @@ const HomeView = ({
     const cards = getAdaptiveCards().filter(c => c.title.toLowerCase().includes(searchTerm.toLowerCase()));
 
     return (
-      <div className="p-4 md:p-8 space-y-6 md:space-y-12 animate-in fade-in duration-1000 pb-24">
+      <div className="p-4 md:p-8 flex flex-col min-h-[calc(100vh-14rem)] justify-between space-y-6 md:space-y-12 animate-in fade-in duration-1000 pb-8 md:pb-24">
         {}
         {showStabilizationHint && !searchTerm && (
             <div className="relative overflow-hidden bg-rose-500/10 border border-rose-500/20 p-5 md:p-8 rounded-3xl md:rounded-[48px] animate-in slide-in-from-top-10 duration-700 shadow-[0_0_50px_rgba(244,63,94,0.1)]">
@@ -315,26 +315,31 @@ const HomeView = ({
                         <h2 className="text-xl md:text-2xl font-black text-white uppercase tracking-tighter">Рекомендовано для вас</h2>
                     </div>
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-6">
                     {recommendations.map((rec, i) => (
                         <div 
                             key={rec.id}
                             onClick={() => navigateTo('material', rec.id)}
-                            className="bg-slate-900/40 border border-slate-800 p-4 md:p-6 rounded-2xl md:rounded-[32px] hover:bg-slate-800/60 transition-all cursor-pointer group shadow-xl"
+                            className="bg-slate-900/40 border border-slate-800 p-4 md:p-6 rounded-2xl md:rounded-[32px] hover:bg-slate-800/60 transition-all cursor-pointer group shadow-xl flex flex-row md:flex-col items-center md:items-stretch gap-4 md:gap-0"
                         >
-                            <div className="flex justify-between items-start mb-3 md:mb-4">
-                                <div className={`p-2 md:p-3 rounded-xl md:rounded-2xl bg-gradient-to-br ${rec.color} text-white force-white shadow-lg`}>
-                                    {React.cloneElement(rec.icon, { className: 'w-4 h-4 md:w-6 md:h-6' })}
+                            <div className="flex flex-col md:flex-row md:justify-between items-start md:mb-4 w-auto">
+                                <div className={`p-3 rounded-xl md:rounded-2xl bg-gradient-to-br ${rec.color} text-white force-white shadow-lg`}>
+                                    {React.cloneElement(rec.icon, { className: 'w-6 h-6' })}
                                 </div>
-                                <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest flex items-center gap-1">
+                                <span className="hidden md:flex text-[10px] font-black text-slate-500 uppercase tracking-widest items-center gap-1">
                                     <Clock size={12} /> {rec.duration}
                                 </span>
                             </div>
-                            <h3 className="text-lg md:text-xl font-black text-white uppercase tracking-tighter leading-tight mb-2 group-hover:text-emerald-400 transition-colors">
-                                {rec.title}
-                            </h3>
-                            <div className="flex items-center gap-2 text-slate-500">
-                                <span className="text-[10px] font-black uppercase tracking-widest">{catTranslations[rec.cat] || rec.cat}</span>
+                            <div className="flex-1 flex flex-col justify-center">
+                                <h3 className="text-lg md:text-xl font-black text-white uppercase tracking-tighter leading-tight mb-1 md:mb-2 group-hover:text-emerald-400 transition-colors">
+                                    {rec.title}
+                                </h3>
+                                <div className="flex items-center gap-2 text-slate-500">
+                                    <span className="text-[9px] md:text-[10px] font-black uppercase tracking-widest">{catTranslations[rec.cat] || rec.cat}</span>
+                                    <span className="md:hidden flex text-[9px] font-black uppercase tracking-widest items-center gap-1">
+                                        • <Clock size={10} /> {rec.duration}
+                                    </span>
+                                </div>
                             </div>
                         </div>
                     ))}
@@ -350,24 +355,24 @@ const HomeView = ({
                     {searchTerm ? 'Результати пошуку' : 'Всі практики'}
                 </h2>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-8">
             {cards.map((card, i) => (
                 <div 
                 key={i} 
                 onClick={card.onClick} 
-                className="group relative h-36 md:h-80 robust-card cursor-pointer shadow-2xl overflow-hidden rounded-3xl md:rounded-[48px]"
+                className="group relative h-32 md:h-80 robust-card cursor-pointer shadow-2xl overflow-hidden rounded-2xl md:rounded-[48px]"
                 >
                 <div className={`card-bg-layer bg-gradient-to-br ${card.color} opacity-90`}></div>
                 
                 <div className="absolute inset-0 bg-white/0 group-hover:bg-white/5 transition-colors duration-500"></div>
                 
-                <div className="relative p-4 md:p-10 h-full flex flex-col justify-between text-white force-white z-10">
-                    <div className="p-2 md:p-4 bg-white/20 rounded-xl md:rounded-2xl w-fit shadow-inner transition-all duration-500 group-hover:scale-110 group-hover:bg-white/30 group-hover:rotate-12">
+                <div className="relative p-3 md:p-10 h-full flex flex-col items-center justify-center md:items-stretch md:justify-between text-center md:text-left text-white force-white z-10 gap-2 md:gap-0">
+                    <div className="p-2 md:p-4 bg-white/20 rounded-xl md:rounded-2xl w-fit shadow-inner transition-all duration-500 group-hover:scale-110 group-hover:bg-white/30 md:group-hover:rotate-12 mx-auto md:mx-0">
                         {React.cloneElement(card.icon, { className: 'w-5 h-5 md:w-8 md:h-8' })}
                     </div>
-                    <div className="transition-all duration-500 group-hover:translate-x-2">
-                        <p className="text-[10px] font-black uppercase mb-1 opacity-70 tracking-widest force-white">{card.cat}</p>
-                        <h4 className="text-lg md:text-3xl font-black uppercase tracking-tighter leading-none group-hover:text-white drop-shadow-md force-white">
+                    <div className="transition-all duration-500 md:group-hover:translate-x-2">
+                        <p className="text-[8px] md:text-[10px] font-black uppercase mb-0 md:mb-1 opacity-70 tracking-widest force-white">{card.cat}</p>
+                        <h4 className="text-sm md:text-3xl font-black uppercase tracking-tighter leading-tight md:leading-none group-hover:text-white drop-shadow-md force-white line-clamp-2">
                         {card.title}
                         </h4>
                     </div>

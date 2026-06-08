@@ -466,6 +466,9 @@ const ShelterAppComplete = () => {
             setSearchTerm={setSearchTerm}
             setShowSOS={setShowSOS}
             currentView={currentView}
+            logout={() => { api.logout(); navigate('/auth'); }}
+            username={username}
+            resilience={resilience}
         />
 
         <div className="flex-1 relative">

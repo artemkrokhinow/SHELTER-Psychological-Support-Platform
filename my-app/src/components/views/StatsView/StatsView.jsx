@@ -91,8 +91,8 @@ const StatsView = ({ userId, userStats, resilience = 50, resilienceMultiplier = 
                     <h2 className="text-2xl md:text-3xl font-black text-white italic uppercase tracking-tighter leading-none">Сад Стійкості</h2>
                 </div>
                 
-                <div className="bg-slate-900/40 border border-slate-800 p-6 md:p-12 rounded-3xl md:rounded-[48px] relative overflow-hidden flex flex-col md:flex-row items-center gap-6 md:gap-12">
-                    <div className="relative flex items-center justify-center w-40 h-40 md:w-64 md:h-64 bg-emerald-500/5 rounded-full border border-emerald-500/10 shadow-[0_0_50px_rgba(16,185,129,0.15)]">
+                <div className="bg-slate-900/40 border border-slate-800 p-6 md:p-12 rounded-3xl md:rounded-[48px] relative overflow-hidden flex flex-col md:flex-row items-center gap-4 md:gap-12 text-center md:text-left">
+                    <div className="relative flex items-center justify-center w-32 h-32 md:w-64 md:h-64 bg-emerald-500/5 rounded-full border border-emerald-500/10 shadow-[0_0_50px_rgba(16,185,129,0.15)] shrink-0">
                         <div 
                             className="transition-all duration-1000 ease-out flex items-center justify-center"
                             style={{ transform: `scale(${treeScale})` }}
@@ -101,13 +101,13 @@ const StatsView = ({ userId, userStats, resilience = 50, resilienceMultiplier = 
                         </div>
                     </div>
 
-                    <div className="space-y-6 flex-1">
+                    <div className="space-y-4 md:space-y-6 flex-1 w-full flex flex-col items-center md:items-start">
                         <div>
                             <h3 className="text-2xl md:text-4xl font-black text-white uppercase tracking-tighter mb-2">Ваше дерево росте</h3>
-                            <p className="text-slate-400 max-w-md">Ваша стійкість — це живий організм. Чим частіше ви практикуєте, тим міцнішим стає коріння вашого ментального здоров'я.</p>
+                            <p className="text-slate-400 max-w-md text-sm md:text-base">Ваша стійкість — це живий організм. Чим частіше ви практикуєте, тим міцнішим стає коріння вашого ментального здоров'я.</p>
                         </div>
                         
-                        <div className="grid grid-cols-2 gap-4">
+                        <div className="grid grid-cols-2 gap-3 md:gap-4 w-full">
                             <div className="bg-slate-800/50 p-4 md:p-6 rounded-2xl md:rounded-[32px] border border-slate-700/30">
                                 <p className="text-[9px] md:text-[10px] font-black text-slate-500 uppercase tracking-widest mb-1">Рівень стійкості</p>
                                 <p className="text-2xl md:text-3xl font-black text-white">{Math.round(resilience)}%</p>
@@ -127,7 +127,7 @@ const StatsView = ({ userId, userStats, resilience = 50, resilienceMultiplier = 
                     <div className="w-2 h-8 bg-blue-500 rounded-full"></div>
                     <h2 className="text-2xl md:text-3xl font-black text-white italic uppercase tracking-tighter leading-none">Аналітика прогресу</h2>
                 </div>
-                <div className="bg-slate-900/30 border border-slate-800 p-4 md:p-10 rounded-3xl md:rounded-[48px] shadow-2xl h-64 md:h-96 min-h-[250px] md:min-h-[400px]">
+                <div className="bg-slate-900/30 border-y md:border border-slate-800 py-4 px-2 md:p-10 -mx-4 md:mx-0 rounded-none md:rounded-[48px] shadow-2xl h-64 md:h-96 min-h-[250px] md:min-h-[400px]">
                     {isVisible ? (
                         <ResponsiveContainer width="100%" height="100%" minWidth={0} minHeight={0}>
                             <AreaChart data={historyData} margin={{ top: 20, right: 30, left: 10, bottom: 10 }}>
@@ -209,10 +209,10 @@ const StatsView = ({ userId, userStats, resilience = 50, resilienceMultiplier = 
                         .sort((a, b) => new Date(b.date || b.createdAt || 0) - new Date(a.date || a.createdAt || 0))
                         .slice(0, 5)
                         .map((act, i) => (
-                        <div key={i} className="bg-slate-900/40 border border-slate-800 p-6 rounded-[32px] flex items-center justify-between animate-in fade-in slide-in-from-left duration-500" style={{ animationDelay: `${i * 100}ms` }}>
-                            <div className="flex items-center gap-4">
-                                <div className={`w-12 h-12 rounded-2xl flex items-center justify-center ${act.change > 0 ? 'bg-emerald-500/10 text-emerald-500' : act.change < 0 ? 'bg-rose-500/10 text-rose-500' : 'bg-slate-500/10 text-slate-500'}`}>
-                                    <Zap size={20} />
+                        <div key={i} className="bg-slate-900/40 border border-slate-800 p-4 md:p-6 rounded-[20px] md:rounded-[32px] flex items-center justify-between animate-in fade-in slide-in-from-left duration-500" style={{ animationDelay: `${i * 100}ms` }}>
+                            <div className="flex items-center gap-3 md:gap-4">
+                                <div className={`w-10 h-10 md:w-12 md:h-12 rounded-[14px] md:rounded-2xl flex items-center justify-center shrink-0 ${act.change > 0 ? 'bg-emerald-500/10 text-emerald-500' : act.change < 0 ? 'bg-rose-500/10 text-rose-500' : 'bg-slate-500/10 text-slate-500'}`}>
+                                    <Zap size={18} className="md:w-5 md:h-5" />
                                 </div>
                                 <div>
                                     <p className="text-sm font-black text-white uppercase tracking-tight">{translateActivity(act.type || act.activityType, act.name || act.activityName)}</p>
@@ -221,12 +221,12 @@ const StatsView = ({ userId, userStats, resilience = 50, resilienceMultiplier = 
                                     </p>
                                 </div>
                             </div>
-                            <div className="flex flex-col items-end text-right">
-                                <div className={`text-xl font-black ${act.change > 0 ? 'text-emerald-500' : act.change < 0 ? 'text-rose-500' : 'text-slate-500'}`}>
+                            <div className="flex flex-col items-end text-right shrink-0">
+                                <div className={`text-lg md:text-xl font-black ${act.change > 0 ? 'text-emerald-500' : act.change < 0 ? 'text-rose-500' : 'text-slate-500'}`}>
                                     {act.change > 0 ? `+${Math.round(act.change)}` : act.change < 0 ? `-${Math.abs(Math.round(act.change))}` : '0'}
                                 </div>
                                 {Math.round(act.change || 0) === 0 && (act.type === 'material_view' || act.activityType === 'material_view') && (
-                                    <p className="text-[9px] text-slate-500 uppercase font-bold tracking-widest mt-1 max-w-[150px]">
+                                    <p className="text-[8px] md:text-[9px] text-slate-500 uppercase font-bold tracking-widest mt-0.5 md:mt-1 max-w-[100px] md:max-w-[150px] leading-tight">
                                         Не підтверджено прочитання
                                     </p>
                                 )}

@@ -115,10 +115,10 @@ const DiaryView = ({ userId, onAddEntry }) => {
                     className="w-full h-32 md:h-40 bg-slate-800/50 border border-slate-700 rounded-xl md:rounded-[24px] p-4 md:p-6 text-white placeholder:text-slate-600 outline-none focus:border-emerald-500 transition-all resize-none shadow-inner"
                 />
 
-                <div className="flex flex-col md:flex-row justify-between items-center gap-6">
-                    <div className="flex items-center gap-4">
-                        <span className="text-xs font-black text-slate-500 uppercase tracking-widest">Мій стан:</span>
-                        <div className="flex gap-2">
+                <div className="flex flex-col md:flex-row justify-between items-center gap-6 w-full">
+                    <div className="flex flex-col md:flex-row items-center gap-4 w-full md:w-auto">
+                        <span className="text-xs font-black text-slate-500 uppercase tracking-widest text-center md:text-left">Мій стан:</span>
+                        <div className="flex justify-center md:justify-start gap-2 w-full md:w-auto">
                             {MOOD_CONFIG.map((mood, idx) => {
                                 const Icon = mood.icon;
                                 const isSelected = selectedMood === idx;
@@ -145,7 +145,7 @@ const DiaryView = ({ userId, onAddEntry }) => {
                         )}
                     </div>
 
-                    <div className="flex items-center gap-4">
+                    <div className="flex flex-col items-center md:items-end gap-4 w-full md:w-auto">
                         {saveMessage && (
                             <span className={`text-sm font-bold ${saveMessage.includes('✅') ? 'text-emerald-400' : 'text-rose-400'}`}>
                                 {saveMessage}

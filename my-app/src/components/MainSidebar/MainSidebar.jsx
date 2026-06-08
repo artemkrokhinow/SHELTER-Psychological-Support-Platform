@@ -17,7 +17,7 @@ const MainSidebar = React.memo(({
     const [showLogoutConfirm, setShowLogoutConfirm] = React.useState(false);
 
     return (
-        <aside className={`w-full md:w-72 h-[72px] md:h-auto border-t md:border-t-0 md:border-r border-slate-800 flex flex-row md:flex-col bg-[#0b0f1a] z-50 md:z-20 shadow-2xl transition-all duration-500 transform-gpu will-change-[filter,transform,opacity] order-last md:order-none shrink-0 ${showSOS ? 'blur-md grayscale opacity-50 scale-95 pointer-events-none' : ''}`}>
+        <aside className={`w-full md:w-72 h-14 md:h-auto border-t md:border-t-0 md:border-r border-slate-800 flex flex-row md:flex-col bg-[#0b0f1a] z-50 md:z-20 shadow-2xl transition-all duration-500 transform-gpu will-change-[filter,transform,opacity] order-last md:order-none shrink-0 ${showSOS ? 'blur-md grayscale opacity-50 scale-95 pointer-events-none' : ''}`}>
             <div className="p-8 hidden md:flex items-center gap-3">
                 <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center text-[#0b0f1a] shadow-xl">
                     <ShieldCheck size={28} />
@@ -25,15 +25,15 @@ const MainSidebar = React.memo(({
                 <span className="block text-2xl font-black text-white italic uppercase tracking-tighter">Shelter</span>
             </div>
 
-            <nav className="flex-1 px-2 md:px-4 mt-0 md:mt-6 flex items-center overflow-x-auto overflow-y-hidden md:overflow-visible scrollbar-hide">
-                <div className="flex flex-row md:flex-col items-center md:items-stretch space-x-2 md:space-x-0 md:space-y-0 w-full min-w-max md:min-w-0">
-                    <FlipSidebarItem id="home" icon={<Layout size={22} />} label="Дашборд" isDashboard={true} index={0} isSpecialMode={isSpecialMode} currentView={currentView} onClickAction={navigateTo} onBackAction={handleChatBack} tourStep={tourStep} />
-                    <FlipSidebarItem id="quests" icon={<Trophy size={22} />} label="Квести" index={1} isSpecialMode={isSpecialMode} currentView={currentView} onClickAction={navigateTo} tourStep={tourStep} />
-                    <FlipSidebarItem id="testing" icon={<ClipboardList size={22} />} label="Діагностика" index={2} isSpecialMode={isSpecialMode} currentView={currentView} onClickAction={navigateTo} tourStep={tourStep} />
-                    <FlipSidebarItem id="library" icon={<BookOpen size={22} />} label="Медіатека" index={3} isSpecialMode={isSpecialMode} currentView={currentView} onClickAction={navigateTo} tourStep={tourStep} />
-                    <FlipSidebarItem id="advice" icon={<Lightbulb size={22} />} label="Поради" index={4} isSpecialMode={isSpecialMode} currentView={currentView} onClickAction={navigateTo} tourStep={tourStep} />
-                    <FlipSidebarItem id="diary" icon={<PenLine size={22} />} label="Щоденник" index={5} isSpecialMode={isSpecialMode} currentView={currentView} onClickAction={navigateTo} tourStep={tourStep} />
-                    <FlipSidebarItem id="stats" icon={<BarChart3 size={22} />} label="Прогрес" index={6} isSpecialMode={isSpecialMode} currentView={currentView} onClickAction={navigateTo} tourStep={tourStep} />
+            <nav className="flex-1 px-2 md:px-4 mt-0 md:mt-6 flex items-center md:items-start overflow-x-auto overflow-y-hidden md:overflow-visible scrollbar-hide">
+                <div className="flex flex-row md:flex-col items-center md:items-stretch justify-between md:justify-start space-x-0 md:space-y-0 w-full min-w-0">
+                    <FlipSidebarItem id="home" icon={<Layout size={22} className="md:w-[22px] md:h-[22px] w-5 h-5" />} label="Дашборд" isDashboard={true} index={0} isSpecialMode={isSpecialMode} currentView={currentView} onClickAction={navigateTo} onBackAction={handleChatBack} tourStep={tourStep} />
+                    <FlipSidebarItem id="quests" icon={<Trophy size={22} className="md:w-[22px] md:h-[22px] w-5 h-5" />} label="Квести" index={1} isSpecialMode={isSpecialMode} currentView={currentView} onClickAction={navigateTo} tourStep={tourStep} />
+                    <FlipSidebarItem id="testing" icon={<ClipboardList size={22} className="md:w-[22px] md:h-[22px] w-5 h-5" />} label="Діагностика" index={2} isSpecialMode={isSpecialMode} currentView={currentView} onClickAction={navigateTo} tourStep={tourStep} />
+                    <FlipSidebarItem id="library" icon={<BookOpen size={22} className="md:w-[22px] md:h-[22px] w-5 h-5" />} label="Медіатека" index={3} isSpecialMode={isSpecialMode} currentView={currentView} onClickAction={navigateTo} tourStep={tourStep} />
+                    <FlipSidebarItem id="advice" icon={<Lightbulb size={22} className="md:w-[22px] md:h-[22px] w-5 h-5" />} label="Поради" index={4} isSpecialMode={isSpecialMode} currentView={currentView} onClickAction={navigateTo} tourStep={tourStep} />
+                    <FlipSidebarItem id="diary" icon={<PenLine size={22} className="md:w-[22px] md:h-[22px] w-5 h-5" />} label="Щоденник" index={5} isSpecialMode={isSpecialMode} currentView={currentView} onClickAction={navigateTo} tourStep={tourStep} />
+                    <FlipSidebarItem id="stats" icon={<BarChart3 size={22} className="md:w-[22px] md:h-[22px] w-5 h-5" />} label="Прогрес" index={6} isSpecialMode={isSpecialMode} currentView={currentView} onClickAction={navigateTo} tourStep={tourStep} />
                 </div>
             </nav>
 
