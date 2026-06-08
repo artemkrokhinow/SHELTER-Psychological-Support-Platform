@@ -1,42 +1,14 @@
 import { useEffect, useState, useCallback, useRef, useImperativeHandle, forwardRef } from "react";
 import "./characterCompanion.css";
 
-const CompanionFace = ({ emotion }) => {
-	const getColors = () => {
-		switch(emotion) {
-			case 'happy': return '#10b981'; // emerald-500
-			case 'sad': return '#3b82f6'; // blue-500
-			case 'normal': 
-			default: return '#ffffff'; // white
-		}
-	};
-	
-	const color = getColors();
-	
-	return (
-		<svg viewBox="0 0 100 100" className="character-image" fill="none" xmlns="http://www.w3.org/2000/svg">
-			{/* Білий квадратик із темною рамкою */}
-			<rect x="4" y="4" width="92" height="92" rx="30" fill="white" stroke="#0f172a" strokeWidth="4" />
-			
-			{/* Темне обличчя */}
-			<circle cx="50" cy="50" r="32" fill="#0f172a" />
-			
-			{/* Очі */}
-			<circle cx="37" cy="44" r="4.5" fill={color} />
-			<circle cx="63" cy="44" r="4.5" fill={color} />
-			
-			{/* Рот */}
-			{emotion === 'normal' && (
-				<line x1="38" y1="60" x2="62" y2="60" stroke={color} strokeWidth="5" strokeLinecap="round" />
-			)}
-			{emotion === 'happy' && (
-				<path d="M 35 56 Q 50 72 65 56" stroke={color} strokeWidth="5" strokeLinecap="round" fill="none" />
-			)}
-			{emotion === 'sad' && (
-				<path d="M 35 64 Q 50 48 65 64" stroke={color} strokeWidth="5" strokeLinecap="round" fill="none" />
-			)}
-		</svg>
-	);
+import happyImg from "../../infrastructure/assets/images/characterCompanion/happy.svg";
+import normalImg from "../../infrastructure/assets/images/characterCompanion/normal.svg";
+import sadImg from "../../infrastructure/assets/images/characterCompanion/sad.svg";
+
+const characterImages = {
+	happy: happyImg,
+	normal: normalImg,
+	sad: sadImg
 };
 
 const characterPhrases = {
@@ -318,7 +290,11 @@ const CharacterCompanion = forwardRef(({
 				)}
 			</div>
 			<div className={`character-avatar aura-${auraColor}`}>
-				<CompanionFace emotion={currentEmotion} />
+				<img
+					src={characterImages[currentEmotion] || characterImages.normal}
+					alt="Character companion"
+					className="character-image"
+				/>
 			</div>
 		</div>
 	);
