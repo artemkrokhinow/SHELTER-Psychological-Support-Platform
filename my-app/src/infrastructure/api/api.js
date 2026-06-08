@@ -30,7 +30,32 @@ const getGuestData = () => {
 };
 
 const saveGuestData = (data) => {
-	localStorage.setItem(GUEST_KEY, JSON.stringify(data));
+	// Ліміти для захисту від переповнення LocalStorage (~5MB)
+	if (data.history && data.history.length > 50) {
+		data.history = data.history.slice(0, 50);
+	}
+	if (data.diaryEntries && data.diaryEntries.length > 30) {
+		data.diaryEntries = data.diaryEntries.slice(0, 30);
+	}
+	if (data.completedScenarios && data.completedScenarios.length > 100) {
+		data.completedScenarios = data.completedScenarios.slice(data.completedScenarios.length - 100);
+	}
+
+	try {
+		localStorage.setItem(GUEST_KEY, JSON.stringify(data));
+	} catch (e) {
+		console.warn("LocalStorage quota exceeded, performing aggressive cleanup", e);
+		// Якщо пам'ять дійсно переповнена великими текстами у щоденнику
+		if (e.name === 'QuotaExceededError' || e.name === 'NS_ERROR_DOM_QUOTA_REACHED') {
+			data.history = data.history.slice(0, 10);
+			data.diaryEntries = data.diaryEntries.slice(0, 5); // залишаємо тільки 5 найсвіжіших
+			try {
+				localStorage.setItem(GUEST_KEY, JSON.stringify(data));
+			} catch (err) {
+				console.error("Failed to save guest data even after cleanup", err);
+			}
+		}
+	}
 };
 
 const guestService = {
@@ -61,7 +86,8 @@ const guestService = {
 	getStatsVolume: () => {
 		const data = getGuestData();
 		return Promise.resolve({
-			stats: data.stats,
+			allTime: data.stats,
+			history: data.history,
 			diagnostic: data.diagnostic,
             completedScenarios: data.completedScenarios
 		});
@@ -81,12 +107,12 @@ const guestService = {
 		data.stats.resilience = Math.max(0, Math.min(100, data.stats.resilience + change));
 		
 		const historyEntry = {
-			type,
+			activityType: type,
 			change,
-			resilienceAfter: data.stats.resilience,
+			newScore: data.stats.resilience,
 			metadata,
-			name,
-			timestamp: new Date().toISOString()
+			activityName: name,
+			date: new Date().toISOString()
 		};
 		data.history.push(historyEntry);
 		saveGuestData(data);
