@@ -227,21 +227,21 @@ const HomeView = ({
     const cards = getAdaptiveCards().filter(c => c.title.toLowerCase().includes(searchTerm.toLowerCase()));
 
     return (
-      <div className="p-4 md:p-8 space-y-12 animate-in fade-in duration-1000 pb-20">
+      <div className="p-4 md:p-8 space-y-6 md:space-y-12 animate-in fade-in duration-1000 pb-24">
         {}
         {showStabilizationHint && !searchTerm && (
-            <div className="relative overflow-hidden bg-rose-500/10 border border-rose-500/20 p-8 rounded-[48px] animate-in slide-in-from-top-10 duration-700 shadow-[0_0_50px_rgba(244,63,94,0.1)]">
-                <div className="relative z-10 flex flex-col md:flex-row items-center gap-8">
-                    <div className="w-20 h-20 bg-rose-500 rounded-3xl flex items-center justify-center text-white shadow-xl">
-                        <Activity size={40} />
+            <div className="relative overflow-hidden bg-rose-500/10 border border-rose-500/20 p-5 md:p-8 rounded-3xl md:rounded-[48px] animate-in slide-in-from-top-10 duration-700 shadow-[0_0_50px_rgba(244,63,94,0.1)]">
+                <div className="relative z-10 flex flex-col md:flex-row items-center gap-4 md:gap-8">
+                    <div className="w-14 h-14 md:w-20 md:h-20 bg-rose-500 rounded-2xl md:rounded-3xl flex items-center justify-center text-white shadow-xl shrink-0">
+                        <Activity size={28} />
                     </div>
                     <div className="flex-1 text-center md:text-left space-y-2">
-                        <h2 className="text-3xl font-black text-white uppercase tracking-tighter leading-none">Потрібна підтримка?</h2>
+                        <h2 className="text-2xl md:text-3xl font-black text-white uppercase tracking-tighter leading-none">Потрібна підтримка?</h2>
                         <p className="text-rose-200/60 font-medium">Ваш рівень стійкості зараз низький. Рекомендуємо коротку практику заземлення для відновлення ресурсу.</p>
                     </div>
                     <button 
                         onClick={() => navigateTo('practice')}
-                        className="px-10 py-5 bg-white text-rose-600 rounded-2xl font-black uppercase text-xs tracking-widest hover:bg-rose-50 transition-all shadow-xl whitespace-nowrap"
+                        className="px-6 py-4 md:px-10 md:py-5 bg-white text-rose-600 rounded-xl md:rounded-2xl font-black uppercase text-xs tracking-widest hover:bg-rose-50 transition-all shadow-xl whitespace-nowrap"
                     >
                         Почати зараз
                     </button>
@@ -260,14 +260,14 @@ const HomeView = ({
             
           </div>
           
-          <div className="flex gap-4">
-            <div className="w-[140px] bg-slate-900/40 p-4 rounded-3xl border border-slate-800  text-center shrink-0">
-                <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-1 truncate">Серія</p>
-                <p className="text-3xl font-black text-white truncate">{streak} {getDaysWord(streak)}</p>
+          <div className="flex w-full md:w-auto gap-3 md:gap-4 mt-2 md:mt-0">
+            <div className="flex-1 md:w-[140px] bg-slate-900/40 p-3 md:p-4 rounded-2xl md:rounded-3xl border border-slate-800  text-center shrink-0">
+                <p className="text-[9px] md:text-[10px] font-black text-slate-500 uppercase tracking-widest mb-1 truncate">Серія</p>
+                <p className="text-2xl md:text-3xl font-black text-white truncate">{streak} {getDaysWord(streak)}</p>
             </div>
-            <div className="w-[140px] bg-emerald-500/10 p-4 rounded-3xl border border-emerald-500/20  text-center shrink-0">
-                <p className="text-[10px] font-black text-emerald-500 uppercase tracking-widest mb-1 truncate">Стійкість</p>
-                <p className="text-3xl font-black text-emerald-400 truncate">{Math.round(resilience)}%</p>
+            <div className="flex-1 md:w-[140px] bg-emerald-500/10 p-3 md:p-4 rounded-2xl md:rounded-3xl border border-emerald-500/20  text-center shrink-0">
+                <p className="text-[9px] md:text-[10px] font-black text-emerald-500 uppercase tracking-widest mb-1 truncate">Стійкість</p>
+                <p className="text-2xl md:text-3xl font-black text-emerald-400 truncate">{Math.round(resilience)}%</p>
             </div>
           </div>
         </section>
@@ -277,21 +277,21 @@ const HomeView = ({
             <section className="space-y-6">
                 <div className="flex items-center gap-3">
                     <div className="w-2 h-8 bg-blue-500 rounded-full"></div>
-                    <h2 className="text-2xl font-black text-white uppercase tracking-tighter">Як пройшов ваш ранок?</h2>
+                    <h2 className="text-xl md:text-2xl font-black text-white uppercase tracking-tighter">Як пройшов ваш ранок?</h2>
                 </div>
                 <div className="flex flex-wrap gap-4">
                     {moods.map((mood) => (
                         <button
                             key={mood.id}
                             onClick={() => handleMoodSelect(mood)}
-                            className={`group relative flex flex-col items-center gap-2 p-6 rounded-[32px] transition-all duration-500 border ${
+                            className={`group relative flex flex-col items-center gap-1 md:gap-2 p-3 md:p-6 rounded-2xl md:rounded-[32px] transition-all duration-500 border ${
                                 currentMood === mood.id 
                                 ? `bg-gradient-to-br ${mood.color} border-white/20 scale-110 shadow-xl z-10` 
                                 : 'bg-slate-900/40 border-slate-800 hover:border-slate-600 hover:scale-105'
                             }`}
                         >
-                            <span className="text-4xl transition-transform duration-500 group-hover:scale-125">{mood.emoji}</span>
-                            <span className={`text-[10px] font-black uppercase tracking-widest ${
+                            <span className="text-3xl md:text-4xl transition-transform duration-500 group-hover:scale-125">{mood.emoji}</span>
+                            <span className={`text-[8px] md:text-[10px] font-black uppercase tracking-widest ${
                                 currentMood === mood.id ? 'text-white' : 'text-slate-500'
                             }`}>{mood.label}</span>
                             
@@ -312,7 +312,7 @@ const HomeView = ({
                 <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
                         <div className="w-2 h-8 bg-amber-500 rounded-full"></div>
-                        <h2 className="text-2xl font-black text-white uppercase tracking-tighter">Рекомендовано для вас</h2>
+                        <h2 className="text-xl md:text-2xl font-black text-white uppercase tracking-tighter">Рекомендовано для вас</h2>
                     </div>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -320,17 +320,17 @@ const HomeView = ({
                         <div 
                             key={rec.id}
                             onClick={() => navigateTo('material', rec.id)}
-                            className="bg-slate-900/40 border border-slate-800 p-6 rounded-[32px] hover:bg-slate-800/60 transition-all cursor-pointer group shadow-xl"
+                            className="bg-slate-900/40 border border-slate-800 p-4 md:p-6 rounded-2xl md:rounded-[32px] hover:bg-slate-800/60 transition-all cursor-pointer group shadow-xl"
                         >
-                            <div className="flex justify-between items-start mb-4">
-                                <div className={`p-3 rounded-2xl bg-gradient-to-br ${rec.color} text-white force-white shadow-lg`}>
-                                    {rec.icon}
+                            <div className="flex justify-between items-start mb-3 md:mb-4">
+                                <div className={`p-2 md:p-3 rounded-xl md:rounded-2xl bg-gradient-to-br ${rec.color} text-white force-white shadow-lg`}>
+                                    {React.cloneElement(rec.icon, { className: 'w-4 h-4 md:w-6 md:h-6' })}
                                 </div>
                                 <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest flex items-center gap-1">
                                     <Clock size={12} /> {rec.duration}
                                 </span>
                             </div>
-                            <h3 className="text-xl font-black text-white uppercase tracking-tighter leading-tight mb-2 group-hover:text-emerald-400 transition-colors">
+                            <h3 className="text-lg md:text-xl font-black text-white uppercase tracking-tighter leading-tight mb-2 group-hover:text-emerald-400 transition-colors">
                                 {rec.title}
                             </h3>
                             <div className="flex items-center gap-2 text-slate-500">
@@ -346,28 +346,28 @@ const HomeView = ({
         <section className="space-y-6">
             <div className="flex items-center gap-3">
                 <div className="w-2 h-8 bg-purple-500 rounded-full"></div>
-                <h2 className="text-2xl font-black text-white uppercase tracking-tighter">
+                <h2 className="text-xl md:text-2xl font-black text-white uppercase tracking-tighter">
                     {searchTerm ? 'Результати пошуку' : 'Всі практики'}
                 </h2>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">
             {cards.map((card, i) => (
                 <div 
                 key={i} 
                 onClick={card.onClick} 
-                className="group relative h-48 md:h-80 robust-card cursor-pointer shadow-2xl overflow-hidden"
+                className="group relative h-36 md:h-80 robust-card cursor-pointer shadow-2xl overflow-hidden rounded-3xl md:rounded-[48px]"
                 >
                 <div className={`card-bg-layer bg-gradient-to-br ${card.color} opacity-90`}></div>
                 
                 <div className="absolute inset-0 bg-white/0 group-hover:bg-white/5 transition-colors duration-500"></div>
                 
-                <div className="relative p-6 md:p-10 h-full flex flex-col justify-between text-white force-white z-10">
-                    <div className="p-3 md:p-4 bg-white/20 rounded-2xl w-fit shadow-inner transition-all duration-500 group-hover:scale-110 group-hover:bg-white/30 group-hover:rotate-12">
-                        {React.cloneElement(card.icon, { className: 'w-6 h-6 md:w-8 md:h-8' })}
+                <div className="relative p-4 md:p-10 h-full flex flex-col justify-between text-white force-white z-10">
+                    <div className="p-2 md:p-4 bg-white/20 rounded-xl md:rounded-2xl w-fit shadow-inner transition-all duration-500 group-hover:scale-110 group-hover:bg-white/30 group-hover:rotate-12">
+                        {React.cloneElement(card.icon, { className: 'w-5 h-5 md:w-8 md:h-8' })}
                     </div>
                     <div className="transition-all duration-500 group-hover:translate-x-2">
                         <p className="text-[10px] font-black uppercase mb-1 opacity-70 tracking-widest force-white">{card.cat}</p>
-                        <h4 className="text-xl md:text-3xl font-black uppercase tracking-tighter leading-none group-hover:text-white drop-shadow-md force-white">
+                        <h4 className="text-lg md:text-3xl font-black uppercase tracking-tighter leading-none group-hover:text-white drop-shadow-md force-white">
                         {card.title}
                         </h4>
                     </div>

@@ -95,12 +95,12 @@ const DiaryView = ({ userId, onAddEntry }) => {
     };
 
     return (
-        <div className="p-4 md:p-8 space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500 text-left pb-24">
+        <div className="p-4 md:p-8 space-y-6 md:space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500 text-left pb-24">
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-8">
-                <h2 className="text-3xl md:text-5xl font-black text-white italic uppercase tracking-tighter leading-none">Щоденник рефлексії</h2>
+                <h2 className="text-2xl md:text-5xl font-black text-white italic uppercase tracking-tighter leading-none">Щоденник рефлексії</h2>
             </div>
 
-            <div className="bg-slate-900/40 border border-slate-800 p-8 rounded-[40px]  shadow-2xl space-y-6">
+            <div className="bg-slate-900/40 border border-slate-800 p-5 md:p-8 rounded-3xl md:rounded-[40px]  shadow-2xl space-y-4 md:space-y-6">
                 <div className="flex items-center gap-3 mb-2">
                     <div className="w-10 h-10 bg-emerald-500/10 rounded-xl flex items-center justify-center">
                         <BookOpen size={20} className="text-emerald-500" />
@@ -112,7 +112,7 @@ const DiaryView = ({ userId, onAddEntry }) => {
                     value={diaryEntry}
                     onChange={(e) => setDiaryEntry(e.target.value)}
                     placeholder="Опишіть ваші відчуття сьогодні..."
-                    className="w-full h-40 bg-slate-800/50 border border-slate-700 rounded-[24px] p-6 text-white placeholder:text-slate-600 outline-none focus:border-emerald-500 transition-all resize-none shadow-inner"
+                    className="w-full h-32 md:h-40 bg-slate-800/50 border border-slate-700 rounded-xl md:rounded-[24px] p-4 md:p-6 text-white placeholder:text-slate-600 outline-none focus:border-emerald-500 transition-all resize-none shadow-inner"
                 />
 
                 <div className="flex flex-col md:flex-row justify-between items-center gap-6">
@@ -127,7 +127,7 @@ const DiaryView = ({ userId, onAddEntry }) => {
                                         key={idx}
                                         onClick={() => setSelectedMood(idx)}
                                         title={mood.label}
-                                        className={`p-4 rounded-2xl border-2 transition-all duration-300 ${
+                                        className={`p-3 md:p-4 rounded-xl md:rounded-2xl border-2 transition-all duration-300 ${
                                             isSelected
                                                 ? `${mood.bg} ${mood.border} scale-110 shadow-lg`
                                                 : 'bg-slate-800/50 border-transparent opacity-40 hover:opacity-100'
@@ -154,7 +154,7 @@ const DiaryView = ({ userId, onAddEntry }) => {
                         <button
                             onClick={handleSaveDiary}
                             disabled={isSaving}
-                            className="bg-emerald-500 text-[#0b0f1a] px-10 py-4 rounded-2xl font-black uppercase text-xs hover:bg-emerald-400 transition-all shadow-xl shadow-emerald-500/20 disabled:opacity-50 disabled:cursor-not-allowed"
+                            className="bg-emerald-500 text-[#0b0f1a] px-6 py-3 md:px-10 md:py-4 rounded-xl md:rounded-2xl font-black uppercase text-[10px] md:text-xs hover:bg-emerald-400 transition-all shadow-xl shadow-emerald-500/20 disabled:opacity-50 disabled:cursor-not-allowed w-full md:w-auto mt-4 md:mt-0"
                         >
                             {isSaving ? 'Збереження...' : 'Зберегти нотатку'}
                         </button>
@@ -189,7 +189,7 @@ const DiaryView = ({ userId, onAddEntry }) => {
                         return (
                             <div
                                 key={entry._id || idx}
-                                className="group bg-slate-900/40 border border-slate-800 rounded-[32px] p-6  transition-all hover:border-slate-700 animate-in fade-in duration-300 relative overflow-hidden"
+                                className="group bg-slate-900/40 border border-slate-800 rounded-2xl md:rounded-[32px] p-4 md:p-6  transition-all hover:border-slate-700 animate-in fade-in duration-300 relative overflow-hidden"
                             >
                                 <div className="flex items-start justify-between gap-4 relative z-10">
                                     <div className="flex items-center gap-3">

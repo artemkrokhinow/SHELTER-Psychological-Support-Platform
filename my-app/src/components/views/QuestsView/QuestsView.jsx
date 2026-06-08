@@ -246,22 +246,22 @@ const QuestsView = ({
     };
 
     return (
-        <div className="p-4 md:p-8 space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-700 pb-24">
-            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-8">
-                <h2 className="text-3xl md:text-5xl font-black text-white italic uppercase tracking-tighter leading-none">Квести Стійкості</h2>
+        <div className="p-4 md:p-8 space-y-6 md:space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-700 pb-24">
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 md:gap-6 mb-4 md:mb-8">
+                <h2 className="text-2xl md:text-5xl font-black text-white italic uppercase tracking-tighter leading-none">Квести Стійкості</h2>
                 <div className="flex items-center gap-3 bg-amber-500/10 px-4 py-2 rounded-2xl border border-amber-500/20">
                     <Trophy className="text-amber-500" size={20} />
                     <p className="text-amber-500 font-bold text-xs uppercase tracking-widest">Один день — один маленький крок.</p>
                 </div>
             </div>
 
-            <div className="relative max-w-4xl mx-auto space-y-12 before:absolute before:left-[27px] before:top-8 before:bottom-8 before:w-1 before:bg-slate-800 before:rounded-full">
+            <div className="relative max-w-4xl mx-auto space-y-6 md:space-y-12 before:absolute before:left-[19px] md:before:left-[27px] before:top-8 before:bottom-8 before:w-1 before:bg-slate-800 before:rounded-full">
                 {React.useMemo(() => {
                     return quests.map((quest) => (
-                        <div key={quest.id} className={`relative pl-20 transition-all duration-500 ${quest.status === 'locked' ? 'opacity-50' : 'opacity-100'}`}>
-                        {}
+                        <div key={quest.id} className={`relative pl-14 md:pl-20 transition-all duration-500 ${quest.status === 'locked' ? 'opacity-50' : 'opacity-100'}`}>
+                        {/* Current Quest Indicator */}
                         {quest.status === "current" && (
-                            <div className="absolute -left-4 -top-8 text-4xl animate-bounce z-20">🦊</div>
+                            <div className="absolute -left-3 md:-left-4 -top-6 md:-top-8 text-3xl md:text-4xl animate-bounce z-20">🦊</div>
                         )}
 
                         {}
@@ -270,28 +270,28 @@ const QuestsView = ({
                                                   (tourStep === '5_do_chat' && quest.type === 'dialogue');
                             return (
                                 <>
-                                    <div className={`absolute left-0 top-2 w-14 h-14 rounded-2xl flex items-center justify-center border-4 transition-all duration-500 z-10 ${
+                                    <div className={`absolute left-0 top-2 w-10 h-10 md:w-14 md:h-14 rounded-xl md:rounded-2xl flex items-center justify-center border-2 md:border-4 transition-all duration-500 z-10 ${
                                         quest.status === 'completed' ? 'bg-emerald-500 border-emerald-500/50 text-white' :
                                         quest.status === 'current' ? 'bg-blue-600 border-blue-500/50 text-white shadow-[0_0_20px_rgba(37,99,235,0.4)] scale-110' :
                                         'bg-slate-900 border-slate-800 text-slate-600'
                                     }`}>
-                                        {quest.status === 'completed' ? <Check size={24} strokeWidth={3} /> : 
-                                         quest.status === 'current' ? (quest.questType === 'sorting' ? <Grid3X3 size={24} /> : <MapPin size={24} />) : 
-                                         <Lock size={20} />}
+                                        {quest.status === 'completed' ? <Check className="w-5 h-5 md:w-6 md:h-6" strokeWidth={3} /> : 
+                                         quest.status === 'current' ? (quest.questType === 'sorting' ? <Grid3X3 className="w-5 h-5 md:w-6 md:h-6" /> : <MapPin className="w-5 h-5 md:w-6 md:h-6" />) : 
+                                         <Lock className="w-4 h-4 md:w-5 md:h-5" />}
                                     </div>
-                                    <div className={`p-8 rounded-[40px] border transition-all duration-500 ${
+                                    <div className={`p-5 md:p-8 rounded-2xl md:rounded-[40px] border transition-all duration-500 ${
                                         isHighlighted ? 'bg-slate-900/90 border-emerald-500 shadow-[0_0_40px_rgba(16,185,129,0.3)] scale-[1.05] z-[9999] relative ring-4 ring-emerald-500 animate-pulse pointer-events-auto' :
                                         quest.status === 'current' ? 'bg-slate-900/60 border-blue-500/50 shadow-2xl scale-[1.02]' :
                                         'bg-slate-900/40 border-slate-800'
                                     }`}>
-                                        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+                                        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 md:gap-6">
                                             <div className="space-y-2 flex-1">
                                                 <div className="flex items-center gap-3">
                                                     <span className="text-[10px] font-black text-emerald-500 uppercase tracking-widest bg-emerald-500/10 px-2 py-1 rounded-lg">День {quest.day}</span>
                                                     {quest.status === 'completed' && <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Виконано</span>}
                                                 </div>
-                                                <h3 className="text-2xl font-black text-white uppercase tracking-tighter">{quest.title}</h3>
-                                                <div className="bg-slate-950/50 p-4 rounded-2xl border-l-4 border-slate-700">
+                                                <h3 className="text-xl md:text-2xl font-black text-white uppercase tracking-tighter">{quest.title}</h3>
+                                                <div className="bg-slate-950/50 p-3 md:p-4 rounded-xl md:rounded-2xl border-l-4 border-slate-700">
                                                     <p className="text-slate-400 text-sm">"{quest.thought}"</p>
                                                 </div>
                                                 <div className="flex items-center gap-2 text-slate-500 text-[10px] font-bold uppercase tracking-wide">
@@ -303,7 +303,7 @@ const QuestsView = ({
                                             {quest.status !== 'locked' && (
                                                 <button 
                                                     onClick={() => handleQuestAction(quest)}
-                                                    className={`px-8 py-4 rounded-2xl font-black uppercase text-[10px] tracking-widest transition-all flex items-center gap-2 whitespace-nowrap ${
+                                                    className={`px-6 py-3 md:px-8 md:py-4 rounded-xl md:rounded-2xl font-black uppercase text-[10px] tracking-widest transition-all flex items-center gap-2 whitespace-nowrap ${
                                                         quest.status === 'current' ? 'bg-blue-600 text-white hover:bg-blue-500 shadow-lg shadow-blue-600/20' : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
                                                     }`}
                                                 >

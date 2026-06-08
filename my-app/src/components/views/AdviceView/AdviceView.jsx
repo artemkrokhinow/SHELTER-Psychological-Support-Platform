@@ -87,10 +87,10 @@ const AdviceView = ({ resilience = 50 }) => {
     }
 
     return (
-        <div className="p-4 md:p-8 space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-1000 pb-20">
+        <div className="p-4 md:p-8 space-y-6 md:space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-1000 pb-20">
             <header className="space-y-4">
-                <h2 className="text-3xl md:text-5xl font-black text-white italic uppercase tracking-tighter leading-none">Глибоке вивчення</h2>
-                <p className="text-slate-500 font-medium text-lg">Ці статті підібрані розумним алгоритмом спеціально під ваш поточний рівень стійкості.</p>
+                <h2 className="text-2xl md:text-5xl font-black text-white italic uppercase tracking-tighter leading-none">Глибоке вивчення</h2>
+                <p className="text-slate-500 font-medium text-sm md:text-lg">Ці статті підібрані розумним алгоритмом спеціально під ваш поточний рівень стійкості.</p>
             </header>
 
             {materials.length > 0 && (

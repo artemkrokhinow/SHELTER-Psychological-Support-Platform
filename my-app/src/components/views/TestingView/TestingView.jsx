@@ -144,18 +144,18 @@ const TestingView = ({
     return (
       <div className="p-4 md:p-8 space-y-4 md:space-y-10 animate-in fade-in slide-in-from-bottom-4 duration-500 pb-24">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 md:gap-6 mb-6 md:mb-8">
-          <h2 className="text-3xl md:text-5xl font-black text-white italic uppercase tracking-tighter leading-none text-left">Діагностика</h2>
+          <h2 className="text-2xl md:text-5xl font-black text-white italic uppercase tracking-tighter leading-none text-left">Діагностика</h2>
           <div className="flex items-center gap-4 bg-slate-900/50 p-3 rounded-2xl border border-slate-800 ">
             <span className="text-xs font-black uppercase text-slate-400 tracking-widest">Питання {testStep + 1} з {questions.length}</span>
             <div className="flex gap-1">{questions.map((_, i) => <div key={i} className={`w-6 h-1.5 rounded-full transition-all ${i <= testStep ? 'bg-emerald-500' : 'bg-slate-800'}`}></div>)}</div>
           </div>
         </div>
-        <div className="max-w-3xl w-full mx-auto bg-slate-900/40 border border-slate-800 p-6 md:p-12 robust-rounded-48  shadow-2xl md:h-[550px] flex flex-col justify-start relative overflow-hidden">
+        <div className="max-w-3xl w-full mx-auto bg-slate-900/40 border border-slate-800 p-5 md:p-12 robust-rounded-48 shadow-2xl md:h-[550px] flex flex-col justify-start relative overflow-hidden">
            <div key={testStep} className="animate-in fade-in slide-in-from-right-8 duration-500 w-full h-full">
-               <h3 className="text-2xl font-bold text-white mb-6 md:mb-10 leading-tight text-left">{questions[testStep].q}</h3>
+               <h3 className="text-xl md:text-2xl font-bold text-white mb-4 md:mb-10 leading-tight text-left">{questions[testStep].q}</h3>
                <div className="grid grid-cols-1 gap-3 md:gap-4">
                   {questions[testStep].options.map((opt, idx) => (
-                    <button key={idx} onClick={() => handleAnswer(questions[testStep].points[idx])} className="flex items-center justify-between p-5 md:p-7 bg-slate-800/40 border border-slate-700 rounded-[32px] hover:border-emerald-500/50 hover:bg-emerald-500/5 transition-all text-left text-slate-300 hover:text-white font-bold group">
+                    <button key={idx} onClick={() => handleAnswer(questions[testStep].points[idx])} className="flex items-center justify-between p-4 md:p-7 bg-slate-800/40 border border-slate-700 rounded-2xl md:rounded-[32px] hover:border-emerald-500/50 hover:bg-emerald-500/5 transition-all text-left text-slate-300 hover:text-white font-bold group text-sm md:text-base">
                       {opt} <ChevronRight size={18} className="text-slate-700 group-hover:text-emerald-500 transition-all" />
                     </button>
                   ))}

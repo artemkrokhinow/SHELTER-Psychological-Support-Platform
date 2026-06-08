@@ -79,7 +79,7 @@ const StatsView = ({ userId, userStats, resilience = 50, resilienceMultiplier = 
     };
 
     return (
-        <div className="p-4 md:p-8 space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-700 pb-24">
+        <div className="p-4 md:p-8 space-y-6 md:space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-700 pb-24">
            <style>{`
                .recharts-cartesian-grid-horizontal line { stroke: #1e293b; }
                .recharts-cartesian-grid-vertical line { display: none; }
@@ -88,11 +88,11 @@ const StatsView = ({ userId, userStats, resilience = 50, resilienceMultiplier = 
            <section className="space-y-6">
                 <div className="flex items-center gap-3">
                     <div className="w-2 h-8 bg-emerald-500 rounded-full"></div>
-                    <h2 className="text-3xl font-black text-white italic uppercase tracking-tighter leading-none">Сад Стійкості</h2>
+                    <h2 className="text-2xl md:text-3xl font-black text-white italic uppercase tracking-tighter leading-none">Сад Стійкості</h2>
                 </div>
                 
-                <div className="bg-slate-900/40 border border-slate-800 p-12 rounded-[48px] relative overflow-hidden flex flex-col md:flex-row items-center gap-12">
-                    <div className="relative flex items-center justify-center w-64 h-64 bg-emerald-500/5 rounded-full border border-emerald-500/10 shadow-[0_0_50px_rgba(16,185,129,0.15)]">
+                <div className="bg-slate-900/40 border border-slate-800 p-6 md:p-12 rounded-3xl md:rounded-[48px] relative overflow-hidden flex flex-col md:flex-row items-center gap-6 md:gap-12">
+                    <div className="relative flex items-center justify-center w-40 h-40 md:w-64 md:h-64 bg-emerald-500/5 rounded-full border border-emerald-500/10 shadow-[0_0_50px_rgba(16,185,129,0.15)]">
                         <div 
                             className="transition-all duration-1000 ease-out flex items-center justify-center"
                             style={{ transform: `scale(${treeScale})` }}
@@ -103,18 +103,18 @@ const StatsView = ({ userId, userStats, resilience = 50, resilienceMultiplier = 
 
                     <div className="space-y-6 flex-1">
                         <div>
-                            <h3 className="text-4xl font-black text-white uppercase tracking-tighter mb-2">Ваше дерево росте</h3>
+                            <h3 className="text-2xl md:text-4xl font-black text-white uppercase tracking-tighter mb-2">Ваше дерево росте</h3>
                             <p className="text-slate-400 max-w-md">Ваша стійкість — це живий організм. Чим частіше ви практикуєте, тим міцнішим стає коріння вашого ментального здоров'я.</p>
                         </div>
                         
                         <div className="grid grid-cols-2 gap-4">
-                            <div className="bg-slate-800/50 p-6 rounded-[32px] border border-slate-700/30">
-                                <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-1">Рівень стійкості</p>
-                                <p className="text-3xl font-black text-white">{Math.round(resilience)}%</p>
+                            <div className="bg-slate-800/50 p-4 md:p-6 rounded-2xl md:rounded-[32px] border border-slate-700/30">
+                                <p className="text-[9px] md:text-[10px] font-black text-slate-500 uppercase tracking-widest mb-1">Рівень стійкості</p>
+                                <p className="text-2xl md:text-3xl font-black text-white">{Math.round(resilience)}%</p>
                             </div>
-                            <div className="bg-slate-800/50 p-6 rounded-[32px] border border-slate-700/30">
-                                <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-1">Виконано завдань</p>
-                                <p className="text-3xl font-black text-white">{leafCount}</p>
+                            <div className="bg-slate-800/50 p-4 md:p-6 rounded-2xl md:rounded-[32px] border border-slate-700/30">
+                                <p className="text-[9px] md:text-[10px] font-black text-slate-500 uppercase tracking-widest mb-1">Виконано завдань</p>
+                                <p className="text-2xl md:text-3xl font-black text-white">{leafCount}</p>
                             </div>
                         </div>
                     </div>
@@ -125,9 +125,9 @@ const StatsView = ({ userId, userStats, resilience = 50, resilienceMultiplier = 
             <section className="space-y-6 pb-12">
                 <div className="flex items-center gap-3">
                     <div className="w-2 h-8 bg-blue-500 rounded-full"></div>
-                    <h2 className="text-3xl font-black text-white italic uppercase tracking-tighter leading-none">Аналітика прогресу</h2>
+                    <h2 className="text-2xl md:text-3xl font-black text-white italic uppercase tracking-tighter leading-none">Аналітика прогресу</h2>
                 </div>
-                <div className="bg-slate-900/30 border border-slate-800 p-10 rounded-[48px] shadow-2xl h-96 min-h-[400px]">
+                <div className="bg-slate-900/30 border border-slate-800 p-4 md:p-10 rounded-3xl md:rounded-[48px] shadow-2xl h-64 md:h-96 min-h-[250px] md:min-h-[400px]">
                     {isVisible ? (
                         <ResponsiveContainer width="100%" height="100%" minWidth={0} minHeight={0}>
                             <AreaChart data={historyData} margin={{ top: 20, right: 30, left: 10, bottom: 10 }}>
