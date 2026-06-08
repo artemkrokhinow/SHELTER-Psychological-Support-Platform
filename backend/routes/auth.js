@@ -537,8 +537,7 @@ router.post("/guest/diagnostic", (req, res) => {
 router.post("/migrate-guest", async (req, res) => {
 
 	try {
-		const { email, password, username } = req.body;
-		const guestCookie = req.cookies?.dr_guest;
+		const { email, password, username, guestData } = req.body;
 		
 		
 		if (!email || !password || !username) {
@@ -585,12 +584,6 @@ router.post("/migrate-guest", async (req, res) => {
 				field: "email",
 				type: "exists"
 			});
-		}
-
-		
-		let guestData = null;
-		if (guestCookie) {
-			guestData = JSON.parse(guestCookie);
 		}
 
 		
