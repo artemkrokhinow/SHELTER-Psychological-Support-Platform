@@ -5,6 +5,24 @@ import {
 } from 'lucide-react';
 import { api } from '../../../infrastructure/api/api';
 
+const getDaysWord = (count) => {
+    const lastDigit = count % 10;
+    const lastTwoDigits = count % 100;
+
+    if (lastTwoDigits >= 11 && lastTwoDigits <= 14) {
+        return 'днів';
+    }
+
+    if (lastDigit === 1) {
+        return 'день';
+    }
+
+    if (lastDigit >= 2 && lastDigit <= 4) {
+        return 'дні';
+    }
+
+    return 'днів';
+};
 const HomeView = ({ 
     searchTerm, 
     navigateTo, 
@@ -245,7 +263,7 @@ const HomeView = ({
           <div className="flex gap-4">
             <div className="w-[140px] bg-slate-900/40 p-4 rounded-3xl border border-slate-800  text-center shrink-0">
                 <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-1 truncate">Серія</p>
-                <p className="text-3xl font-black text-white truncate">{streak} дні</p>
+                <p className="text-3xl font-black text-white truncate">{streak} {getDaysWord(streak)}</p>
             </div>
             <div className="w-[140px] bg-emerald-500/10 p-4 rounded-3xl border border-emerald-500/20  text-center shrink-0">
                 <p className="text-[10px] font-black text-emerald-500 uppercase tracking-widest mb-1 truncate">Стійкість</p>
@@ -305,7 +323,7 @@ const HomeView = ({
                             className="bg-slate-900/40 border border-slate-800 p-6 rounded-[32px] hover:bg-slate-800/60 transition-all cursor-pointer group shadow-xl"
                         >
                             <div className="flex justify-between items-start mb-4">
-                                <div className={`p-3 rounded-2xl ${rec.color} text-white shadow-lg`}>
+                                <div className={`p-3 rounded-2xl bg-gradient-to-br ${rec.color} text-white force-white shadow-lg`}>
                                     {rec.icon}
                                 </div>
                                 <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest flex items-center gap-1">
@@ -343,13 +361,13 @@ const HomeView = ({
                 
                 <div className="absolute inset-0 bg-white/0 group-hover:bg-white/5 transition-colors duration-500"></div>
                 
-                <div className="relative p-10 h-full flex flex-col justify-between text-white z-10">
+                <div className="relative p-10 h-full flex flex-col justify-between text-white force-white z-10">
                     <div className="p-4 bg-white/20 rounded-2xl w-fit shadow-inner transition-all duration-500 group-hover:scale-110 group-hover:bg-white/30 group-hover:rotate-12">
                         {card.icon}
                     </div>
                     <div className="transition-all duration-500 group-hover:translate-x-2">
-                        <p className="text-[10px] font-black uppercase mb-1 opacity-70 tracking-widest">{card.cat}</p>
-                        <h4 className="text-3xl font-black uppercase tracking-tighter leading-none group-hover:text-white drop-shadow-md">
+                        <p className="text-[10px] font-black uppercase mb-1 opacity-70 tracking-widest force-white">{card.cat}</p>
+                        <h4 className="text-3xl font-black uppercase tracking-tighter leading-none group-hover:text-white drop-shadow-md force-white">
                         {card.title}
                         </h4>
                     </div>

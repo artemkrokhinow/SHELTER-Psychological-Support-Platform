@@ -4,6 +4,8 @@ import { api } from '../../infrastructure/api/api';
 import { ShieldCheck, Mail, Lock, User, ChevronLeft, Sparkles } from 'lucide-react';
 import { GoogleLogin } from '@react-oauth/google';
 import HoldSOSButton from '../../components/HoldSOSButton/HoldSOSButton';
+import SOSOverlay from '../../components/SOSOverlay/SOSOverlay';
+import BreathingExercise from '../../components/BreathingExercise/BreathingExercise';
 
 export default function AuthPage() {
     const [isLogin, setIsLogin] = useState(true);
@@ -11,6 +13,8 @@ export default function AuthPage() {
     const [error, setError] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [isLeaving, setIsLeaving] = useState(false);
+    const [showSOS, setShowSOS] = useState(false);
+    const [showBreathing, setShowBreathing] = useState(false);
     const navigate = useNavigate();
 
     const handleGoogleSuccess = async (credentialResponse) => {
@@ -21,6 +25,7 @@ export default function AuthPage() {
             if (data.token && data.user) {
                 localStorage.setItem("dr_token", data.token);
                 localStorage.setItem("userId", data.user.id);
+                localStorage.setItem("dr_current_view", "home");
                 navigate('/main');
             } else {
                 setError(data.message || "Помилка авторизації Google");
@@ -34,8 +39,12 @@ export default function AuthPage() {
     };
 
     const handleSosClick = () => {
-        setIsLeaving(true);
-        setTimeout(() => navigate('/main', { state: { showSOS: true } }), 600);
+        setShowSOS(true);
+    };
+
+    const handlePracticeClick = async () => {
+        setShowSOS(false);
+        setShowBreathing(true);
     };
 
     const handleSubmit = async (e) => {
@@ -60,6 +69,7 @@ export default function AuthPage() {
             if (data.token && data.user) {
                 localStorage.setItem("dr_token", data.token);
                 localStorage.setItem("userId", data.user.id);
+                localStorage.setItem("dr_current_view", "home");
                 navigate('/main');
             } else {
                 setError(data.message || "Помилка авторизації");
@@ -80,6 +90,7 @@ export default function AuthPage() {
             const data = await api.loginAsGuest();
             if (data.id || data.user) {
                 localStorage.setItem("dr_token", "guest_mode");
+                localStorage.setItem("dr_current_view", "home");
                 navigate('/main');
             } else {
                 setError(data.message || "Помилка входу як гість");
@@ -104,12 +115,7 @@ export default function AuthPage() {
             </div>
 
             {}
-            <button
-                onClick={() => navigate('/main')}
-                className="absolute top-8 left-8 flex items-center gap-2 text-slate-500 hover:text-white font-bold uppercase text-xs tracking-widest transition-all font-montserrat"
-            >
-                <ChevronLeft size={18} /> На головну
-            </button>
+
 
             {}
             <div className="w-full max-w-md animate-in fade-in slide-in-from-bottom-8 duration-700">
@@ -240,6 +246,22 @@ export default function AuthPage() {
                     </HoldSOSButton>
                 </div>
             </div>
+
+            {showSOS && !showBreathing && (
+                <SOSOverlay 
+                    onClose={() => setShowSOS(false)} 
+                    onPracticeClick={handlePracticeClick} 
+                />
+            )}
+
+            {showBreathing && (
+                <BreathingExercise 
+                    onExit={() => setShowBreathing(false)}
+                    autoStart={true}
+                    title="Техніка дихання"
+                    showControls={true}
+                />
+            )}
         </div>
     );
 }

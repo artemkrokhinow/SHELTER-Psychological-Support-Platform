@@ -47,7 +47,7 @@ const AdviceView = ({ resilience = 50 }) => {
                     setMaterials(filtered);
                 }
 
-                if (userId) {
+                if (userId || api.isGuest()) {
                     const stats = await api.getUserStats(userId);
                     const viewed = stats?.materialsViewed?.materials || [];
                     setReadIds(new Set(viewed.map(v => v.materialId)));
@@ -71,8 +71,9 @@ const AdviceView = ({ resilience = 50 }) => {
 
         if (isOpening && !(readIds.has(m._id) || readIds.has(m.materialId))) {
             setReadIds(prev => new Set([...prev, m._id, m.materialId].filter(Boolean)));
-            if (userId) {
+            if (userId || api.isGuest()) {
                 api.recordMaterialView(userId, m._id || m.materialId, 0).catch(err => console.error(err));
+                api.updateUserProgress(userId, m._id || m.materialId, 'material').catch(err => console.error(err));
             }
         }
     };

@@ -18,14 +18,37 @@ const isValidId = (id) => id && id !== "null" && id !== "undefined";
 
 const isGuest = () => localStorage.getItem("dr_token") === "guest_mode";
 
+let _guestRecovering = false;
+const guestFetch = async (url, options = {}) => {
+	const res = await fetch(url, { credentials: "include", ...options });
+	if (res.ok) return res.json();
+	if (res.status === 404 && isGuest() && !_guestRecovering) {
+		_guestRecovering = true;
+		try {
+			const reReg = await fetch(`${API_URL}/auth/guest`, {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				credentials: "include",
+			});
+			if (reReg.ok) {
+				const retry = await fetch(url, { credentials: "include", ...options });
+				_guestRecovering = false;
+				return retry.json();
+			}
+		} catch (e) {
+			console.error("Guest re-register failed:", e);
+		}
+		_guestRecovering = false;
+	}
+	return res.json();
+};
+
 export const api = {
 	isGuest,
 
 	getProfile: () => {
 		if (isGuest()) {
-			return fetch(`${API_URL}/auth/guest/me`, {
-				credentials: "include",
-			}).then((res) => res.json());
+			return guestFetch(`${API_URL}/auth/guest/me`);
 		}
 		const userId = localStorage.getItem("userId");
 		if (!isValidId(userId)) return Promise.reject("Invalid ID");
@@ -145,12 +168,11 @@ export const api = {
 
 	recordBreathingSession: (userId, minutes) => {
 		if (isGuest()) {
-			return fetch(`${API_URL}/auth/guest/update-resilience`, {
+			return guestFetch(`${API_URL}/auth/guest/update-resilience`, {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
-				credentials: 'include',
 				body: JSON.stringify({ type: 'breathing', metadata: { minutes }, name: `Дихальна сесія (${minutes} хв)` })
-			}).then((res) => res.json());
+			});
 		}
 		return fetch(`${API_URL}/stats/breathing/${userId}`, {
 			method: 'POST',
@@ -161,12 +183,11 @@ export const api = {
 
 	recordDiagnostic: (userId, answers) => {
 		if (isGuest()) {
-			return fetch(`${API_URL}/auth/guest/diagnostic`, {
+			return guestFetch(`${API_URL}/auth/guest/diagnostic`, {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
-				credentials: 'include',
 				body: JSON.stringify({ answers })
-			}).then((res) => res.json());
+			});
 		}
 		return fetch(`${API_URL}/stats/diagnostic/${userId}`, {
 			method: 'POST',
@@ -179,12 +200,11 @@ export const api = {
 		if (isGuest()) {
 			
 			
-			return fetch(`${API_URL}/auth/guest/update-resilience`, {
+			return guestFetch(`${API_URL}/auth/guest/update-resilience`, {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
-				credentials: 'include',
 				body: JSON.stringify({ type: 'material_view', itemId: materialId, metadata: { minutes }, name: `Перегляд матеріалу` })
-			}).then((res) => res.json());
+			});
 		}
 		return fetch(`${API_URL}/stats/material-view/${userId}`, {
 			method: 'POST',
@@ -206,17 +226,16 @@ export const api = {
 
 	updateUserProgress: (userId, itemId, type) => {
 		if (isGuest()) {
-			return fetch(`${API_URL}/auth/guest/update-resilience`, {
+			return guestFetch(`${API_URL}/auth/guest/update-resilience`, {
 				method: "POST",
 				headers: { "Content-Type": "application/json" },
-				credentials: "include",
 				body: JSON.stringify({
 					type: `complete_${type}`,
 					metadata: {},
 					name: `Завершено: ${type === 'material' ? 'Матеріал' : 'Вправу'}`,
 					itemId
 				}),
-			}).then((res) => res.ok ? res.json() : res.text().then(t => { throw new Error(t) }));
+			});
 		}
 		if (!isValidId(userId)) return Promise.reject("Invalid ID");
 		return fetch(`${API_URL}/users/update-progress`, {
@@ -228,9 +247,7 @@ export const api = {
 
 	getUserStats: (userId) => {
 		if (isGuest()) {
-			return fetch(`${API_URL}/auth/guest/stats-volume`, {
-				credentials: "include",
-			}).then((res) => res.json());
+			return guestFetch(`${API_URL}/auth/guest/stats-volume`);
 		}
 		const finalUserId = userId || localStorage.getItem("userId");
 		if (!isValidId(finalUserId)) return Promise.reject("Invalid ID");
@@ -241,12 +258,11 @@ export const api = {
 
 	addDiaryEntry: (userId, mood, content, tags = []) => {
 		if (isGuest()) {
-			return fetch(`${API_URL}/auth/guest/diary`, {
+			return guestFetch(`${API_URL}/auth/guest/diary`, {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
-				credentials: 'include',
 				body: JSON.stringify({ mood, content, tags })
-			}).then((res) => res.json());
+			});
 		}
 		return fetch(`${API_URL}/stats/diary/${userId}`, {
 			method: 'POST',
@@ -257,9 +273,7 @@ export const api = {
 
 	getDiaryEntries: (userId, limit = 10, page = 1) => {
 		if (isGuest()) {
-			return fetch(`${API_URL}/auth/guest/diary`, {
-				credentials: 'include'
-			}).then((res) => res.json());
+			return guestFetch(`${API_URL}/auth/guest/diary`);
 		}
 		return fetch(`${API_URL}/stats/diary/${userId}?limit=${limit}&page=${page}`, {
 			headers: getHeaders()
@@ -268,13 +282,10 @@ export const api = {
 
 	updateResilience: (userId, type, metadata = {}, name) => {
 		if (isGuest()) {
-			return fetch(`${API_URL}/auth/guest/update-resilience`, {
+			return guestFetch(`${API_URL}/auth/guest/update-resilience`, {
 				method: "POST",
 				headers: { "Content-Type": "application/json" },
-				credentials: "include",
 				body: JSON.stringify({ type, metadata, name }),
-			}).then((res) => res.json()).then(data => {
-				return data;
 			});
 		}
 		if (!isValidId(userId)) return Promise.reject("Invalid ID");
@@ -289,9 +300,7 @@ export const api = {
 
 	getVolumeStats: (userId) => {
 		if (isGuest()) {
-			return fetch(`${API_URL}/auth/guest/stats-volume`, {
-				credentials: "include",
-			}).then((res) => res.json());
+			return guestFetch(`${API_URL}/auth/guest/stats-volume`);
 		}
 		if (!isValidId(userId)) return Promise.reject("Invalid ID");
 		return fetch(`${API_URL}/users/${userId}/stats-volume`, {
@@ -309,6 +318,13 @@ export const api = {
 	},
 
 	completeScenario: (scenarioId, score) => {
+		if (isGuest()) {
+			return guestFetch(`${API_URL}/auth/complete-scenario`, {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({ scenarioId, score }),
+			});
+		}
 		return fetch(`${API_URL}/auth/complete-scenario`, {
 			method: "POST",
 			headers: {

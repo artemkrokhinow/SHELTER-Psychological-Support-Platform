@@ -160,14 +160,15 @@ const LibraryView = ({
               setExpandedId(null);
           } else {
               setExpandedId(mid);
-              if (userId) {
+              if (userId || api.isGuest()) {
                   api.recordMaterialView(userId, mid).catch(() => {});
+                  api.updateUserProgress(userId, mid, 'material').catch(() => {});
               }
           }
           return;
       }
 
-      if (userId) {
+      if (userId || api.isGuest()) {
         api.recordMaterialView(userId, mid)
           .then(() => {
             if (userStats) {

@@ -104,7 +104,7 @@ export default function SimulatorPage({ isEmbedded, embeddedId, onBack, applyRes
         }
     };
 
-    const finishSession = (finalHistory, totalPoints, totalChoices, forcedScore) => {
+    const finishSession = async (finalHistory, totalPoints, totalChoices, forcedScore) => {
         setHistory(finalHistory);
         setIsFinished(true);
         setProgress(100);
@@ -117,23 +117,23 @@ export default function SimulatorPage({ isEmbedded, embeddedId, onBack, applyRes
         const isSuccess = score >= 50;
         const finalImpact = isSuccess ? 4 : -4;
         
+        try {
+            await api.completeScenario(id, score);
+        } catch (error) {
+            console.error('❌ FRONTEND (SimulatorPage): api.completeScenario failed!', error);
+        }
 
         if (applyResilienceChange) {
             applyResilienceChange('exercise_finish', { score, delta: finalImpact, name: scenario.name });
         } else {
             const userId = localStorage.getItem("userId");
             if (userId) {
-                api.updateResilience(userId, "exercise", { score }, scenario.name);
+                try {
+                    await api.updateResilience(userId, "exercise", { score }, scenario.name);
+                } catch(e) {}
             }
         }
         
-        api.completeScenario(id, score)
-            .then(response => {
-            })
-            .catch(error => {
-                console.error('❌ FRONTEND (SimulatorPage): api.completeScenario failed!', error);
-            });
-
         if (onComplete) {
             onComplete(id);
         }

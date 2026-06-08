@@ -582,6 +582,7 @@ const ShelterAppComplete = () => {
                       simulatorScenariosList={simulatorScenariosList}
                       onStartQuestTask={(quest) => setActiveQuestTask(quest)}
                       tourStep={tourStep}
+                      lastCompletedActivity={lastCompletedActivity}
                     />
                   </div>
                 )}

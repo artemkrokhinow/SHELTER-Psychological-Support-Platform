@@ -12,6 +12,18 @@ import {
 import { TreeDeciduous, Zap, Sprout, Shrub, Trees } from 'lucide-react';
 import { api } from '../../../infrastructure/api/api';
 
+const translateActivity = (actType, actName) => {
+    const raw = (actName || actType || '').toLowerCase();
+    if (raw.includes('mood_select')) return 'Трекер настрою';
+    if (raw.includes('diagnostic')) return 'Діагностика стану';
+    if (raw.includes('quest_completed')) return 'Квест пройдено';
+    if (raw.includes('breathing')) return 'Дихальна практика';
+    if (raw.includes('material')) return 'Перегляд матеріалів';
+    if (raw.includes('diary')) return 'Запис у щоденнику';
+    if (raw.includes('sos')) return 'Екстрена допомога';
+    return raw.replace(/_/g, ' ') || 'Активність';
+};
+
 const StatsView = ({ userId, userStats, resilience = 50, resilienceMultiplier = 1.0, completedCount = 0, isVisible, onRefresh }) => {
     console.log("=== StatsView Data ===", {
         userStats,
@@ -203,12 +215,21 @@ const StatsView = ({ userId, userStats, resilience = 50, resilienceMultiplier = 
                                     <Zap size={20} />
                                 </div>
                                 <div>
-                                    <p className="text-sm font-black text-white uppercase tracking-tight">{act.name || act.activityName || 'Активність'}</p>
-                                    <p className="text-[10px] text-slate-500 uppercase font-bold tracking-widest">{new Date(act.date).toLocaleDateString()} • {act.type || act.activityType}</p>
+                                    <p className="text-sm font-black text-white uppercase tracking-tight">{translateActivity(act.type || act.activityType, act.name || act.activityName)}</p>
+                                    <p className="text-[10px] text-slate-500 uppercase font-bold tracking-widest">
+                                        {new Date(act.date || act.createdAt || Date.now()).toLocaleString('uk-UA', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })}
+                                    </p>
                                 </div>
                             </div>
-                            <div className={`text-xl font-black ${act.change > 0 ? 'text-emerald-500' : act.change < 0 ? 'text-rose-500' : 'text-slate-500'}`}>
-                                {act.change > 0 ? `+${Math.round(act.change)}` : act.change < 0 ? `-${Math.abs(Math.round(act.change))}` : '0'}
+                            <div className="flex flex-col items-end text-right">
+                                <div className={`text-xl font-black ${act.change > 0 ? 'text-emerald-500' : act.change < 0 ? 'text-rose-500' : 'text-slate-500'}`}>
+                                    {act.change > 0 ? `+${Math.round(act.change)}` : act.change < 0 ? `-${Math.abs(Math.round(act.change))}` : '0'}
+                                </div>
+                                {Math.round(act.change || 0) === 0 && (act.type === 'material_view' || act.activityType === 'material_view') && (
+                                    <p className="text-[9px] text-slate-500 uppercase font-bold tracking-widest mt-1 max-w-[150px]">
+                                        Не підтверджено прочитання
+                                    </p>
+                                )}
                             </div>
                         </div>
                     ))}

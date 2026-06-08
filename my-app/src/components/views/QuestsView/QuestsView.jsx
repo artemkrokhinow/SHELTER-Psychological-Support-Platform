@@ -27,7 +27,8 @@ const QuestsView = ({
     simulatorScenariosList,
     onStartQuestTask,
     tourStep = '0',
-    onMaterialComplete
+    onMaterialComplete,
+    lastCompletedActivity
 }) => {
     const [pageType, setPageType] = useState("default");
     const [quests, setQuests] = useState([]);
@@ -196,7 +197,7 @@ const QuestsView = ({
         
         window.addEventListener('focus', loadData);
         return () => window.removeEventListener('focus', loadData);
-    }, [resilience, loadData]);
+    }, [resilience, lastCompletedActivity, loadData]);
 
     const handleQuestAction = (quest) => {
         if (onStartQuestTask) {

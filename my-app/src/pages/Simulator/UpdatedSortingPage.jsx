@@ -5,7 +5,7 @@ import CharacterCompanion from "../../components/characterCompanion/CharacterCom
 import { ArrowLeft, Target, Sparkles, Clock, LayoutGrid } from 'lucide-react';
 import "./updatedSortingPage.css";
 
-export default function UpdatedSortingPage({ isEmbedded, embeddedId, onBack, onComplete }) {
+export default function UpdatedSortingPage({ isEmbedded, embeddedId, onBack, onComplete, applyResilienceChange }) {
     const params = useParams();
     const id = isEmbedded ? embeddedId : params.id;
     const navigate = useNavigate();
@@ -183,21 +183,30 @@ export default function UpdatedSortingPage({ isEmbedded, embeddedId, onBack, onC
             if (sortedCount + 1 >= totalItems) {
                 if (showCompletionMenu) return; 
 
-                const userId = localStorage.getItem("userId");
-                if (userId) {
+                const finishExercise = async () => {
                     try {
-                        api.updateResilience(userId, "exercise_complete", { score }, scenario?.name || "Сортування").catch(console.error);
-                    } catch(e) {}
-                }
-                try {
-                    if (id && !id.startsWith('hardcoded-sorting')) {
-                        api.completeScenario(id, 100).catch(console.error);
+                        if (id) {
+                            await api.completeScenario(id, 100);
+                        }
+                    } catch(e) { console.error(e); }
+
+                    if (applyResilienceChange) {
+                        applyResilienceChange("exercise_complete", { score, name: scenario?.name || "Сортування" });
+                    } else {
+                        const userId = localStorage.getItem("userId");
+                        if (userId) {
+                            try {
+                                await api.updateResilience(userId, "exercise_complete", { score }, scenario?.name || "Сортування");
+                            } catch(e) {}
+                        }
                     }
-                } catch(e) {}
-                if (onComplete) {
-                    onComplete(id);
-                }
-                setShowCompletionMenu(true);
+                    
+                    if (onComplete) {
+                        onComplete(id);
+                    }
+                    setShowCompletionMenu(true);
+                };
+                finishExercise();
             }
         } else {
             setHighlightedBox(boxId);

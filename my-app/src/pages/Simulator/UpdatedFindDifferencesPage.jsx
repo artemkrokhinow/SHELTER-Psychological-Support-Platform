@@ -5,7 +5,7 @@ import CharacterCompanion from "../../components/characterCompanion/CharacterCom
 import { ArrowLeft, Search, ZoomIn, ZoomOut, RotateCcw, Eye, Target, Trophy } from 'lucide-react';
 import "./updatedFindDifferencesPage.css";
 
-export default function UpdatedFindDifferencesPage({ isEmbedded, embeddedId, onBack, onComplete }) {
+export default function UpdatedFindDifferencesPage({ isEmbedded, embeddedId, onBack, onComplete, applyResilienceChange }) {
     const params = useParams();
     const id = isEmbedded ? embeddedId : params.id;
     const navigate = useNavigate();
@@ -91,10 +91,9 @@ export default function UpdatedFindDifferencesPage({ isEmbedded, embeddedId, onB
 
                 const userId = localStorage.getItem("userId");
                 if (userId) {
-                    api.updateResilience(userId, "difference_found", { points: clickedDifference.points }, scenario.name);
+                    api.updateResilience(userId, "difference_found", { points: clickedDifference.points }, scenario.name).catch(() => {});
                 }
 
-                
                 const marker = document.querySelector(`[data-diff-id="${diffId}"]`);
                 if (marker) {
                     marker.classList.add('found');
@@ -103,18 +102,31 @@ export default function UpdatedFindDifferencesPage({ isEmbedded, embeddedId, onB
                 if (updatedFound.filter(fid => fid.startsWith(`${currentLevelIndex}-`)).length >= differences.length) {
                     setIsFinished(true);
                     const finalScore = score + (clickedDifference.points || 10);
-                    if (userId) {
-                        api.updateResilience(userId, "level_complete", {}, scenario.name);
-                        api.completeScenario(id, 10);
-                    }
-                    if (onComplete) {
-                        onComplete(id);
-                    }
-
                     
-                    if (companionRef.current && companionRef.current.speakAchievement) {
-                        companionRef.current.speakAchievement();
-                    }
+                    const finishLevel = async () => {
+                        try {
+                            if (id) {
+                                await api.completeScenario(id, 10);
+                            }
+                        } catch (e) { console.error(e); }
+                        
+                        if (applyResilienceChange) {
+                            applyResilienceChange('level_complete', { score: finalScore, name: scenario?.name || "Знайди відмінності" });
+                        } else if (userId) {
+                            try {
+                                await api.updateResilience(userId, "level_complete", {}, scenario?.name || "Знайди відмінності");
+                            } catch (e) {}
+                        }
+                        
+                        if (onComplete) {
+                            onComplete(id);
+                        }
+                        
+                        if (companionRef.current && companionRef.current.speakAchievement) {
+                            companionRef.current.speakAchievement();
+                        }
+                    };
+                    finishLevel();
                 }
             }
         } else {
