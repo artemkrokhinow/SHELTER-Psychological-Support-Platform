@@ -355,19 +355,19 @@ const HomeView = ({
                 <div 
                 key={i} 
                 onClick={card.onClick} 
-                className="group relative h-80 robust-card cursor-pointer shadow-2xl overflow-hidden"
+                className="group relative h-48 md:h-80 robust-card cursor-pointer shadow-2xl overflow-hidden"
                 >
                 <div className={`card-bg-layer bg-gradient-to-br ${card.color} opacity-90`}></div>
                 
                 <div className="absolute inset-0 bg-white/0 group-hover:bg-white/5 transition-colors duration-500"></div>
                 
-                <div className="relative p-10 h-full flex flex-col justify-between text-white force-white z-10">
-                    <div className="p-4 bg-white/20 rounded-2xl w-fit shadow-inner transition-all duration-500 group-hover:scale-110 group-hover:bg-white/30 group-hover:rotate-12">
-                        {card.icon}
+                <div className="relative p-6 md:p-10 h-full flex flex-col justify-between text-white force-white z-10">
+                    <div className="p-3 md:p-4 bg-white/20 rounded-2xl w-fit shadow-inner transition-all duration-500 group-hover:scale-110 group-hover:bg-white/30 group-hover:rotate-12">
+                        {React.cloneElement(card.icon, { className: 'w-6 h-6 md:w-8 md:h-8' })}
                     </div>
                     <div className="transition-all duration-500 group-hover:translate-x-2">
                         <p className="text-[10px] font-black uppercase mb-1 opacity-70 tracking-widest force-white">{card.cat}</p>
-                        <h4 className="text-3xl font-black uppercase tracking-tighter leading-none group-hover:text-white drop-shadow-md force-white">
+                        <h4 className="text-xl md:text-3xl font-black uppercase tracking-tighter leading-none group-hover:text-white drop-shadow-md force-white">
                         {card.title}
                         </h4>
                     </div>
