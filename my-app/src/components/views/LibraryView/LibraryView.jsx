@@ -260,7 +260,7 @@ const LibraryView = ({
             return (
                 <div key={item.id} className="relative w-full h-full">
                     {/* Placeholder */}
-                    <div className="border p-8 flex flex-col h-full robust-rounded-48 opacity-0 pointer-events-none">
+                    <div className="border p-6 md:p-8 flex flex-col h-full robust-rounded-48 opacity-0 pointer-events-none">
                         <div className="flex justify-between items-start mb-10">
                             <div className="p-4 rounded-2xl w-14 h-14"></div>
                             <div className="px-3 py-1 rounded-full text-[9px] font-black uppercase">{durationLabel}</div>
@@ -282,7 +282,7 @@ const LibraryView = ({
                     {/* Actual Card */}
                     <div 
                         onClick={() => handleMaterialClick(item)} 
-                        className={`absolute top-0 left-0 w-full min-h-full group border p-8 flex flex-col robust-rounded-48 transition-all duration-500 cursor-pointer text-left 
+                        className={`absolute top-0 left-0 w-full min-h-full group border p-6 md:p-8 flex flex-col robust-rounded-48 transition-all duration-500 cursor-pointer text-left 
                         ${isExpanded ? 'z-50 border-emerald-500/50 bg-slate-900 shadow-[0_24px_64px_rgba(0,0,0,0.75),0_0_0_1px_rgba(16,185,129,0.12)]' : 'z-10 hover:border-emerald-500/50 bg-slate-900/40 border-slate-800 shadow-xl'} 
                         ${isHighlighted ? 'bg-slate-900/90 border-emerald-500 shadow-[0_0_40px_rgba(16,185,129,0.3)] scale-[1.05] z-[9999] ring-4 ring-emerald-500 animate-pulse pointer-events-auto' : ''}`}
                     >
@@ -323,7 +323,7 @@ const LibraryView = ({
       <div className="p-4 md:p-8 space-y-16 animate-in fade-in slide-in-from-bottom-4 duration-500 pb-24">
         {}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
-          <h2 className="text-5xl font-black text-white italic uppercase tracking-tighter leading-none">Бібліотека спокою</h2>
+          <h2 className="text-3xl md:text-5xl font-black text-white italic uppercase tracking-tighter leading-none">Бібліотека спокою</h2>
           <div className="flex gap-2 bg-slate-900/50 p-1.5 rounded-2xl border border-slate-800 ">
             {['Всі', 'Аудіо', 'Відео', 'Стаття'].map((f) => (
               <button key={f} onClick={() => setLibraryFilter(f)} className={`px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${libraryFilter === f ? 'bg-emerald-500 text-[#0b0f1a]' : 'text-slate-500 hover:text-white'}`}>{f}</button>
@@ -338,7 +338,7 @@ const LibraryView = ({
                     <div className="w-2 h-8 bg-blue-500 rounded-full"></div>
                     <h3 className="text-2xl font-black text-white uppercase tracking-tighter">Звукові ландшафти</h3>
                 </div>
-                <div className="bg-slate-900/40 border border-slate-800 p-8 rounded-[40px]  relative overflow-hidden group">
+                <div className="bg-slate-900/40 border border-slate-800 p-6 md:p-8 rounded-[40px]  relative overflow-hidden group">
                     <div className="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-20 transition-opacity">
                         <Wind size={120} className="text-blue-500" />
                     </div>

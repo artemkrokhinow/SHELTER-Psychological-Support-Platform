@@ -97,7 +97,7 @@ const DiaryView = ({ userId, onAddEntry }) => {
     return (
         <div className="p-4 md:p-8 space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500 text-left pb-24">
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-8">
-                <h2 className="text-5xl font-black text-white italic uppercase tracking-tighter leading-none">Щоденник рефлексії</h2>
+                <h2 className="text-3xl md:text-5xl font-black text-white italic uppercase tracking-tighter leading-none">Щоденник рефлексії</h2>
             </div>
 
             <div className="bg-slate-900/40 border border-slate-800 p-8 rounded-[40px]  shadow-2xl space-y-6">

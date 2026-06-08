@@ -144,7 +144,7 @@ const TestingView = ({
     return (
       <div className="p-4 md:p-8 space-y-10 animate-in fade-in slide-in-from-bottom-4 duration-500 pb-24">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-8">
-          <h2 className="text-5xl font-black text-white italic uppercase tracking-tighter leading-none text-left">Діагностика</h2>
+          <h2 className="text-3xl md:text-5xl font-black text-white italic uppercase tracking-tighter leading-none text-left">Діагностика</h2>
           <div className="flex items-center gap-4 bg-slate-900/50 p-3 rounded-2xl border border-slate-800 ">
             <span className="text-xs font-black uppercase text-slate-400 tracking-widest">Питання {testStep + 1} з {questions.length}</span>
             <div className="flex gap-1">{questions.map((_, i) => <div key={i} className={`w-6 h-1.5 rounded-full transition-all ${i <= testStep ? 'bg-emerald-500' : 'bg-slate-800'}`}></div>)}</div>

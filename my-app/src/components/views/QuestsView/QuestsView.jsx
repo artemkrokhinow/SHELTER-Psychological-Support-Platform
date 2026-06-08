@@ -248,7 +248,7 @@ const QuestsView = ({
     return (
         <div className="p-4 md:p-8 space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-700 pb-24">
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-8">
-                <h2 className="text-5xl font-black text-white italic uppercase tracking-tighter leading-none">Квести Стійкості</h2>
+                <h2 className="text-3xl md:text-5xl font-black text-white italic uppercase tracking-tighter leading-none">Квести Стійкості</h2>
                 <div className="flex items-center gap-3 bg-amber-500/10 px-4 py-2 rounded-2xl border border-amber-500/20">
                     <Trophy className="text-amber-500" size={20} />
                     <p className="text-amber-500 font-bold text-xs uppercase tracking-widest">Один день — один маленький крок.</p>
