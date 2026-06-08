@@ -170,12 +170,12 @@
 /* Mobile responsive */
 @media (max-width: 768px) {
 	.character-companion {
-		transform: scale(0.9);
+		transform: scale(0.7);
 		transform-origin: bottom right;
 	}
 
 	.character-companion.bottom-right {
-		bottom: 10px;
+		bottom: 85px;
 		right: 10px;
 	}
 
