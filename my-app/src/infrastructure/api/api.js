@@ -30,15 +30,15 @@ const getGuestData = () => {
 };
 
 const saveGuestData = (data) => {
-	// Ліміти для захисту від переповнення LocalStorage (~5MB)
-	if (data.history && data.history.length > 50) {
-		data.history = data.history.slice(0, 50);
+	// Надзвичайно жорсткі ліміти для Гостя (режим "Демо")
+	if (data.history && data.history.length > 20) {
+		data.history = data.history.slice(0, 20);
 	}
-	if (data.diaryEntries && data.diaryEntries.length > 30) {
-		data.diaryEntries = data.diaryEntries.slice(0, 30);
+	if (data.diaryEntries && data.diaryEntries.length > 3) {
+		data.diaryEntries = data.diaryEntries.slice(0, 3);
 	}
-	if (data.completedScenarios && data.completedScenarios.length > 100) {
-		data.completedScenarios = data.completedScenarios.slice(data.completedScenarios.length - 100);
+	if (data.completedScenarios && data.completedScenarios.length > 20) {
+		data.completedScenarios = data.completedScenarios.slice(data.completedScenarios.length - 20);
 	}
 
 	try {
