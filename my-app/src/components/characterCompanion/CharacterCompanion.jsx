@@ -259,10 +259,29 @@ const CharacterCompanion = forwardRef(({
 		};
 	}, [lastCompletedActivity, isTestFinished, isSpecialModeActive, consecutiveDrops, resilience, speak]);
 
+	useEffect(() => {
+		if (tourStep && tourStep !== '0') return;
+		if (isSpecialModeActive) return;
+
+		const hintInterval = setInterval(() => {
+			const now = Date.now();
+			const lastSpeak = Number(localStorage.getItem("lastCompanionSpeakTime") || 0);
+			// 60 seconds cooldown for random hints
+			if (now - lastSpeak > 60000) {
+				// 30% chance to appear every 10 seconds if cooldown is met
+				if (Math.random() < 0.3) {
+					setIsVisible(true);
+					speak('main-hints');
+					localStorage.setItem("lastCompanionSpeakTime", String(now));
+				}
+			}
+		}, 10000);
+
+		return () => clearInterval(hintInterval);
+	}, [tourStep, isSpecialModeActive, speak]);
+
 	// Remove the random face cycling interval
 	// (It used to just change currentCharacter randomly every 8s)
-
-	
 	useEffect(() => {
 		return () => {
 			if (speakTimeoutRef.current) {
