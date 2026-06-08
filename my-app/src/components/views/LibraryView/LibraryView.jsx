@@ -260,9 +260,9 @@ const LibraryView = ({
             return (
                 <div key={item.id} className="relative w-full h-full">
                     {/* Placeholder */}
-                    <div className="border p-6 md:p-8 flex flex-col h-full robust-rounded-48 opacity-0 pointer-events-none">
-                        <div className="flex justify-between items-start mb-10">
-                            <div className="p-4 rounded-2xl w-14 h-14"></div>
+                    <div className="border p-4 md:p-8 flex flex-col h-full rounded-[28px] md:robust-rounded-48 opacity-0 pointer-events-none">
+                        <div className="flex justify-between items-start mb-4 md:mb-10">
+                            <div className="p-3 md:p-4 rounded-xl md:rounded-2xl w-10 h-10 md:w-14 md:h-14"></div>
                             <div className="px-3 py-1 rounded-full text-[9px] font-black uppercase">{durationLabel}</div>
                         </div>
                         <div className="flex flex-col flex-1">
@@ -274,20 +274,22 @@ const LibraryView = ({
                                     </span>
                                 )}
                             </div>
-                            <h4 className="text-xl font-bold tracking-tight uppercase leading-none">{item.title}</h4>
-                            <div className="mt-auto pt-6 flex items-center gap-2 text-xs font-bold uppercase">Відкрити контент</div>
+                            <h4 className="text-lg md:text-xl font-bold tracking-tight uppercase leading-none">{item.title}</h4>
+                            <div className="mt-auto pt-4 md:pt-6 flex items-center gap-2 text-xs font-bold uppercase">Відкрити контент</div>
                         </div>
                     </div>
 
                     {/* Actual Card */}
                     <div 
                         onClick={() => handleMaterialClick(item)} 
-                        className={`absolute top-0 left-0 w-full min-h-full group border p-6 md:p-8 flex flex-col robust-rounded-48 transition-all duration-500 cursor-pointer text-left 
+                        className={`absolute top-0 left-0 w-full min-h-full group border p-5 md:p-8 flex flex-col rounded-[28px] md:robust-rounded-48 transition-all duration-500 cursor-pointer text-left 
                         ${isExpanded ? 'z-50 border-emerald-500/50 bg-slate-900 shadow-[0_24px_64px_rgba(0,0,0,0.75),0_0_0_1px_rgba(16,185,129,0.12)]' : 'z-10 hover:border-emerald-500/50 bg-slate-900/40 border-slate-800 shadow-xl'} 
                         ${isHighlighted ? 'bg-slate-900/90 border-emerald-500 shadow-[0_0_40px_rgba(16,185,129,0.3)] scale-[1.05] z-[9999] ring-4 ring-emerald-500 animate-pulse pointer-events-auto' : ''}`}
                     >
-                        <div className="flex justify-between items-start mb-10 relative z-10">
-                            <div className={`p-4 rounded-2xl ${item.color} text-white shadow-lg`}>{item.icon}</div>
+                        <div className="flex justify-between items-start mb-4 md:mb-10 relative z-10">
+                            <div className={`flex items-center justify-center p-3 md:p-4 rounded-xl md:rounded-2xl w-12 h-12 md:w-14 md:h-14 ${item.color} text-white shadow-lg`}>
+                                {React.cloneElement(item.icon, { className: 'w-5 h-5 md:w-6 md:h-6' })}
+                            </div>
                             <div className="bg-slate-800 px-3 py-1 rounded-full text-[9px] font-black uppercase text-slate-400">{durationLabel}</div>
                         </div>
                         <div className="relative z-10 flex flex-col flex-1">
