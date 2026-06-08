@@ -27,7 +27,7 @@ const MainHeader = React.memo(({
     const showSearch = currentView === 'home' || currentView === 'library';
 
     return (
-        <header className="h-24 shrink-0 px-8 flex items-center justify-between sticky top-0 z-10  bg-[#0b0f1a]/60 border-b border-slate-800/50">
+        <header className="h-20 md:h-24 shrink-0 px-4 md:px-8 flex items-center justify-between gap-2 md:gap-4 sticky top-0 z-10  bg-[#0b0f1a]/80 backdrop-blur-md md:bg-[#0b0f1a]/60 border-b border-slate-800/50">
             {showSearch ? (
                 <div className="flex items-center gap-4 bg-slate-900/40 px-6 py-3 rounded-full border border-slate-800 w-full max-w-md focus-within:border-emerald-500 transition-colors group shadow-inner">
                     <Search size={18} className="text-slate-500 group-focus-within:text-emerald-500 transition-colors" />

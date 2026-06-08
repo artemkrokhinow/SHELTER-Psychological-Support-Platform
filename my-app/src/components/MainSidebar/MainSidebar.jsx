@@ -17,16 +17,16 @@ const MainSidebar = React.memo(({
     const [showLogoutConfirm, setShowLogoutConfirm] = React.useState(false);
 
     return (
-        <aside className={`w-72 border-r border-slate-800 flex flex-col bg-[#0b0f1a] z-20 shadow-2xl transition-all duration-500 transform-gpu will-change-[filter,transform,opacity] ${showSOS ? 'blur-md grayscale opacity-50 scale-95 pointer-events-none' : ''}`}>
-            <div className="p-8 flex items-center gap-3">
+        <aside className={`w-full md:w-72 h-[72px] md:h-auto border-t md:border-t-0 md:border-r border-slate-800 flex flex-row md:flex-col bg-[#0b0f1a] z-50 md:z-20 shadow-2xl transition-all duration-500 transform-gpu will-change-[filter,transform,opacity] order-last md:order-none shrink-0 ${showSOS ? 'blur-md grayscale opacity-50 scale-95 pointer-events-none' : ''}`}>
+            <div className="p-8 hidden md:flex items-center gap-3">
                 <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center text-[#0b0f1a] shadow-xl">
                     <ShieldCheck size={28} />
                 </div>
                 <span className="block text-2xl font-black text-white italic uppercase tracking-tighter">Shelter</span>
             </div>
 
-            <nav className="flex-1 px-4 mt-6">
-                <div className="space-y-0">
+            <nav className="flex-1 px-2 md:px-4 mt-0 md:mt-6 flex items-center overflow-x-auto overflow-y-hidden md:overflow-visible scrollbar-hide">
+                <div className="flex flex-row md:flex-col items-center md:items-stretch space-x-2 md:space-x-0 md:space-y-0 w-full min-w-max md:min-w-0">
                     <FlipSidebarItem id="home" icon={<Layout size={22} />} label="Дашборд" isDashboard={true} index={0} isSpecialMode={isSpecialMode} currentView={currentView} onClickAction={navigateTo} onBackAction={handleChatBack} tourStep={tourStep} />
                     <FlipSidebarItem id="quests" icon={<Trophy size={22} />} label="Квести" index={1} isSpecialMode={isSpecialMode} currentView={currentView} onClickAction={navigateTo} tourStep={tourStep} />
                     <FlipSidebarItem id="testing" icon={<ClipboardList size={22} />} label="Діагностика" index={2} isSpecialMode={isSpecialMode} currentView={currentView} onClickAction={navigateTo} tourStep={tourStep} />
@@ -37,7 +37,7 @@ const MainSidebar = React.memo(({
                 </div>
             </nav>
 
-            <div className="p-6 border-t border-slate-900 space-y-4">
+            <div className="p-6 border-t border-slate-900 space-y-4 hidden md:block">
                 <div className="bg-slate-900/50 p-4 rounded-[24px] flex items-center gap-3 border border-slate-800/50 shadow-inner">
                     <div className="w-10 h-10 rounded-full bg-emerald-500 flex items-center justify-center text-[#0b0f1a] font-black text-xs">
                         {username.charAt(0).toUpperCase()}

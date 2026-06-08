@@ -444,7 +444,7 @@ const ShelterAppComplete = () => {
   }
 
   return (
-    <div className={`flex h-screen bg-[#0b0f1a] text-slate-300 font-sans overflow-hidden`}>
+    <div className={`flex flex-col md:flex-row h-screen bg-[#0b0f1a] text-slate-300 font-sans overflow-hidden`}>
       {}
       {showSOS && <div className="fixed inset-0 z-[100] bg-[#0b0f1a]/80 animate-in fade-in duration-300"></div>}
 

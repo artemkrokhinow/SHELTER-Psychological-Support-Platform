@@ -320,7 +320,7 @@ const LibraryView = ({
     }, [filteredMedia, tourStep, handleMaterialClick, expandedId]);
 
     return (
-      <div className="p-8 space-y-16 animate-in fade-in slide-in-from-bottom-4 duration-500 pb-24">
+      <div className="p-4 md:p-8 space-y-16 animate-in fade-in slide-in-from-bottom-4 duration-500 pb-24">
         {}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
           <h2 className="text-5xl font-black text-white italic uppercase tracking-tighter leading-none">Бібліотека спокою</h2>

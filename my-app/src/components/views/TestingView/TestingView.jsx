@@ -142,7 +142,7 @@ const TestingView = ({
     }
 
     return (
-      <div className="p-8 space-y-10 animate-in fade-in slide-in-from-bottom-4 duration-500 pb-24">
+      <div className="p-4 md:p-8 space-y-10 animate-in fade-in slide-in-from-bottom-4 duration-500 pb-24">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-8">
           <h2 className="text-5xl font-black text-white italic uppercase tracking-tighter leading-none text-left">Діагностика</h2>
           <div className="flex items-center gap-4 bg-slate-900/50 p-3 rounded-2xl border border-slate-800 ">

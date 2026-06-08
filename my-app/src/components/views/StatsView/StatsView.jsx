@@ -79,7 +79,7 @@ const StatsView = ({ userId, userStats, resilience = 50, resilienceMultiplier = 
     };
 
     return (
-        <div className="p-8 space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-700 pb-24">
+        <div className="p-4 md:p-8 space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-700 pb-24">
            <style>{`
                .recharts-cartesian-grid-horizontal line { stroke: #1e293b; }
                .recharts-cartesian-grid-vertical line { display: none; }

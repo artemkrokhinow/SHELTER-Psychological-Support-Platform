@@ -73,12 +73,12 @@ const FlipSidebarItem = ({
   };
 
   return (
-    <div style={wrapperStyle} className={isHighlighted ? 'ring-4 ring-emerald-500 animate-pulse rounded-[20px] shadow-[0_0_20px_rgba(16,185,129,0.5)]' : ''}>
+    <div style={wrapperStyle} className={`max-md:!mb-0 max-md:!w-14 max-md:flex-shrink-0 ${isHighlighted ? 'ring-4 ring-emerald-500 animate-pulse rounded-[20px] shadow-[0_0_20px_rgba(16,185,129,0.5)]' : ''}`}>
       <div style={innerStyle}>
         {}
         <div
           style={faceStyle}
-          className={`flex items-center gap-4 p-4 robust-rounded-20 cursor-pointer transition-all duration-300 ${isActive || isHighlighted
+          className={`flex items-center justify-center md:justify-start gap-4 p-4 robust-rounded-20 cursor-pointer transition-all duration-300 ${isActive || isHighlighted
               ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-500/20'
               : 'hover:bg-slate-800 text-slate-400'
             }`}

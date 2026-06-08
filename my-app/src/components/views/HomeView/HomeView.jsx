@@ -227,7 +227,7 @@ const HomeView = ({
     const cards = getAdaptiveCards().filter(c => c.title.toLowerCase().includes(searchTerm.toLowerCase()));
 
     return (
-      <div className="p-8 space-y-12 animate-in fade-in duration-1000 pb-20">
+      <div className="p-4 md:p-8 space-y-12 animate-in fade-in duration-1000 pb-20">
         {}
         {showStabilizationHint && !searchTerm && (
             <div className="relative overflow-hidden bg-rose-500/10 border border-rose-500/20 p-8 rounded-[48px] animate-in slide-in-from-top-10 duration-700 shadow-[0_0_50px_rgba(244,63,94,0.1)]">
@@ -254,7 +254,7 @@ const HomeView = ({
         {}
         <section className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
           <div className="space-y-4">
-            <h1 className="text-7xl font-black text-white italic uppercase tracking-tighter leading-none">
+            <h1 className="text-4xl md:text-7xl font-black text-white italic uppercase tracking-tighter leading-none">
               {searchTerm ? `Пошук: "${searchTerm}"` : `Привіт, ${username}`}
             </h1>
             
