@@ -241,6 +241,9 @@ const CharacterCompanion = forwardRef(({
 		} else if (!prev.isTestFinished && isTestFinished) {
 			shouldSpeak = true;
 			phraseCategory = 'achievement';
+		} else if (consecutiveDrops >= 2 || resilience < 30) {
+			shouldSpeak = true;
+			phraseCategory = 'stress';
 		}
 
 		if (shouldSpeak && cooldownSatisfied) {
@@ -254,7 +257,7 @@ const CharacterCompanion = forwardRef(({
 			isTestFinished,
 			isSpecialModeActive
 		};
-	}, [lastCompletedActivity, isTestFinished, isSpecialModeActive, speak]);
+	}, [lastCompletedActivity, isTestFinished, isSpecialModeActive, consecutiveDrops, resilience, speak]);
 
 	// Remove the random face cycling interval
 	// (It used to just change currentCharacter randomly every 8s)
