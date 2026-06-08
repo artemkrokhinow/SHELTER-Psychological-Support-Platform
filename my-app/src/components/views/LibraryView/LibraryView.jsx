@@ -260,9 +260,9 @@ const LibraryView = ({
             return (
                 <div key={item.id} className="relative w-full h-full">
                     {/* Placeholder */}
-                    <div className="border p-4 md:p-8 flex flex-col h-full rounded-[28px] md:robust-rounded-48 opacity-0 pointer-events-none">
+                    <div className="border p-5 md:p-8 flex flex-col h-full rounded-[28px] md:robust-rounded-48 opacity-0 pointer-events-none">
                         <div className="flex justify-between items-start mb-4 md:mb-10">
-                            <div className="p-3 md:p-4 rounded-xl md:rounded-2xl w-10 h-10 md:w-14 md:h-14"></div>
+                            <div className="p-3 md:p-4 rounded-xl md:rounded-2xl w-12 h-12 md:w-14 md:h-14"></div>
                             <div className="px-3 py-1 rounded-full text-[9px] font-black uppercase">{durationLabel}</div>
                         </div>
                         <div className="flex flex-col flex-1">

@@ -81,7 +81,7 @@ export default function BreathingExercise({
 
     return (
         <>
-            <div className="fixed inset-0 z-[100] bg-[#070a12] flex flex-col items-center justify-center overflow-hidden animate-in fade-in duration-500">
+            <div className="absolute inset-0 z-[100] bg-[#070a12] flex flex-col items-center justify-center overflow-hidden animate-in fade-in duration-500">
                 {}
                 <div className="absolute top-8 left-8 right-8 flex items-center justify-between z-10">
                     <button
@@ -97,20 +97,22 @@ export default function BreathingExercise({
                 </div>
 
                 {}
-                <div className="flex flex-col items-center gap-12 z-10">
+                <div className="flex flex-col items-center gap-6 md:gap-12 z-10 w-full max-w-sm px-4">
                     <div className="text-center">
-                        <p className="text-slate-500 text-xs font-black uppercase tracking-[0.3em] mb-3">Тиша та спокій</p>
-                        <h1 className="text-5xl font-black text-white italic uppercase tracking-tighter leading-none">{title}</h1>
+                        <p className="text-slate-500 text-[10px] md:text-xs font-black uppercase tracking-[0.3em] mb-2 md:mb-3">Тиша та спокій</p>
+                        <h1 className="text-4xl md:text-5xl font-black text-white italic uppercase tracking-tighter leading-none">{title}</h1>
                     </div>
 
                     {}
-                    <div className="relative flex items-center justify-center w-80 h-80 my-8">
+                    <div className="relative flex items-center justify-center w-60 h-60 md:w-80 md:h-80 my-4 md:my-8">
                         {}
                         <div
-                            className="absolute rounded-full transition-all ease-in-out"
+                            className="absolute inset-0 rounded-full transition-all ease-in-out m-auto"
                             style={{
-                                width: '260px',
-                                height: '260px',
+                                width: '100%',
+                                height: '100%',
+                                maxWidth: '260px',
+                                maxHeight: '260px',
                                 background: 'radial-gradient(circle, rgba(16,185,129,0.15) 0%, transparent 80%)',
                                 border: '2px solid rgba(16,185,129,0.4)',
                                 boxShadow: isActive ? `0 0 80px ${phase.color}` : 'none',
@@ -120,12 +122,12 @@ export default function BreathingExercise({
                         ></div>
 
                         {}
-                        <div className="relative z-10 flex flex-col items-center justify-center w-64 h-64 rounded-full bg-[#0b0f1a]/40 border border-emerald-500/10  shadow-2xl">
-                            <Wind size={36} className="text-emerald-400 mb-4 opacity-80" />
-                            <span className="text-[100px] font-black text-white italic leading-none drop-shadow-2xl">{seconds}</span>
+                        <div className="relative z-10 flex flex-col items-center justify-center w-48 h-48 md:w-64 md:h-64 rounded-full bg-[#0b0f1a]/40 border border-emerald-500/10  shadow-2xl">
+                            <Wind size={28} className="text-emerald-400 mb-2 md:mb-4 opacity-80 md:w-9 md:h-9" />
+                            <span className="text-[70px] md:text-[100px] font-black text-white italic leading-none drop-shadow-2xl">{seconds}</span>
                             <span
                                 key={phaseIndex}
-                                className="text-lg font-black text-emerald-400 uppercase tracking-[0.2em] mt-2"
+                                className="text-sm md:text-lg font-black text-emerald-400 uppercase tracking-[0.2em] mt-1 md:mt-2"
                                 style={{ animation: 'fadeUp 0.4s ease-out' }}
                             >
                                 {phase.label}
@@ -134,10 +136,10 @@ export default function BreathingExercise({
                     </div>
 
                     {}
-                    <div className="h-12 flex items-center justify-center">
+                    <div className="h-10 md:h-12 flex items-center justify-center">
                         <p
                             key={phaseIndex}
-                            className="text-slate-500 text-sm text-center max-w-xs leading-relaxed"
+                            className="text-slate-500 text-xs md:text-sm text-center max-w-xs leading-relaxed"
                             style={{ animation: 'fadeUp 0.5s ease-out' }}
                         >
                             {isActive ? HINTS[phaseIndex] : "Натисніть кнопку, щоб розпочати сесію"}
