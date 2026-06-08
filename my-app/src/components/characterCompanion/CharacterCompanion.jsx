@@ -1,9 +1,9 @@
 import { useEffect, useState, useCallback, useRef, useImperativeHandle, forwardRef } from "react";
 import "./characterCompanion.css";
 
-import happyImg from "../../infrastructure/assets/images/characterCompanion/happy.svg";
-import normalImg from "../../infrastructure/assets/images/characterCompanion/normal.svg";
-import sadImg from "../../infrastructure/assets/images/characterCompanion/sad.svg";
+import happyImg from "../../infrastructure/assets/images/characterCompanion/happy_v2.svg";
+import normalImg from "../../infrastructure/assets/images/characterCompanion/normal_v2.svg";
+import sadImg from "../../infrastructure/assets/images/characterCompanion/sad_v2.svg";
 
 const characterImages = {
 	happy: happyImg,
