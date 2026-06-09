@@ -1,14 +1,14 @@
 import { useEffect, useState, useCallback, useRef, useImperativeHandle, forwardRef } from "react";
 import "./characterCompanion.css";
 
-import happyImg from "../../infrastructure/assets/images/characterCompanion/happy_v2.svg";
-import normalImg from "../../infrastructure/assets/images/characterCompanion/normal_v2.svg";
-import sadImg from "../../infrastructure/assets/images/characterCompanion/sad_v2.svg";
+import { ReactComponent as HappyImg } from "../../infrastructure/assets/images/characterCompanion/happy_v2.svg";
+import { ReactComponent as NormalImg } from "../../infrastructure/assets/images/characterCompanion/normal_v2.svg";
+import { ReactComponent as SadImg } from "../../infrastructure/assets/images/characterCompanion/sad_v2.svg";
 
 const characterImages = {
-	happy: happyImg,
-	normal: normalImg,
-	sad: sadImg
+	happy: HappyImg,
+	normal: NormalImg,
+	sad: SadImg
 };
 
 const characterPhrases = {
@@ -312,11 +312,10 @@ const CharacterCompanion = forwardRef(({
 				)}
 			</div>
 			<div className={`character-avatar aura-${auraColor}`}>
-				<img
-					src={characterImages[currentEmotion] || characterImages.normal}
-					alt="Character companion"
-					className="character-image"
-				/>
+				{(() => {
+					const CurrentImg = characterImages[currentEmotion] || characterImages.normal;
+					return <CurrentImg className="character-image" />;
+				})()}
 			</div>
 		</div>
 	);

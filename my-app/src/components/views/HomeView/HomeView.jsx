@@ -69,42 +69,30 @@ const HomeView = ({
         
         let filtered = [];
         const allMedia = [...mediaLibraryData];
-        
-        // Shuffle helper to add variety
         const shuffle = (array) => [...array].sort(() => 0.5 - Math.random());
         
         if (currentMood === 'anxiety') {
             filtered = allMedia.filter(m => 
-                m.cat === 'anxiety' || 
-                m.title.toLowerCase().includes('дихання') || 
-                m.title.toLowerCase().includes('заземлення') ||
-                m.title.toLowerCase().includes('шок')
+                m.title.toLowerCase().match(/дихан|заземлення|шок|панічн|вагус|птахів/)
             );
         } else if (currentMood === 'stress') {
             filtered = allMedia.filter(m => 
-                m.cat === 'stress' || 
-                m.title.toLowerCase().includes('йога') || 
-                m.title.toLowerCase().includes('релакс')
+                m.title.toLowerCase().match(/релаксац|йога|кортизол|трясіння|океан|хвилі/)
             );
         } else if (currentMood === 'exhausted') {
             filtered = allMedia.filter(m => 
-                m.title.toLowerCase().includes('дощу') || 
-                m.title.toLowerCase().includes('сон') || 
-                m.type === 'Аудіо'
+                m.title.toLowerCase().match(/дощу|дощ|сну|ліжка|аудіо|медитац|нічного|цвіркуни/)
             );
         } else if (currentMood === 'calm') {
             filtered = allMedia.filter(m => 
-                m.type === 'Стаття' || 
-                m.title.toLowerCase().includes('фокус')
+                m.title.toLowerCase().match(/інтелект|стійкість|щоденник|прокрастинуємо|гігієна|багаття/)
             );
         } else if (currentMood === 'happy') {
             filtered = allMedia.filter(m => 
-                m.type === 'Відео' || 
-                m.type === 'Стаття'
+                m.title.toLowerCase().match(/зарядка|діагностика|інтелект|рефлекс|птахів/)
             );
         }
         
-        // Add random fallback items if we don't have enough
         if (filtered.length < 3) {
             const fallback = shuffle(allMedia.filter(m => !filtered.some(f => f.id === m.id)));
             filtered = [...filtered, ...fallback];
@@ -355,7 +343,7 @@ const HomeView = ({
                         <div 
                             key={rec.id}
                             onClick={() => navigateTo('material', rec.id)}
-                            className="bg-slate-900/40 border border-slate-800 p-4 md:p-6 rounded-2xl md:rounded-[32px] hover:bg-slate-800/60 transition-all cursor-pointer group shadow-xl flex flex-row md:flex-col items-center md:items-stretch gap-4 md:gap-0"
+                            className="bg-slate-900/40 md:h-[220px] border border-slate-800 p-4 md:p-6 rounded-2xl md:rounded-[32px] hover:bg-slate-800/60 transition-all cursor-pointer group shadow-xl flex flex-row md:flex-col items-center md:items-stretch gap-4 md:gap-0"
                         >
                             <div className="flex flex-col md:flex-row md:justify-between items-start md:mb-4 w-auto">
                                 <div className={`p-3 rounded-xl md:rounded-2xl bg-gradient-to-br ${rec.color} text-white force-white shadow-lg`}>
