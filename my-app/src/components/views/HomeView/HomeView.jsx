@@ -76,23 +76,23 @@ const HomeView = ({
         
         if (currentMood === 'anxiety') {
             filtered = allMedia.filter(m => 
-                m.title.toLowerCase().match(/дихан|заземлення|шок|панічн|вагус|птахів/)
+                m.title.toLowerCase().match(/дихан|заземлення|шок|панічн|вагус|птахів|голоси/)
             );
         } else if (currentMood === 'stress') {
             filtered = allMedia.filter(m => 
-                m.title.toLowerCase().match(/релаксац|йога|кортизол|трясіння|океан|хвилі/)
+                m.title.toLowerCase().match(/релаксац|йога|кортизол|трясіння|пляжі|хвиль/)
             );
         } else if (currentMood === 'exhausted') {
             filtered = allMedia.filter(m => 
-                m.title.toLowerCase().match(/дощу|дощ|сну|ліжка|аудіо|медитац|нічного|цвіркуни/)
+                m.title.toLowerCase().match(/дощу|дощ|сну|ліжка|аудіо|медитац|цвіркуни|ліс/)
             );
         } else if (currentMood === 'calm') {
             filtered = allMedia.filter(m => 
-                m.title.toLowerCase().match(/інтелект|стійкість|щоденник|прокрастинуємо|гігієна|багаття/)
+                m.title.toLowerCase().match(/інтелект|стійкість|щоденник|прокрастинуємо|гігієна|багаття|райська|атмосфера/)
             );
         } else if (currentMood === 'happy') {
             filtered = allMedia.filter(m => 
-                m.title.toLowerCase().match(/зарядка|діагностика|інтелект|рефлекс|птахів/)
+                m.title.toLowerCase().match(/зарядка|діагностика|інтелект|рефлекс|птахів|райська/)
             );
         }
         
