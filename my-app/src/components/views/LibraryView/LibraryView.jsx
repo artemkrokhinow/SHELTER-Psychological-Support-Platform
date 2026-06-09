@@ -19,7 +19,9 @@ const LibraryView = ({
     userId, 
     userStats, 
     setUserStats,
-    tourStep = '0'
+    tourStep = '0',
+    currentMood,
+    resilience
 }) => {
     const navigate = useNavigate();
     const [activeNoise, setActiveNoise] = useState(null);
@@ -36,6 +38,33 @@ const LibraryView = ({
       const matchesSearch = item.title.toLowerCase().includes(searchTerm.toLowerCase());
       const matchesFilter = libraryFilter === 'Всі' || item.type === libraryFilter;
       return matchesSearch && matchesFilter;
+    }).sort((a, b) => {
+        if (currentMood) {
+            const getMoodScore = (m) => {
+                const title = m.title.toLowerCase();
+                if (currentMood === 'anxiety') return /дихан|заземлення|шок|панічн|вагус|птахів|голоси/.test(title) ? 1 : 0;
+                if (currentMood === 'stress') return /релаксац|йога|кортизол|трясіння|пляжі|хвиль/.test(title) ? 1 : 0;
+                if (currentMood === 'exhausted') return /дощу|дощ|сну|ліжка|аудіо|медитац|цвіркуни|ліс/.test(title) ? 1 : 0;
+                if (currentMood === 'calm') return /інтелект|стійкість|щоденник|прокрастинуємо|гігієна|багаття|райська|атмосфера/.test(title) ? 1 : 0;
+                if (currentMood === 'happy') return /зарядка|діагностика|інтелект|рефлекс|птахів|райська/.test(title) ? 1 : 0;
+                return 0;
+            };
+            const scoreA = getMoodScore(a);
+            const scoreB = getMoodScore(b);
+            if (scoreA !== scoreB) return scoreB - scoreA;
+        }
+
+        const res = typeof resilience === 'number' ? resilience : 50;
+        const isSuitable = (m) => {
+            const min = m.minResilience != null ? m.minResilience : 0;
+            const max = m.maxResilience != null ? m.maxResilience : 100;
+            return res >= min && res <= max ? 1 : 0;
+        };
+        const suitA = isSuitable(a);
+        const suitB = isSuitable(b);
+        if (suitA !== suitB) return suitB - suitA;
+
+        return 0;
     });
 
     

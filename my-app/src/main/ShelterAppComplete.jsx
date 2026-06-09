@@ -570,6 +570,8 @@ const ShelterAppComplete = () => {
                       userStats={userStats}
                       setUserStats={setUserStats}
                       tourStep={tourStep}
+                      currentMood={currentMood}
+                      resilience={resilience}
                     />
                   </div>
                 )}
