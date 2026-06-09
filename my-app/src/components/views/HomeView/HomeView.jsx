@@ -68,13 +68,48 @@ const HomeView = ({
         if (!currentMood) return [];
         
         let filtered = [];
+        const allMedia = [...mediaLibraryData];
+        
+        // Shuffle helper to add variety
+        const shuffle = (array) => [...array].sort(() => 0.5 - Math.random());
+        
         if (currentMood === 'anxiety') {
-            filtered = mediaLibraryData.filter(m => m.cat === 'anxiety' || m.title.includes('Дихання'));
+            filtered = allMedia.filter(m => 
+                m.cat === 'anxiety' || 
+                m.title.toLowerCase().includes('дихання') || 
+                m.title.toLowerCase().includes('заземлення') ||
+                m.title.toLowerCase().includes('шок')
+            );
+        } else if (currentMood === 'stress') {
+            filtered = allMedia.filter(m => 
+                m.cat === 'stress' || 
+                m.title.toLowerCase().includes('йога') || 
+                m.title.toLowerCase().includes('релакс')
+            );
         } else if (currentMood === 'exhausted') {
-            filtered = mediaLibraryData.filter(m => m.title.includes('дощу') || m.cat === 'stress');
-        } else {
-            filtered = mediaLibraryData.slice(0, 3);
+            filtered = allMedia.filter(m => 
+                m.title.toLowerCase().includes('дощу') || 
+                m.title.toLowerCase().includes('сон') || 
+                m.type === 'Аудіо'
+            );
+        } else if (currentMood === 'calm') {
+            filtered = allMedia.filter(m => 
+                m.type === 'Стаття' || 
+                m.title.toLowerCase().includes('фокус')
+            );
+        } else if (currentMood === 'happy') {
+            filtered = allMedia.filter(m => 
+                m.type === 'Відео' || 
+                m.type === 'Стаття'
+            );
         }
+        
+        // Add random fallback items if we don't have enough
+        if (filtered.length < 3) {
+            const fallback = shuffle(allMedia.filter(m => !filtered.some(f => f.id === m.id)));
+            filtered = [...filtered, ...fallback];
+        }
+        
         return filtered.slice(0, 3);
     };
 
