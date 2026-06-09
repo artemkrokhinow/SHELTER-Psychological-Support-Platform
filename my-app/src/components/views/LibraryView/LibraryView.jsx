@@ -265,7 +265,7 @@ const LibraryView = ({
                             <div className="p-3 md:p-4 rounded-xl md:rounded-2xl w-12 h-12 md:w-14 md:h-14 shrink-0"></div>
                             
                             <div className="flex flex-col flex-1 min-w-0">
-                                <h4 className="text-sm md:text-xl font-bold tracking-tight uppercase leading-none mt-0 md:mt-2 truncate">{item.title}</h4>
+                                <h4 className="text-sm md:text-xl font-bold tracking-tight uppercase leading-snug mt-0 md:mt-2 line-clamp-3">{item.title}</h4>
                                 <div className="flex items-center gap-2 mt-1">
                                     <p className="text-[9px] font-black uppercase tracking-widest">{item.type}</p>
                                     {item.type === 'Стаття' && !item.url && (
@@ -294,7 +294,7 @@ const LibraryView = ({
                             </div>
                             
                             <div className="flex flex-col flex-1 min-w-0">
-                                <h4 className={`text-sm md:text-xl font-bold tracking-tight uppercase leading-none transition-colors mt-0 md:mt-2 truncate ${isExpanded ? 'text-emerald-400' : 'text-white group-hover:text-emerald-400'}`}>{item.title}</h4>
+                                <h4 className={`text-sm md:text-xl font-bold tracking-tight uppercase leading-snug transition-colors mt-0 md:mt-2 line-clamp-3 ${isExpanded ? 'text-emerald-400' : 'text-white group-hover:text-emerald-400'}`}>{item.title}</h4>
                                 <div className="flex items-center gap-2 mt-1">
                                     <p className="text-[9px] md:text-[10px] font-black text-emerald-500 uppercase tracking-widest">{item.type}</p>
                                     {item.type === 'Стаття' && !item.url && (
