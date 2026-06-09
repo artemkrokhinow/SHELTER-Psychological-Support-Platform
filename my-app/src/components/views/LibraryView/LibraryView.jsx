@@ -262,48 +262,10 @@ const LibraryView = ({
         ));
     }, []);
 
-    const getDurationLabel = (item) => {
-        let val = String(item.duration || '').trim();
-        const textLen = (item.content || '').replace(/<[^>]*>?/gm, '').length + (item.desc || '').length;
-        const isShortText = checkIsShortArticle(item);
-
-        // If it's a short text, it must be in seconds
-        if (isShortText) {
-            const secMatch = val.match(/^(\d+)\s*с/i);
-            if (secMatch) return `${secMatch[1]} сек`;
-
-            if (/^\d+$/.test(val)) {
-                const num = parseInt(val, 10);
-                if (num >= 60) return `${Math.ceil(num/60)} хв`;
-                return `${num} сек`;
-            }
-
-            const totalSeconds = Math.max(15, Math.ceil(textLen / 15));
-            if (totalSeconds < 60) return `${Math.ceil(totalSeconds / 5) * 5} сек`;
-        }
-
-        const secMatch = val.match(/^(\d+)\s*с/i);
-        if (secMatch) {
-            const secs = parseInt(secMatch[1], 10);
-            if (secs >= 60) return `${Math.ceil(secs / 60)} хв`;
-            return `${secs} сек`;
-        }
-
-        if (/^\d+$/.test(val)) return `${val} хв`;
-
-        if (val === '10 хв' && item.type === 'Стаття') {
-            const rawMins = Math.ceil(textLen / 1000);
-            const mins = Math.min(5, Math.max(3, rawMins));
-            return `${mins} хв`;
-        }
-
-        return val;
-    };
-
     const memoizedFilteredMedia = React.useMemo(() => {
         return filteredMedia.map((item) => {
             const isHighlighted = tourStep === '7_do_library';
-            const durationLabel = getDurationLabel(item);
+            const durationLabel = item.duration;
             const mid = item.materialId || item.id || item._id;
             const isExpanded = expandedId === mid;
 

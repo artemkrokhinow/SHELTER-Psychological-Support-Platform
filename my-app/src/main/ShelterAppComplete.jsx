@@ -216,14 +216,63 @@ const ShelterAppComplete = () => {
         const materials = await api.getMaterials();
         if (Array.isArray(materials)) {
           const adviceTitles = ["Гігієна сну в стресі", "Емоційний інтелект", "Медітація для новачків", "Як працює кортизол"];
-            const mappedData = materials
+          
+          const checkIsShortText = (m) => {
+              if (m.type !== 'text') return false;
+              if (m.url && m.url.trim() !== '') return false;
+              const content = m.content || '';
+              const desc = m.desc || '';
+              if (/<h[1-3]>|<iframe|<video|<audio|<img|<table/i.test(content)) return false;
+              if ((content.match(/<p>/gi) || []).length > 4) return false;
+              if ((content.match(/<li>/gi) || []).length > 6) return false;
+              const textLen = content.replace(/<[^>]*>?/gm, ' ').replace(/\s+/g, ' ').trim().length + desc.replace(/<[^>]*>?/gm, ' ').replace(/\s+/g, ' ').trim().length;
+              return textLen <= 600;
+          };
+
+          const getFormattedDuration = (m) => {
+              let val = String(m.duration || '').trim();
+              if (val === '60 хв') return '1 год';
+              if (val === '120 хв') return '2 год';
+              
+              const textLen = (m.content || '').replace(/<[^>]*>?/gm, '').length + (m.desc || '').length;
+              const isShortText = checkIsShortText(m);
+
+              if (isShortText) {
+                  const secMatch = val.match(/^(\d+)\s*с/i);
+                  if (secMatch) return `${secMatch[1]} сек`;
+                  if (/^\d+$/.test(val)) {
+                      const num = parseInt(val, 10);
+                      return num >= 60 ? `${Math.ceil(num/60)} хв` : `${num} сек`;
+                  }
+                  const totalSeconds = Math.max(15, Math.ceil(textLen / 15));
+                  if (totalSeconds < 60) return `${Math.ceil(totalSeconds / 5) * 5} сек`;
+              }
+
+              const secMatch = val.match(/^(\d+)\s*с/i);
+              if (secMatch) {
+                  const secs = parseInt(secMatch[1], 10);
+                  return secs >= 60 ? `${Math.ceil(secs / 60)} хв` : `${secs} сек`;
+              }
+
+              if (/^\d+$/.test(val)) return `${val} хв`;
+
+              if (val === '10 хв' && m.type === 'text') {
+                  const rawMins = Math.ceil(textLen / 1000);
+                  const mins = Math.min(5, Math.max(3, rawMins));
+                  return `${mins} хв`;
+              }
+
+              return val || '10 хв';
+          };
+
+          const mappedData = materials
             .filter(m => !adviceTitles.includes(m.title))
             .map(m => ({
               id: m._id,
               title: m.title,
               type: m.type === 'text' ? 'Стаття' : m.type === 'video' ? 'Відео' : 'Аудіо',
               cat: m.category || 'Загальне',
-              duration: m.duration || '10 хв',
+              duration: getFormattedDuration(m),
               icon: m.type === 'text' ? <FileText size={20} /> : m.type === 'video' ? <Video size={20} /> : <Headphones size={20} />,
               color: m.category === 'anxiety' ? 'bg-blue-500' : m.category === 'stress' ? 'bg-emerald-500' : m.category === 'apathy' ? 'bg-rose-500' : 'bg-purple-500',
               url: m.url,
