@@ -440,18 +440,18 @@ const ShelterAppComplete = () => {
   useEffect(() => {
     const savedScroll = sessionStorage.getItem(`dr_scroll_pos_${currentView}`);
     if (savedScroll && scrollContainerRef.current) {
-        setTimeout(() => {
-            if (scrollContainerRef.current) {
-                scrollContainerRef.current.scrollTop = parseInt(savedScroll, 10);
-            }
-        }, 50);
-        
-        // Backup restore after longer delay for heavy layouts
-        setTimeout(() => {
-            if (scrollContainerRef.current) {
-                scrollContainerRef.current.scrollTop = parseInt(savedScroll, 10);
-            }
-        }, 300);
+        const targetTop = parseInt(savedScroll, 10);
+        if (targetTop > 0) {
+            scrollContainerRef.current.scrollTop = 0;
+            setTimeout(() => {
+                if (scrollContainerRef.current) {
+                    scrollContainerRef.current.scrollTo({
+                        top: targetTop,
+                        behavior: 'smooth'
+                    });
+                }
+            }, 100);
+        }
     }
   }, [currentView]);
 
