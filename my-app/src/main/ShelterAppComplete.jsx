@@ -60,8 +60,16 @@ const ShelterAppComplete = () => {
   const [isSortingMode, setIsSortingMode] = useState(false);
   const [showSOS, setShowSOS] = useState(location.state?.showSOS || false);
   const [showSOSPhones, setShowSOSPhones] = useState(false);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [libraryFilter, setLibraryFilter] = useState('Всі');
+  const [searchTerm, setSearchTerm] = useState(() => sessionStorage.getItem('dr_search_term') || '');
+  const [libraryFilter, setLibraryFilter] = useState(() => sessionStorage.getItem('dr_library_filter') || 'Всі');
+
+  useEffect(() => {
+    sessionStorage.setItem('dr_search_term', searchTerm);
+  }, [searchTerm]);
+
+  useEffect(() => {
+    sessionStorage.setItem('dr_library_filter', libraryFilter);
+  }, [libraryFilter]);
 
 
   const [testStep, setTestStep] = useState(0);
@@ -427,6 +435,29 @@ const ShelterAppComplete = () => {
       setTourStep('8_finish');
     }
   }, [isTestFinished, lastCompletedActivity, tourStep]);
+  const scrollContainerRef = useRef(null);
+
+  useEffect(() => {
+    const savedScroll = sessionStorage.getItem(`dr_scroll_pos_${currentView}`);
+    if (savedScroll && scrollContainerRef.current) {
+        setTimeout(() => {
+            if (scrollContainerRef.current) {
+                scrollContainerRef.current.scrollTop = parseInt(savedScroll, 10);
+            }
+        }, 50);
+        
+        // Backup restore after longer delay for heavy layouts
+        setTimeout(() => {
+            if (scrollContainerRef.current) {
+                scrollContainerRef.current.scrollTop = parseInt(savedScroll, 10);
+            }
+        }, 300);
+    }
+  }, [currentView]);
+
+  const handleScroll = (e) => {
+      sessionStorage.setItem(`dr_scroll_pos_${currentView}`, e.target.scrollTop);
+  };
 
   const isSpecialMode = isChatMode || isSimulatorMode || isFindDifferencesMode || isSortingMode || isMistakesAnalysisMode;
 
@@ -460,7 +491,11 @@ const ShelterAppComplete = () => {
         logout={() => { api.logout(); navigate('/auth'); }}
         tourStep={tourStep}
       />
-      <main className={`flex-1 flex flex-col overflow-y-auto bg-[#0b0f1a] transition-opacity duration-500 will-change-[opacity] ${showSOS ? 'opacity-20 pointer-events-none' : 'opacity-100'}`}>
+      <main 
+        ref={scrollContainerRef}
+        onScroll={handleScroll}
+        className={`flex-1 flex flex-col overflow-y-auto bg-[#0b0f1a] transition-opacity duration-500 will-change-[opacity] ${showSOS ? 'opacity-20 pointer-events-none' : 'opacity-100'}`}
+      >
         <MainHeader 
             searchTerm={searchTerm}
             setSearchTerm={setSearchTerm}

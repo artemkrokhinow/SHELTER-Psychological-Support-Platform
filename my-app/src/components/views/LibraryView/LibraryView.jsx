@@ -67,7 +67,30 @@ const LibraryView = ({
         return 0;
     });
 
-    
+    const checkIsShortArticle = (material) => {
+        if (material.type !== 'Стаття' && material.type !== 'text') return false;
+        if (material.url && material.url.trim() !== '') return false;
+        
+        const content = material.content || '';
+        const desc = material.desc || '';
+        
+        if (/<h[1-3]>|<iframe|<video|<audio|<img|<table/i.test(content)) return false;
+        
+        const paragraphsCount = (content.match(/<p>/gi) || []).length;
+        if (paragraphsCount > 4) return false;
+        
+        const listItemsCount = (content.match(/<li>/gi) || []).length;
+        if (listItemsCount > 6) return false;
+        
+        const cleanContent = content.replace(/<[^>]*>?/gm, ' ').replace(/\s+/g, ' ').trim();
+        const cleanDesc = desc.replace(/<[^>]*>?/gm, ' ').replace(/\s+/g, ' ').trim();
+        const totalLen = cleanContent.length + cleanDesc.length;
+        
+        if (totalLen <= 600) return true;
+        
+        return false;
+    };
+
     const createNoiseBuffer = (type) => {
         if (!audioCtx.current) return null;
         const bufferSize = 2 * audioCtx.current.sampleRate;
@@ -181,9 +204,7 @@ const LibraryView = ({
     const handleMaterialClick = (material) => {
       const mid = material.materialId || material.id || material._id;
 
-      const contentLen = (material.content || '').replace(/<[^>]*>?/gm, '').length;
-      const descLen = (material.desc || '').length;
-      const isShortArticle = material.type === 'Стаття' && !material.url && (contentLen + descLen) < 250;
+      const isShortArticle = checkIsShortArticle(material);
       if (isShortArticle) {
           if (expandedId === mid) {
               setExpandedId(null);
@@ -244,7 +265,7 @@ const LibraryView = ({
     const getDurationLabel = (item) => {
         let val = String(item.duration || '').trim();
         const textLen = (item.content || '').replace(/<[^>]*>?/gm, '').length + (item.desc || '').length;
-        const isShortText = item.type === 'Стаття' && !item.url && textLen < 250;
+        const isShortText = checkIsShortArticle(item);
 
         // If it's a short text, it must be in seconds
         if (isShortText) {
@@ -299,7 +320,7 @@ const LibraryView = ({
                                 <p className="text-[10px] font-black uppercase tracking-widest">{item.type}</p>
                                 {item.type === 'Стаття' && !item.url && (
                                     <span className="text-[8px] font-black bg-slate-800 px-2 py-0.5 rounded-md uppercase tracking-wider">
-                                        {(item.content || '').replace(/<[^>]*>?/gm, '').length + (item.desc || '').length < 250 ? 'Швидке читання' : 'Розгорнуто'}
+                                        {checkIsShortArticle(item) ? 'Швидке читання' : 'Розгорнуто'}
                                     </span>
                                 )}
                             </div>
@@ -324,7 +345,7 @@ const LibraryView = ({
                                 <p className="text-[10px] font-black text-emerald-500 uppercase tracking-widest">{item.type}</p>
                                 {item.type === 'Стаття' && !item.url && (
                                     <span className="text-[8px] font-black bg-slate-800 text-slate-300 px-2 py-0.5 rounded-md uppercase tracking-wider">
-                                        {(item.content || '').replace(/<[^>]*>?/gm, '').length + (item.desc || '').length < 250 ? 'Швидке читання' : 'Розгорнуто'}
+                                        {checkIsShortArticle(item) ? 'Швидке читання' : 'Розгорнуто'}
                                     </span>
                                 )}
                             </div>
