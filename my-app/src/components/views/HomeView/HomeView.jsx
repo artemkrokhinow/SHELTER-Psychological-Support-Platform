@@ -46,7 +46,10 @@ const HomeView = ({
         'stress': 'Стрес',
         'apathy': 'Апатія',
         'depression': 'Депресія',
-        'general': 'Загальне'
+        'resilience': 'Стійкість',
+        'general': 'Загальне',
+        'support': 'Підтримка',
+        'sleep': 'Сон'
     };
 
     const moods = [
