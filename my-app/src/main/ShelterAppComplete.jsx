@@ -359,6 +359,12 @@ const ShelterAppComplete = () => {
       setIsChatMode(true);
       setIsSimulatorMode(false);
     } else {
+      if (currentView !== id) {
+        sessionStorage.removeItem(`dr_scroll_pos_${id}`);
+        if (scrollContainerRef.current) {
+          scrollContainerRef.current.scrollTop = 0;
+        }
+      }
       setCurrentView(id);
       if (!visitedViews.includes(id)) {
         setVisitedViews(prev => [...prev, id]);
