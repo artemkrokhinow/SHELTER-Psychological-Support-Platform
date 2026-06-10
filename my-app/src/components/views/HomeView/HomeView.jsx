@@ -398,7 +398,7 @@ const HomeView = ({
                     </div>
                     <div className="transition-all duration-500 md:group-hover:translate-x-2">
                         <p className="text-[8px] md:text-[10px] font-black uppercase mb-0 md:mb-1 opacity-70 tracking-widest force-white">{card.cat}</p>
-                        <h4 className="text-sm md:text-3xl font-black uppercase tracking-tighter leading-tight md:leading-none group-hover:text-white drop-shadow-md force-white line-clamp-2">
+                        <h4 className="text-sm md:text-3xl lg:text-lg xl:text-2xl font-black uppercase tracking-tighter leading-tight md:leading-none group-hover:text-white drop-shadow-md force-white line-clamp-2">
                         {card.title}
                         </h4>
                     </div>
