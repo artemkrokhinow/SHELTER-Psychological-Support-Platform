@@ -81,7 +81,7 @@ export default function BreathingExercise({
 
     return (
         <>
-            <div className="absolute inset-0 z-[100] bg-[#070a12] flex flex-col items-center justify-center overflow-hidden animate-in fade-in duration-500">
+            <div className="fixed inset-0 z-[9999] bg-[#070a12] flex flex-col items-center justify-center overflow-hidden animate-in fade-in duration-500">
                 {}
                 <div className="absolute top-8 left-8 right-8 flex items-center justify-between z-10">
                     <button
