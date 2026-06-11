@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import {
     Area,
     AreaChart,
@@ -12,19 +13,31 @@ import {
 import { TreeDeciduous, Zap, Sprout, Shrub, Trees } from 'lucide-react';
 import { api } from '../../../infrastructure/api/api';
 
-const translateActivity = (actType, actName) => {
-    const raw = (actName || actType || '').toLowerCase();
-    if (raw.includes('mood_select')) return 'Трекер настрою';
-    if (raw.includes('diagnostic')) return 'Діагностика стану';
-    if (raw.includes('quest_completed')) return 'Квест пройдено';
-    if (raw.includes('breathing')) return 'Дихальна практика';
-    if (raw.includes('material')) return 'Перегляд матеріалів';
-    if (raw.includes('diary')) return 'Запис у щоденнику';
-    if (raw.includes('sos')) return 'Екстрена допомога';
-    return raw.replace(/_/g, ' ') || 'Активність';
-};
+
 
 const StatsView = ({ userId, userStats, resilience = 50, resilienceMultiplier = 1.0, completedCount = 0, isVisible, onRefresh }) => {
+    const { t, i18n } = useTranslation();
+
+    const translateActivity = (actType, actName) => {
+        const raw = (actName || actType || '').toLowerCase();
+        const activityLabels = {
+            'mood_check': t('stats.mood_tracker'),
+            'diagnostic': t('stats.state_diagnostics'),
+            'quest_complete': t('stats.quest_completed'),
+            'breathing': t('stats.breathing_practice'),
+            'material_view': t('stats.materials_review'),
+            'diary': t('stats.diary_entry_activity'),
+            'sos': t('stats.emergency_help')
+        };
+        for (const [key, label] of Object.entries(activityLabels)) {
+            if (raw.includes(key) || raw.includes(key.replace('_', ' '))) return label;
+        }
+        if (raw.includes('mood_select')) return t('stats.mood_tracker');
+        if (raw.includes('quest_completed')) return t('stats.quest_completed');
+        if (raw.includes('material')) return t('stats.materials_review');
+        return raw.replace(/_/g, ' ') || raw;
+    };
+
     console.log("=== StatsView Data ===", {
         userStats,
         resilience,
@@ -67,7 +80,7 @@ const StatsView = ({ userId, userStats, resilience = 50, resilienceMultiplier = 
     const leafCount = Math.max(0, completedCount); 
 
     const handleEraseData = async () => {
-        if (window.confirm("Ви впевнені, що хочете безповоротно видалити всі свої дані? Цю дію неможливо скасувати.")) {
+        if (window.confirm(t('stats.delete_confirm'))) {
             try {
                 await api.deletePersonalData(userId);
                 localStorage.removeItem("dr_token");
@@ -88,7 +101,7 @@ const StatsView = ({ userId, userStats, resilience = 50, resilienceMultiplier = 
            <section className="space-y-6">
                 <div className="flex items-center gap-3">
                     <div className="w-2 h-8 bg-emerald-500 rounded-full"></div>
-                    <h2 className="text-2xl md:text-3xl font-black text-white italic uppercase tracking-tighter leading-none">Сад Стійкості</h2>
+                    <h2 className="text-2xl md:text-3xl font-black text-white italic uppercase tracking-tighter leading-none">{t('stats.garden_title')}</h2>
                 </div>
                 
                 <div className="bg-slate-900/40 border border-slate-800 p-6 md:p-12 rounded-3xl md:rounded-[48px] relative overflow-hidden flex flex-col md:flex-row items-center gap-4 md:gap-12 text-center md:text-left">
@@ -103,17 +116,17 @@ const StatsView = ({ userId, userStats, resilience = 50, resilienceMultiplier = 
 
                     <div className="space-y-4 md:space-y-6 flex-1 w-full flex flex-col items-center md:items-start">
                         <div>
-                            <h3 className="text-2xl md:text-4xl font-black text-white uppercase tracking-tighter mb-2">Ваше дерево росте</h3>
-                            <p className="text-slate-400 max-w-md text-sm md:text-base">Ваша стійкість — це живий організм. Чим частіше ви практикуєте, тим міцнішим стає коріння вашого ментального здоров'я.</p>
+                            <h3 className="text-2xl md:text-4xl font-black text-white uppercase tracking-tighter mb-2">{t('stats.tree_growing')}</h3>
+                            <p className="text-slate-400 max-w-md text-sm md:text-base">{t('stats.tree_description')}</p>
                         </div>
                         
                         <div className="grid grid-cols-2 gap-3 md:gap-4 w-full">
                             <div className="bg-slate-800/50 p-4 md:p-6 rounded-2xl md:rounded-[32px] border border-slate-700/30">
-                                <p className="text-[9px] md:text-[10px] font-black text-slate-500 uppercase tracking-widest mb-1">Рівень стійкості</p>
+                                <p className="text-[9px] md:text-[10px] font-black text-slate-500 uppercase tracking-widest mb-1">{t('stats.resilience_level')}</p>
                                 <p className="text-2xl md:text-3xl font-black text-white">{Math.round(resilience)}%</p>
                             </div>
                             <div className="bg-slate-800/50 p-4 md:p-6 rounded-2xl md:rounded-[32px] border border-slate-700/30">
-                                <p className="text-[9px] md:text-[10px] font-black text-slate-500 uppercase tracking-widest mb-1">Виконано завдань</p>
+                                <p className="text-[9px] md:text-[10px] font-black text-slate-500 uppercase tracking-widest mb-1">{t('stats.tasks_completed')}</p>
                                 <p className="text-2xl md:text-3xl font-black text-white">{leafCount}</p>
                             </div>
                         </div>
@@ -125,7 +138,7 @@ const StatsView = ({ userId, userStats, resilience = 50, resilienceMultiplier = 
             <section className="space-y-6 pb-12">
                 <div className="flex items-center gap-3">
                     <div className="w-2 h-8 bg-blue-500 rounded-full"></div>
-                    <h2 className="text-2xl md:text-3xl font-black text-white italic uppercase tracking-tighter leading-none">Аналітика прогресу</h2>
+                    <h2 className="text-2xl md:text-3xl font-black text-white italic uppercase tracking-tighter leading-none">{t('stats.progress_analytics')}</h2>
                 </div>
                 <div className="bg-slate-900/30 border-y md:border border-slate-800 py-4 px-2 md:p-10 -mx-4 md:mx-0 rounded-none md:rounded-[48px] shadow-2xl h-64 md:h-96 min-h-[250px] md:min-h-[400px]">
                     {isVisible ? (
@@ -169,14 +182,14 @@ const StatsView = ({ userId, userStats, resilience = 50, resilienceMultiplier = 
                                         try {
                                             const d = new Date(label);
                                             if (isNaN(d.getTime())) return label;
-                                            const time = d.toLocaleTimeString('uk-UA', { hour: '2-digit', minute: '2-digit' });
-                                            const date = d.toLocaleDateString('uk-UA', { day: 'numeric', month: 'short' });
+                                            const time = d.toLocaleTimeString(i18n.language === 'en' ? 'en-US' : 'uk-UA', { hour: '2-digit', minute: '2-digit' });
+                                            const date = d.toLocaleDateString(i18n.language === 'en' ? 'en-US' : 'uk-UA', { day: 'numeric', month: 'short' });
                                             return `${time} ${date}`;
                                         } catch (e) {
                                             return label;
                                         }
                                     }}
-                                    formatter={(value) => [`${value}%`, 'Стійкість']}
+                                    formatter={(value) => [`${value}%`, t('stats.resilience_label')]}
                                 />
                                 <Area type="monotone" dataKey="val" stroke="#10b981" strokeWidth={4} fillOpacity={1} fill="url(#colorVal)" isAnimationActive={false}>
                                     <LabelList 
@@ -200,7 +213,7 @@ const StatsView = ({ userId, userStats, resilience = 50, resilienceMultiplier = 
             <section className="space-y-6">
                 <div className="flex items-center gap-3">
                     <div className="w-2 h-8 bg-amber-500 rounded-full"></div>
-                    <h2 className="text-3xl font-black text-white italic uppercase tracking-tighter leading-none">Історія активності</h2>
+                    <h2 className="text-3xl font-black text-white italic uppercase tracking-tighter leading-none">{t('stats.activity_history')}</h2>
                 </div>
                 
                 <div className="space-y-4">
@@ -227,7 +240,7 @@ const StatsView = ({ userId, userStats, resilience = 50, resilienceMultiplier = 
                                 </div>
                                 {Math.round(act.change || 0) === 0 && (act.type === 'material_view' || act.activityType === 'material_view') && (
                                     <p className="text-[8px] md:text-[9px] text-slate-500 uppercase font-bold tracking-widest mt-0.5 md:mt-1 max-w-[100px] md:max-w-[150px] leading-tight">
-                                        Не підтверджено прочитання
+                                        {t('stats.reading_not_confirmed')}
                                     </p>
                                 )}
                             </div>
@@ -236,7 +249,7 @@ const StatsView = ({ userId, userStats, resilience = 50, resilienceMultiplier = 
                     
                     {!(userStats?.activities || userStats?.history || []).length && (
                         <div className="p-12 text-center bg-slate-900/20 border border-dashed border-slate-800 rounded-[40px]">
-                            <p className="text-slate-500 font-bold uppercase tracking-widest text-xs">Історія поки порожня</p>
+                            <p className="text-slate-500 font-bold uppercase tracking-widest text-xs">{t('stats.history_empty')}</p>
                         </div>
                     )}
                 </div>
@@ -247,7 +260,7 @@ const StatsView = ({ userId, userStats, resilience = 50, resilienceMultiplier = 
                     onClick={handleEraseData}
                     className="text-xs text-slate-500 hover:text-rose-500 underline decoration-slate-500 hover:decoration-rose-500 transition-colors uppercase tracking-widest font-bold"
                 >
-                    Стерти всі персональні дані
+                    {t('stats.erase_data')}
                 </button>
            </section>
 

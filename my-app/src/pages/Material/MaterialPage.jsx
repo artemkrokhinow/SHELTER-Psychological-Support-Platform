@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { api } from '../../infrastructure/api/api';
 import { getDiagnosticConfig } from '../../infrastructure/utils/diagnosticLogic';
 import CharacterCompanion from '../../components/characterCompanion/CharacterCompanion';
@@ -12,6 +13,7 @@ import {
 } from 'lucide-react';
 
 export default function MaterialPage() {
+    const { t } = useTranslation();
     const { id } = useParams();
     const navigate = useNavigate();
 
@@ -20,7 +22,7 @@ export default function MaterialPage() {
     const [showFeedback, setShowFeedback] = useState(false);
     const [isPlaying, setIsPlaying] = useState(false);
     const [loading, setLoading] = useState(true);
-    const [username, setUsername] = useState("Гість");
+    const [username, setUsername] = useState(t('sidebar.guest'));
     const [userId, setUserId] = useState(localStorage.getItem("userId"));
     const [viewStartTime, setViewStartTime] = useState(Date.now());
     
@@ -44,10 +46,10 @@ export default function MaterialPage() {
 
     const getTypeLabel = (type) => {
         if (!type) return '';
-        const t = type.toLowerCase();
-        if (t === 'video') return 'Відео';
-        if (t === 'audio') return 'Аудіо';
-        if (t === 'text' || t === 'article') return 'Стаття';
+        const t_label = type.toLowerCase();
+        if (t_label === 'video') return t('library.video');
+        if (t_label === 'audio') return t('library.audio');
+        if (t_label === 'text' || t_label === 'article') return t('library.article');
         return type;
     };
 
@@ -64,7 +66,7 @@ export default function MaterialPage() {
         if (userId) {
             try {
                 await api.updateUserProgress(userId, id, 'material');
-                await api.updateResilience(userId, 'material_feedback', { delta }, material?.title || 'Матеріал');
+                await api.updateResilience(userId, 'material_feedback', { delta }, material?.title || t('material.default_title'));
             } catch (error) {
                 console.error('Error updating progress:', error);
             }
@@ -114,22 +116,22 @@ export default function MaterialPage() {
                 </div>
                 <nav className="flex-1 px-4 mt-6">
                     <div className="space-y-0">
-                        {}
+                        {/* Menu Items */}
                         <FlipSidebarItem 
                             id="home" 
                             icon={<LayoutGrid size={22} />} 
-                            label="Дашборд" 
+                            label={t('sidebar.dashboard')} 
                             isDashboard={true}
                             index={0}
                             isSpecialMode={true}
                             onBackAction={() => navigate(-1)}
                         />
-                        <FlipSidebarItem id="quests" icon={<Trophy size={22} />} label="Квести" index={1} isSpecialMode={true} />
-                        <FlipSidebarItem id="testing" icon={<ClipboardList size={22} />} label="Діагностика" index={2} isSpecialMode={true} />
-                        <FlipSidebarItem id="library" icon={<BookOpen size={22} />} label="Медіатека" index={3} isSpecialMode={true} />
-                        <FlipSidebarItem id="advice" icon={<Lightbulb size={22} />} label="Поради" index={4} isSpecialMode={true} />
-                        <FlipSidebarItem id="diary" icon={<PenLine size={22} />} label="Щоденник" index={5} isSpecialMode={true} />
-                        <FlipSidebarItem id="stats" icon={<BarChart3 size={22} />} label="Прогрес" index={6} isSpecialMode={true} />
+                        <FlipSidebarItem id="quests" icon={<Trophy size={22} />} label={t('sidebar.quests')} index={1} isSpecialMode={true} />
+                        <FlipSidebarItem id="testing" icon={<ClipboardList size={22} />} label={t('sidebar.testing')} index={2} isSpecialMode={true} />
+                        <FlipSidebarItem id="library" icon={<BookOpen size={22} />} label={t('sidebar.library')} index={3} isSpecialMode={true} />
+                        <FlipSidebarItem id="advice" icon={<Lightbulb size={22} />} label={t('sidebar.advice')} index={4} isSpecialMode={true} />
+                        <FlipSidebarItem id="diary" icon={<PenLine size={22} />} label={t('sidebar.diary')} index={5} isSpecialMode={true} />
+                        <FlipSidebarItem id="stats" icon={<BarChart3 size={22} />} label={t('sidebar.stats')} index={6} isSpecialMode={true} />
                     </div>
                 </nav>
                 <div className="p-6 border-t border-slate-900">
@@ -139,7 +141,7 @@ export default function MaterialPage() {
                         </div>
                         <div className="hidden lg:block text-left">
                             <p className="text-xs font-black text-white font-bold">{username}</p>
-                            <p className="text-[10px] text-slate-500 uppercase font-bold tracking-widest">Стійкість: {resilience}%</p>
+                            <p className="text-[10px] text-slate-500 uppercase font-bold tracking-widest">{t('sidebar.resilience')}: {resilience}%</p>
                         </div>
                     </div>
                 </div>
@@ -148,7 +150,7 @@ export default function MaterialPage() {
             <main className="flex-1 flex flex-col overflow-y-auto bg-[#0b0f1a]">
                 <header className="h-24 px-8 flex items-center justify-between sticky top-0 z-10  bg-[#0b0f1a]/60 border-b border-slate-800/50">
                     <div className="flex items-center gap-4 bg-slate-900/40 px-6 py-3 rounded-full border border-slate-800 w-full max-w-md opacity-20 pointer-events-none">
-                        <span className="text-xs font-bold uppercase tracking-widest">Перегляд матеріалу...</span>
+                        <span className="text-xs font-bold uppercase tracking-widest">{t('material.viewing_material')}</span>
                     </div>
                     <div className="flex items-center gap-6">
                         <button 
@@ -182,7 +184,7 @@ export default function MaterialPage() {
                                             <span className="text-[10px] font-black text-emerald-500 uppercase tracking-widest">{getTypeLabel(material.type)}</span>
                                             <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest">
                                                 <Clock size={12} className="inline mr-1" />
-                                                {material.duration || '10 хв'}
+                                                {material.duration || `10 ${t('common.min')}`}
                                             </span>
                                         </div>
                                     </div>
@@ -214,7 +216,7 @@ export default function MaterialPage() {
                                 <section className="bg-slate-900/40 border border-slate-800 rounded-[40px] p-8  shadow-2xl animate-in fade-in slide-in-from-bottom duration-700">
                                     <h2 className="text-2xl font-black text-white italic uppercase tracking-tighter mb-6 flex items-center gap-3">
                                         <BookOpen size={24} className="text-emerald-500" />
-                                        {material.type === 'video' || material.type === 'audio' ? 'Опис практики' : 'Матеріал'}
+                                        {material.type === 'video' || material.type === 'audio' ? t('material.practice_description') : t('material.default_title')}
                                     </h2>
                                     <div className="space-y-6 text-slate-300 leading-relaxed">
                                         {material.desc && (
@@ -238,14 +240,14 @@ export default function MaterialPage() {
                                         className="bg-emerald-500 hover:bg-emerald-400 text-[#0b0f1a] px-12 py-4 rounded-2xl font-black uppercase text-xs shadow-xl shadow-emerald-500/20 transition-all flex items-center gap-3"
                                     >
                                         <CheckCircle size={20} />
-                                        Завершити ознайомлення
+                                        {t('material.finish_review')}
                                     </button>
                                 ) : (
                                     <div className="bg-slate-900/40 border border-slate-800 rounded-[40px] p-8  shadow-2xl text-center">
-                                        <p className="text-white mb-6 uppercase font-black tracking-widest text-xs">Як змінився ваш стан?</p>
+                                        <p className="text-white mb-6 uppercase font-black tracking-widest text-xs">{t('material.state_changed')}</p>
                                         <div className="flex gap-4 justify-center">
-                                            <button onClick={() => handleComplete(2)} className="bg-emerald-500 hover:bg-emerald-400 text-[#0b0f1a] px-8 py-3 rounded-2xl font-black uppercase text-xs shadow-xl transition-all">😊 Полегчало</button>
-                                            <button onClick={() => handleComplete(-2)} className="bg-rose-500/20 border border-rose-500/40 hover:bg-rose-500 text-white px-8 py-3 rounded-2xl font-black uppercase text-xs transition-all">😔 Не полегчало</button>
+                                            <button onClick={() => handleComplete(2)} className="bg-emerald-500 hover:bg-emerald-400 text-[#0b0f1a] px-8 py-3 rounded-2xl font-black uppercase text-xs shadow-xl transition-all">😊 {t('material.felt_better')}</button>
+                                            <button onClick={() => handleComplete(-2)} className="bg-rose-500/20 border border-rose-500/40 hover:bg-rose-500 text-white px-8 py-3 rounded-2xl font-black uppercase text-xs transition-all">😔 {t('material.did_not_feel_better')}</button>
                                         </div>
                                     </div>
                                 )}
@@ -255,7 +257,7 @@ export default function MaterialPage() {
                         <div className="flex items-center justify-center h-full text-center">
                             <div>
                                 <div className="text-6xl mb-4">📄</div>
-                                <h2 className="text-2xl font-black text-white mb-2">Матеріал не знайдено</h2>
+                                <h2 className="text-2xl font-black text-white mb-2">{t('material.not_found')}</h2>
                             </div>
                         </div>
                     )}

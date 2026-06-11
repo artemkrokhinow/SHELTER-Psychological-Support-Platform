@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import {
   AlertCircle, ChevronLeft, FileText, Headphones, Video, Wind, X
 } from 'lucide-react';
@@ -38,6 +39,7 @@ const UpdatedSortingPage = React.lazy(() => import('../pages/Simulator/UpdatedSo
 
 
 const ShelterAppComplete = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
   const isGuest = localStorage.getItem("dr_token") === "guest_mode";
@@ -231,38 +233,38 @@ const ShelterAppComplete = () => {
 
           const getFormattedDuration = (m) => {
               let val = String(m.duration || '').trim();
-              if (val === '60 хв') return '1 год';
-              if (val === '120 хв') return '2 год';
+              if (val === '60 хв') return `1 ${t('common.hour', 'год')}`;
+              if (val === '120 хв') return `2 ${t('common.hour', 'год')}`;
               
               const textLen = (m.content || '').replace(/<[^>]*>?/gm, '').length + (m.desc || '').length;
               const isShortText = checkIsShortText(m);
 
               if (isShortText) {
                   const secMatch = val.match(/^(\d+)\s*с/i);
-                  if (secMatch) return `${secMatch[1]} сек`;
+                  if (secMatch) return `${secMatch[1]} ${t('common.sec', 'сек')}`;
                   if (/^\d+$/.test(val)) {
                       const num = parseInt(val, 10);
-                      return num >= 60 ? `${Math.ceil(num/60)} хв` : `${num} сек`;
+                      return num >= 60 ? `${Math.ceil(num/60)} ${t('common.min', 'хв')}` : `${num} ${t('common.sec', 'сек')}`;
                   }
                   const totalSeconds = Math.max(15, Math.ceil(textLen / 15));
-                  if (totalSeconds < 60) return `${Math.ceil(totalSeconds / 5) * 5} сек`;
+                  if (totalSeconds < 60) return `${Math.ceil(totalSeconds / 5) * 5} ${t('common.sec', 'сек')}`;
               }
 
               const secMatch = val.match(/^(\d+)\s*с/i);
               if (secMatch) {
                   const secs = parseInt(secMatch[1], 10);
-                  return secs >= 60 ? `${Math.ceil(secs / 60)} хв` : `${secs} сек`;
+                  return secs >= 60 ? `${Math.ceil(secs / 60)} ${t('common.min', 'хв')}` : `${secs} ${t('common.sec', 'сек')}`;
               }
 
-              if (/^\d+$/.test(val)) return `${val} хв`;
+              if (/^\d+$/.test(val)) return `${val} ${t('common.min', 'хв')}`;
 
               if (val === '10 хв' && m.type === 'text') {
                   const rawMins = Math.ceil(textLen / 1000);
                   const mins = Math.min(5, Math.max(3, rawMins));
-                  return `${mins} хв`;
+                  return `${mins} ${t('common.min', 'хв')}`;
               }
 
-              return val || '10 хв';
+              return val ? val.replace('хв', t('common.min', 'хв')).replace('сек', t('common.sec', 'сек')) : `10 ${t('common.min', 'хв')}`;
           };
 
           const mappedData = materials
@@ -270,7 +272,7 @@ const ShelterAppComplete = () => {
             .map(m => ({
               id: m._id,
               title: m.title,
-              type: m.type === 'text' ? 'Стаття' : m.type === 'video' ? 'Відео' : 'Аудіо',
+              type: m.type === 'text' ? t('library.article', 'Стаття') : m.type === 'video' ? t('library.video', 'Відео') : t('library.audio', 'Аудіо'),
               cat: m.category || 'Загальне',
               duration: getFormattedDuration(m),
               icon: m.type === 'text' ? <FileText size={20} /> : m.type === 'video' ? <Video size={20} /> : <Headphones size={20} />,
@@ -736,11 +738,11 @@ const ShelterAppComplete = () => {
         </div>
         <footer className="h-16 px-8 flex items-center justify-between border-t border-slate-900/50 text-[10px] text-slate-600 font-bold uppercase tracking-widest bg-[#0b0f1a]">
           <div className="flex gap-6">
-            <span className="hover:text-slate-400 cursor-pointer transition-colors" onClick={() => setShowSOS(true)}>SOS Допомога</span>
+            <span className="hover:text-slate-400 cursor-pointer transition-colors" onClick={() => setShowSOS(true)}>{t('app.footer_sos')}</span>
             <span className="hidden md:inline opacity-30">|</span>
-            <span className="hidden md:inline">Система Shelter не є заміною професійної терапії</span>
+            <span className="hidden md:inline">{t('app.footer_disclaimer')}</span>
           </div>
-          <div>© 2026 Shelter App</div>
+          <div>{t('app.footer_rights')}</div>
         </footer>
       </main>
 
@@ -777,9 +779,9 @@ const ShelterAppComplete = () => {
 
             {!showSOSPhones ? (
                 <>
-                    <h2 className="text-3xl sm:text-[32px] font-black text-white uppercase mb-4 tracking-tight">Екстрена допомога</h2>
+                    <h2 className="text-3xl sm:text-[32px] font-black text-white uppercase mb-4 tracking-tight">{t('app.sos_emergency')}</h2>
                     <p className="text-slate-400 mb-10 text-[17px] leading-relaxed font-medium">
-                        Зараз ми проведемо коротку практику «Квадратне дихання». Це допоможе вашій нервовій системі повернутися до стану спокою.
+                        {t('app.sos_desc')}
                     </p>
                     
                     <div className="flex flex-col gap-4">
@@ -788,13 +790,13 @@ const ShelterAppComplete = () => {
                         className="w-full bg-white text-black py-5 rounded-[20px] font-bold text-[17px] hover:bg-slate-200 transition-all flex items-center justify-center gap-3"
                     >
                         <Wind size={22} />
-                        Почати дихання (4-4-4)
+                        {t('app.sos_start_breathing')}
                     </button>
                     <button 
                         onClick={() => setShowSOSPhones(true)}
                         className="w-full bg-[#1b2336] text-white py-5 rounded-[20px] font-bold text-[17px] hover:bg-[#252f48] transition-all"
                     >
-                        Зв'язатися з фахівцем
+                        {t('app.sos_contact_expert')}
                     </button>
                     </div>
                 </>

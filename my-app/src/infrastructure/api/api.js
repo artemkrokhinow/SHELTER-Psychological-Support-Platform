@@ -1,3 +1,6 @@
+import i18n from '../i18n';
+import dbEn from '../../locales/db_en.json';
+
 const getBaseUrl = () => {
 	const host = window.location.hostname;
 	const port = 5000;
@@ -5,6 +8,27 @@ const getBaseUrl = () => {
 		return `http://${host}:${port}/api`;
 	}
 	return "https://shelter-jsv0.onrender.com/api";
+};
+
+const translateObj = (obj, translations) => {
+    if (!obj || typeof obj !== 'object' || !translations) return obj;
+    const trans = translations[obj._id] || translations[obj.id];
+    if (!trans) return obj;
+    return { ...obj, ...trans };
+};
+
+const translateArray = (arr, type) => {
+    if (i18n.language !== 'en') return arr;
+    const translations = dbEn[type];
+    if (!translations) return arr;
+    return arr.map(item => translateObj(item, translations));
+};
+
+const translateSingle = (item, type) => {
+    if (i18n.language !== 'en') return item;
+    const translations = dbEn[type];
+    if (!translations) return item;
+    return translateObj(item, translations);
 };
 
 export const API_URL = getBaseUrl();
@@ -223,7 +247,7 @@ export const api = {
         });
     },
 
-	getMaterials: () => fetch(`${API_URL}/materials`).then((res) => res.json()),
+	getMaterials: () => fetch(`${API_URL}/materials`).then((res) => res.json()).then(data => translateArray(data, 'materials')),
 
 	createMaterial: (data) =>
 		fetch(`${API_URL}/materials`, {
@@ -245,14 +269,14 @@ export const api = {
 			headers: getHeaders(),
 		}).then((res) => res.json()),
 
-	getScenarios: () => fetch(`${API_URL}/scenarios`).then((res) => res.json()),
+	getScenarios: () => fetch(`${API_URL}/scenarios`).then((res) => res.json()).then(data => translateArray(data, 'scenarios')),
 
-	getAdvice: () => fetch(`${API_URL}/advice`).then((res) => res.json()),
-	getRandomAdvice: () => fetch(`${API_URL}/advice/random`).then((res) => res.json()),
+	getAdvice: () => fetch(`${API_URL}/advice`).then((res) => res.json()).then(data => translateArray(data, 'advice')),
+	getRandomAdvice: () => fetch(`${API_URL}/advice/random`).then((res) => res.json()).then(data => translateSingle(data, 'advice')),
 
 	getDiagnosticQuestions: (category) => {
 		const url = category ? `${API_URL}/diagnostic/questions?category=${category}` : `${API_URL}/diagnostic/questions`;
-		return fetch(url).then((res) => res.json());
+		return fetch(url).then((res) => res.json()).then(data => translateArray(data, 'diagnostics'));
 	},
 
 	seedDiagnostics: () => fetch(`${API_URL}/diagnostic/seed`, { method: "POST" }).then((res) => res.json()),
@@ -278,10 +302,10 @@ export const api = {
 		}).then((res) => res.json()),
 
 	getScenarioById: (id) =>
-		fetch(`${API_URL}/scenarios/${id}`).then((res) => res.json()),
+		fetch(`${API_URL}/scenarios/${id}`).then((res) => res.json()).then(data => translateSingle(data, 'scenarios')),
 
 	getMaterialById: (id) =>
-		fetch(`${API_URL}/materials/${id}`).then((res) => res.json()),
+		fetch(`${API_URL}/materials/${id}`).then((res) => res.json()).then(data => translateSingle(data, 'materials')),
 
 	getDashboardStats: (userId) =>
 		fetch(`${API_URL}/stats/dashboard/${userId}`).then((res) => res.json()),

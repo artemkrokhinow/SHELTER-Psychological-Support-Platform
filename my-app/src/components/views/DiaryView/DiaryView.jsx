@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Smile, Meh, Frown, BookOpen, Calendar, Trash2 } from 'lucide-react';
 import { api } from '../../../infrastructure/api/api';
 
@@ -9,6 +10,8 @@ const MOOD_CONFIG = [
 ];
 
 const DiaryView = ({ userId, onAddEntry }) => {
+    const { t, i18n } = useTranslation();
+    const moodsLabels = [t('diary.good'), t('diary.neutral'), t('diary.bad')];
     const [diaryEntry, setDiaryEntry] = useState('');
     const [selectedMood, setSelectedMood] = useState(null);
     const [isSaving, setIsSaving] = useState(false);
@@ -37,13 +40,13 @@ const DiaryView = ({ userId, onAddEntry }) => {
 
     const handleSaveDiary = () => {
         if (!diaryEntry.trim() || selectedMood === null) {
-            setSaveMessage('Будь ласка, напишіть щось та виберіть настрій');
+            setSaveMessage(t('diary.validation_error'));
             setTimeout(() => setSaveMessage(''), 3000);
             return;
         }
 
         if (!resolvedUserId) {
-            setSaveMessage('❌ Потрібна авторизація для збереження');
+            setSaveMessage(t('diary.auth_required'));
             setTimeout(() => setSaveMessage(''), 3000);
             return;
         }
@@ -56,7 +59,7 @@ const DiaryView = ({ userId, onAddEntry }) => {
                 if (res && res.error) {
                     throw new Error(res.error);
                 }
-                setSaveMessage('✅ Нотатку збережено!');
+                setSaveMessage(t('diary.note_saved'));
                 setDiaryEntry('');
                 setSelectedMood(null);
                 loadEntries(); 
@@ -68,14 +71,14 @@ const DiaryView = ({ userId, onAddEntry }) => {
             })
             .catch((err) => {
                 console.error('Error saving diary entry:', err);
-                setSaveMessage('❌ Помилка збереження');
+                setSaveMessage(t('diary.save_error'));
                 setIsSaving(false);
                 setTimeout(() => setSaveMessage(''), 3000);
             });
     };
 
     const handleDeleteEntry = useCallback((entryId) => {
-        if (!window.confirm('Ви впевнені, що хочете видалити цей запис?')) return;
+        if (!window.confirm(t('diary.delete_confirm'))) return;
 
         api.deleteDiaryEntry(resolvedUserId, entryId)
             .then(() => {
@@ -86,7 +89,7 @@ const DiaryView = ({ userId, onAddEntry }) => {
 
     const formatDate = (dateStr) => {
         const date = new Date(dateStr);
-        return date.toLocaleDateString('uk-UA', {
+        return date.toLocaleDateString(i18n.language === 'en' ? 'en-US' : 'uk-UA', {
             day: 'numeric',
             month: 'long',
             hour: '2-digit',
@@ -97,7 +100,7 @@ const DiaryView = ({ userId, onAddEntry }) => {
     return (
         <div className="p-4 md:p-8 space-y-6 md:space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500 text-left pb-24">
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-8">
-                <h2 className="text-2xl md:text-5xl font-black text-white italic uppercase tracking-tighter leading-none">Щоденник рефлексії</h2>
+                <h2 className="text-2xl md:text-5xl font-black text-white italic uppercase tracking-tighter leading-none">{t('diary.title')}</h2>
             </div>
 
             <div className="bg-slate-900/40 border border-slate-800 p-5 md:p-8 rounded-3xl md:rounded-[40px]  shadow-2xl space-y-4 md:space-y-6">
@@ -105,19 +108,19 @@ const DiaryView = ({ userId, onAddEntry }) => {
                     <div className="w-10 h-10 bg-emerald-500/10 rounded-xl flex items-center justify-center">
                         <BookOpen size={20} className="text-emerald-500" />
                     </div>
-                    <h3 className="text-white font-black uppercase text-sm tracking-widest">Новий запис</h3>
+                    <h3 className="text-white font-black uppercase text-sm tracking-widest">{t('diary.new_entry')}</h3>
                 </div>
 
                 <textarea
                     value={diaryEntry}
                     onChange={(e) => setDiaryEntry(e.target.value)}
-                    placeholder="Опишіть ваші відчуття сьогодні..."
+                    placeholder={t('diary.placeholder')}
                     className="w-full h-32 md:h-40 bg-slate-800/50 border border-slate-700 rounded-xl md:rounded-[24px] p-4 md:p-6 text-white placeholder:text-slate-600 outline-none focus:border-emerald-500 transition-all resize-none shadow-inner"
                 />
 
                 <div className="flex flex-col md:flex-row justify-between items-center gap-6 w-full">
                     <div className="flex flex-col md:flex-row items-center gap-4 w-full md:w-auto">
-                        <span className="text-xs font-black text-slate-500 uppercase tracking-widest text-center md:text-left">Мій стан:</span>
+                        <span className="text-xs font-black text-slate-500 uppercase tracking-widest text-center md:text-left">{t('diary.my_state')}</span>
                         <div className="flex justify-center md:justify-start gap-2 w-full md:w-auto">
                             {MOOD_CONFIG.map((mood, idx) => {
                                 const Icon = mood.icon;
@@ -126,7 +129,7 @@ const DiaryView = ({ userId, onAddEntry }) => {
                                     <button
                                         key={idx}
                                         onClick={() => setSelectedMood(idx)}
-                                        title={mood.label}
+                                        title={moodsLabels[idx]}
                                         className={`p-3 md:p-4 rounded-xl md:rounded-2xl border-2 transition-all duration-300 ${
                                             isSelected
                                                 ? `${mood.bg} ${mood.border} scale-110 shadow-lg`
@@ -140,7 +143,7 @@ const DiaryView = ({ userId, onAddEntry }) => {
                         </div>
                         {selectedMood !== null && (
                             <span className={`text-xs font-bold ${MOOD_CONFIG[selectedMood].color}`}>
-                                {MOOD_CONFIG[selectedMood].label}
+                                {moodsLabels[selectedMood]}
                             </span>
                         )}
                     </div>
@@ -156,7 +159,7 @@ const DiaryView = ({ userId, onAddEntry }) => {
                             disabled={isSaving}
                             className="bg-emerald-500 text-[#0b0f1a] px-6 py-3 md:px-10 md:py-4 rounded-xl md:rounded-2xl font-black uppercase text-[10px] md:text-xs hover:bg-emerald-400 transition-all shadow-xl shadow-emerald-500/20 disabled:opacity-50 disabled:cursor-not-allowed w-full md:w-auto mt-4 md:mt-0"
                         >
-                            {isSaving ? 'Збереження...' : 'Зберегти нотатку'}
+                            {isSaving ? t('diary.saving') : t('diary.save_note')}
                         </button>
                     </div>
                 </div>
@@ -164,22 +167,22 @@ const DiaryView = ({ userId, onAddEntry }) => {
 
             <div className="space-y-4">
                 <h3 className="text-xs font-black text-slate-500 uppercase tracking-[0.2em]">
-                    Попередні записи
+                    {t('diary.previous_entries')}
                 </h3>
 
                 {React.useMemo(() => {
                     if (isLoading) {
                         return (
                             <div className="text-center py-10 text-slate-600 text-sm font-bold uppercase tracking-widest">
-                                Завантаження...
+                                {t('common.loading')}
                             </div>
                         );
                     }
                     if (entries.length === 0) {
                         return (
                             <div className="text-center py-12 bg-slate-900/20 border border-dashed border-slate-800 rounded-[32px]">
-                                <p className="text-slate-600 font-bold uppercase tracking-widest text-sm">Поки що немає записів</p>
-                                <p className="text-slate-700 text-xs mt-2">Напишіть свою першу нотатку вище</p>
+                                <p className="text-slate-600 font-bold uppercase tracking-widest text-sm">{t('diary.empty')}</p>
+                                <p className="text-slate-700 text-xs mt-2">{t('diary.write_first')}</p>
                             </div>
                         );
                     }
@@ -198,7 +201,7 @@ const DiaryView = ({ userId, onAddEntry }) => {
                                         </div>
                                         <div>
                                             <span className={`text-xs font-black uppercase tracking-widest ${mood.color}`}>
-                                                {mood.label}
+                                                {moodsLabels[entry.mood] || moodsLabels[1]}
                                             </span>
                                             <div className="flex items-center gap-1 mt-0.5">
                                                 <Calendar size={10} className="text-slate-600" />
@@ -212,7 +215,7 @@ const DiaryView = ({ userId, onAddEntry }) => {
                                     <button 
                                         onClick={() => handleDeleteEntry(entry._id)}
                                         className="opacity-0 group-hover:opacity-100 p-2 text-slate-600 hover:text-rose-500 hover:bg-rose-500/10 rounded-xl transition-all duration-300"
-                                        title="Видалити запис"
+                                        title={t('diary.delete')}
                                     >
                                         <Trash2 size={18} />
                                     </button>

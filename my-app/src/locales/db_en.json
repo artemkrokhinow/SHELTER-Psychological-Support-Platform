@@ -1,0 +1,494 @@
+{
+    "materials": {
+        "6a00bc922944e5b1dd1cead1": {
+            "title": "Psychological stability: scientific foundations",
+            "desc": "A detailed guide to developing psychological resilience based on the latest research in the field of neurobiology.",
+            "content": "Psychological resilience is the ability to adapt to stress and recover from difficulties. Develops through practice."
+        },
+        "6a00bc922944e5b1dd1ceacd": {
+            "title": "Breathing for peace",
+            "desc": "Master the 4-7-8 technique for instant relaxation and reduced anxiety. This simple but powerful technique helps activate the parasympathetic nervous system.",
+            "content": "Breathing technique 4-7-8: Inhale for 4 counts, hold for 7, exhale for 8. Helps to quickly return to a state of rest."
+        },
+        "6a00bc922944e5b1dd1ceace": {
+            "title": "Progressive relaxation technique",
+            "desc": "A step-by-step technique for relieving muscle tension through successive tension and relaxation of various muscle groups.",
+            "content": "Progressive muscle relaxation: alternately tense and relax muscle groups from the feet to the face."
+        },
+        "6a00bc922944e5b1dd1ceacf": {
+            "title": "Mindfulness meditation for beginners",
+            "desc": "An introduction to mindfulness practice - focusing on the breath and the present moment without judgment.",
+            "content": "Mindfulness Meditation: Sit comfortably, close your eyes, and focus on your breathing. When thoughts distract you, gently bring your attention back to your breath."
+        },
+        "6a00bc922944e5b1dd1cead0": {
+            "title": "Diagnostics of the psychological state",
+            "desc": "Comprehensive assessment of your mental health through analysis of stress, anxiety, apathy and overall life satisfaction.",
+            "content": "Diagnosis includes assessment of stress, anxiety, apathy and general well-being. Helps identify areas for improvement."
+        },
+        "6a00bc922944e5b1dd1cead2": {
+            "title": "Keeping a reflection diary",
+            "desc": "A step-by-step guide to effective journaling for self-discovery, emotional regulation, and tracking personal growth.",
+            "content": "A reflection journal helps to develop self-awareness, improve emotional regulation, and find meaning in lived experiences."
+        },
+        "6a0388f9db5bdded60e069ec": {
+            "title": "Sleep hygiene under stress",
+            "desc": "How to ensure quality rest when the brain does not want to fall asleep.",
+            "content": "<h2>The importance of sleep during stress</h2>\n            <p>During periods of great stress, our body produces an excess of cortisol, which interferes with falling asleep. Sleep hygiene becomes your main recovery tool.</p>\n            <h3>Basic tips:</h3>\n            <ul>\n                <li><strong>Schedule:</strong> Go to bed and get up at the same time.</li>\n                <li><strong>Digital detox:</strong> Put away gadgets 1 hour before bed. Blue light suppresses melatonin.</li>\n                <li><strong>Ritual:</strong> Take a warm shower or read a paper book.</li>\n            </ul>"
+        },
+        "6a0388fadb5bdded60e069ed": {
+            "title": "Emotional intelligence",
+            "desc": "Understanding one's own emotions as the key to stability.",
+            "content": "<h2>What is emotional intelligence (EQ)?</h2>\n            <p>EQ is the ability to recognize, understand and manage one's own emotions, as well as to influence the emotions of other people.</p>\n            <h3>Why is this important?</h3>\n            <p>People with high EQ cope better with stress, build stronger relationships and recover faster from crisis situations.</p>\n            <p><strong>Tip:</strong> Whenever you feel a strong emotion, try naming it. \"I feel anxious right now\" is the first step to control.</p>"
+        },
+        "6a0388fadb5bdded60e069ee": {
+            "title": "Meditation for beginners",
+            "desc": "Simple steps to inner silence without too much mysticism.",
+            "content": "<h2>Meditation is simple</h2>\n            <p>You don't have to sit in the lotus position for hours. 5-10 minutes a day is enough to start seeing results.</p>\n            <h3>Where to start:</h3>\n            <ol>\n                <li>Find a quiet place where you won't be disturbed.</li>\n                <li>Sit comfortably, keeping your back straight.</li>\n                <li>Focus on your breathing. Feel the air coming in and out.</li>\n                <li>When thoughts distract you, just gently return your attention to your breathing.</li>\n            </ol>"
+        },
+        "6a0388fadb5bdded60e069ef": {
+            "title": "How Cortisol Works",
+            "desc": "Understanding the chemistry of stress will help you overcome it.",
+            "content": "<h2>Cortisol: the stress hormone</h2>\n            <p>Cortisol is produced by the adrenal glands in response to a threat. It prepares the body for the \"fight or flight\" reaction.</p>\n            <h3>Side effects of prolonged stress:</h3>\n            <p>If cortisol levels are consistently high, it leads to exhaustion, digestive problems, and impaired immunity.</p>\n            <p><strong>How to reduce:</strong> Physical activity, laughter and deep breathing help to signal to the brain that the threat has passed.</p>"
+        },
+        "6a0388fbdb5bdded60e069f1": {
+            "title": "Practice 4-7-8: Breathing technique",
+            "desc": "An effective way to relax through breath control.",
+            "content": "This technique helps to quickly calm the nervous system. Use it when you feel suddenly anxious or can't sleep.",
+            "url": "https://www.youtube.com/watch?v=p8fjYPC-k2k"
+        },
+        "6a0388fcdb5bdded60e069f2": {
+            "title": "Yoga for the neck and shoulders",
+            "desc": "We relieve stiffness and tension after a working day.",
+            "content": "Most of the stress accumulates in the neck and shoulders. This short complex will help you feel relief.",
+            "url": "https://www.youtube.com/watch?v=X3-gKPNyrTA"
+        },
+        "6a0388fcdb5bdded60e069f3": {
+            "title": "Calm breathing: Meditation",
+            "desc": "3 minutes of deep relaxation in Ukrainian.",
+            "content": "A short but very effective meditation. Just close your eyes and follow the voice.",
+            "url": "https://www.youtube.com/watch?v=ZToicYcHIOU"
+        },
+        "6a0388fcdb5bdded60e069f5": {
+            "title": "Vagus activation technique",
+            "desc": "\"Reset\" exercise for the vagus nerve.",
+            "content": "Vagus activation is the fastest physiological way to switch the body from fight-or-flight mode to rest-and-digest mode.",
+            "url": "https://www.youtube.com/watch?v=L1HCG3BGK8I"
+        },
+        "6a0388fcdb5bdded60e069f6": {
+            "title": "Active morning: Charging",
+            "desc": "A simple and effective warm-up for the whole family.",
+            "content": "Just 5 minutes of active movements in the morning will give you energy for the whole day.",
+            "url": "https://www.youtube.com/watch?v=jWP1g1A2_cw"
+        },
+        "6a0388fcdb5bdded60e069f8": {
+            "title": "The sound of rain",
+            "desc": "Natural pink noise that creates a cozy acoustic curtain.",
+            "content": "An hour of soothing rain sounds for sleep or work."
+        },
+        "6a1f137c38a0d34868ecfc9b": {
+            "title": "Grounding technique 5-4-3-2-1",
+            "desc": "A quick way to come back to reality during times of panic or severe anxiety.",
+            "content": "<h2>What is the 5-4-3-2-1 technique?</h2>\n        <p>This exercise helps stop the flow of anxious thoughts by shifting your attention to your senses and your surroundings.</p>\n        <h3>How to perform:</h3>\n        <ol>\n            <li><strong>5 things</strong> you can see right now (eg chair, window, tree).</li>\n            <li><strong>4 things</strong> you can touch (feel the texture of the table, clothes or your hair).</li>\n            <li><strong>3 things</strong> you hear (car noise, birds singing, refrigerator humming).</li>\n            <li><strong>2 things</strong> you can smell (the smell of coffee, soap or just fresh air).</li>\n            <li><strong>1 thing</strong> you can taste (take a sip of water, eat a candy).</li>\n        </ol>\n        <p><strong>Tip:</strong> Say it out loud. This creates additional sensory feedback and even better grounding.</p>"
+        },
+        "6a1f14c10c46c3d837e9d9f1": {
+            "title": "Why we procrastinate and how to negotiate with our brain",
+            "desc": "Easy article about how procrastination is not laziness, but the brain's response to stress. Contains soft techniques to initiate action.",
+            "content": "<h2>Procrastination is not laziness</h2><p>Often we think we are putting things off because of laziness. But science says otherwise: procrastination is our brain's response to stress or negative emotions associated with a task.</p><h3>How to deal with it?</h3><ol><li><strong>The two-minute rule:</strong> Agree with yourself to do the task for only 2 minutes. It removes the brain's resistance to a 'big' task.</li><li><strong>Forgive yourself:</strong> Research shows that people who forgive themselves for procrastinating are less likely to procrastinate in the future.</li><li><strong>Divide and conquer:</strong> Break a daunting task into micro-steps that don't cause panic.</li></ol>"
+        },
+        "6a1f14c10c46c3d837e9d9f4": {
+            "title": "What is \"digital hygiene\" and how to survive in the information noise",
+            "desc": "Practical tips on how to stop checking your phone every 5 minutes and customize the infospace for yourself.",
+            "content": "<h2>Your phone is a tool, not a master</h2><p>The constant stream of news and notifications exhausts our nervous system. Here's how to take back control:</p><h3>Practical steps:</h3><ul><li><strong>Black and white screen:</strong> Put your phone in black and white mode. The brain loses interest in \"gray\" icons, and the time spent on social networks decreases.</li><li><strong>Turn off the unnecessary:</strong> Leave notifications only from people. No push from games or stores.</li><li><strong>An hour without screens:</strong> Try to put your phone down an hour before bed. This will significantly improve the quality of rest.</li></ul>"
+        },
+        "6a1f16100c46c3d837e9db2f": {
+            "title": "What to do during a panic attack",
+            "desc": "Clear step-by-step instructions for acute anxiety attacks. How to help yourself or loved ones when you feel like you're losing control.",
+            "content": "<h2>It's scary, but it will pass</h2><p>A panic attack is your body's false alarm. It reaches its peak in 10 minutes, and then it necessarily declines. You are not going crazy or dying.</p><h3>First aid:</h3><ol><li><strong>Breathe into folded hands:</strong> This will help balance the levels of oxygen and carbon dioxide in the blood, which will stop dizziness.</li><li><strong>Focus on the outside:</strong> Find 5 blue objects around you.</li><li><strong>Cold water:</strong> Wash your face with ice water or hold an ice cube in your hands. Cold activates the parasympathetic nervous system.</li></ol>"
+        },
+        "6a1f16100c46c3d837e9db31": {
+            "title": "When there is no strength to get out of bed",
+            "desc": "Material for the hardest days. What to do when the body is heavy, and any action seems impossible.",
+            "content": "<h2>Allow yourself to stop</h2><p>If you can't get up, don't beat yourself up. Your body has completely exhausted its resources. Now your only task is to just be.</p><h3>The 'Micro-Steps' Strategy:</h3><ul><li><strong>Don't think about the whole day:</strong> Think only about the next 5 minutes.</li><li><strong>The basic minimum:</strong> If you don't have the energy to take a shower, just wash your face or wipe it with a wet towel. Can't cook? Eat an apple or a piece of bread.</li><li><strong>Change position:</strong> Try simply moving from bed to the floor or a chair. Changing the physical position sometimes gives an impulse to the brain.</li></ul><p><em>If this condition lasts more than two weeks, be sure to consult a specialist.</em></p>"
+        },
+        "6a285e37459593276a50adb2": {
+            "title": "Day forest: crickets and birds",
+            "desc": "The lively atmosphere of the afternoon forest with the chirping of crickets. Perfect for meditation or background work.",
+            "content": "The sounds of the daytime forest help restore concentration and reduce stress levels. Let yourself be transported for a few minutes to a warm summer day."
+        },
+        "6a285e37459593276a50adb3": {
+            "title": "Deep sea waves",
+            "desc": "Soothing sound of real sea waves for deep relaxation and stress relief.",
+            "content": "The sound of the sea has a proven therapeutic effect. Rhythmic bursts of waves help to normalize breathing, slow down the heartbeat and prepare for rest."
+        },
+        "6a285e37459593276a50adb4": {
+            "title": "Voices of the wild forest",
+            "desc": "Deep immersion in nature: the rich song of forest birds, which relieves tension.",
+            "content": "Birdsong is evolutionarily associated with security. This audio recording will help you feel calm, let go of anxiety and recharge with natural energy."
+        },
+        "6a285e37459593276a50adb5": {
+            "title": "Summer rain with a thunderstorm",
+            "desc": "The soothing sound of rain drumming on the roof, with distant rumbles of thunder.",
+            "content": "The sound of rain creates a sense of security and coziness. It's the perfect background for reading, thinking, or getting ready for bed."
+        },
+        "6a285e37459593276a50adb6": {
+            "title": "The noise of a campfire in the forest",
+            "desc": "Atmospheric sound of crackling wood and branches in the fire. Warms and soothes.",
+            "content": "Imagine that you are sitting next to a large forest fire. Listen to the cracking of the branches, feel the imaginary warmth of the fire. This is ideal grounding practice."
+        },
+        "6a2867f1459593276a50b36a": {
+            "title": "Paradise atmosphere",
+            "desc": "Soft and relaxing sounds that create a feeling of absolute peace and harmony.",
+            "content": "This light audio background is specially designed to relieve mental stress. Give your mind a break from the information noise."
+        }
+    },
+    "scenarios": {
+        "6a0c946cdb5bdded60f083d2": {
+            "name": "Resistance to burnout",
+            "description": "A simulator for identifying signs of professional exhaustion and building healthy boundaries in the work process.",
+            "messages": [],
+            "nodes": []
+        },
+        "6a0c946cdb5bdded60f083d3": {
+            "name": "Impostor syndrome",
+            "description": "A trainer for fighting self-doubt before an important presentation.",
+            "messages": [],
+            "nodes": []
+        },
+        "6a10771a00169fc597155c7a": {
+            "name": "Conflict resolution",
+            "description": "A simulator for practicing the reaction to complex emotions of the interlocutor. Learn to choose an empathetic path instead of a conflictual one.",
+            "messages": [],
+            "nodes": []
+        },
+        "6a1f36970c46c3d837e9f7a0": {
+            "name": "Symptoms of burnout",
+            "description": "Section burnout symptoms and recovery actions",
+            "messages": [],
+            "nodes": [],
+            "categories": [
+                {
+                    "id": 0,
+                    "name": "Symptoms",
+                    "color": "#ef4444",
+                    "_id": "6a2b09e58e70cd812c446d6b"
+                },
+                {
+                    "id": 1,
+                    "name": "Recovery actions",
+                    "color": "#10b981",
+                    "_id": "6a2b09e58e70cd812c446d6c"
+                }
+            ],
+            "items": [
+                {
+                    "text": "Constant fatigue",
+                    "categoryId": 0,
+                    "_id": "6a2b09e58e70cd812c446d6d"
+                },
+                {
+                    "text": "Cynicism towards work",
+                    "categoryId": 0,
+                    "_id": "6a2b09e58e70cd812c446d6e"
+                },
+                {
+                    "text": "Decreased productivity",
+                    "categoryId": 0,
+                    "_id": "6a2b09e58e70cd812c446d6f"
+                },
+                {
+                    "text": "A bad dream",
+                    "categoryId": 0,
+                    "_id": "6a2b09e58e70cd812c446d70"
+                },
+                {
+                    "text": "Vacation without gadgets",
+                    "categoryId": 1,
+                    "_id": "6a2b09e58e70cd812c446d71"
+                },
+                {
+                    "text": "Setting time limits",
+                    "categoryId": 1,
+                    "_id": "6a2b09e58e70cd812c446d72"
+                },
+                {
+                    "text": "Physical exercises",
+                    "categoryId": 1,
+                    "_id": "6a2b09e58e70cd812c446d73"
+                },
+                {
+                    "text": "Communication with loved ones",
+                    "categoryId": 1,
+                    "_id": "6a2b09e58e70cd812c446d74"
+                }
+            ]
+        },
+        "6a1f36970c46c3d837e9f7a1": {
+            "name": "Thoughts of an impostor",
+            "description": "Let's separate harmful thoughts from rational ones",
+            "messages": [],
+            "nodes": [],
+            "categories": [
+                {
+                    "id": 0,
+                    "name": "Thoughts of an impostor",
+                    "color": "#ef4444",
+                    "_id": "6a2b09e58e70cd812c446d84"
+                },
+                {
+                    "id": 1,
+                    "name": "Rational thoughts",
+                    "color": "#3b82f6",
+                    "_id": "6a2b09e58e70cd812c446d85"
+                }
+            ],
+            "items": [
+                {
+                    "text": "I was just lucky",
+                    "categoryId": 0,
+                    "_id": "6a2b09e58e70cd812c446d86"
+                },
+                {
+                    "text": "Soon everyone will know that I can't do anything",
+                    "categoryId": 0,
+                    "_id": "6a2b09e58e70cd812c446d87"
+                },
+                {
+                    "text": "I do not deserve this success",
+                    "categoryId": 0,
+                    "_id": "6a2b09e58e70cd812c446d88"
+                },
+                {
+                    "text": "I put effort into the result",
+                    "categoryId": 1,
+                    "_id": "6a2b09e58e70cd812c446d89"
+                },
+                {
+                    "text": "Mistakes are part of learning",
+                    "categoryId": 1,
+                    "_id": "6a2b09e58e70cd812c446d8a"
+                },
+                {
+                    "text": "My skills are valuable",
+                    "categoryId": 1,
+                    "_id": "6a2b09e58e70cd812c446d8b"
+                },
+                {
+                    "text": "I have the right not to know something",
+                    "categoryId": 1,
+                    "_id": "6a2b09e58e70cd812c446d8c"
+                }
+            ]
+        },
+        "6a1f36970c46c3d837e9f7a2": {
+            "name": "Focus and concentration",
+            "description": "Sort out what distracts you and what helps you focus",
+            "messages": [],
+            "nodes": [],
+            "categories": [
+                {
+                    "id": 0,
+                    "name": "Distracts",
+                    "color": "#f59e0b",
+                    "_id": "6a2b09e58e70cd812c446d99"
+                },
+                {
+                    "id": 1,
+                    "name": "It helps",
+                    "color": "#8b5cf6",
+                    "_id": "6a2b09e58e70cd812c446d9a"
+                }
+            ],
+            "items": [
+                {
+                    "text": "Constant notifications",
+                    "categoryId": 0,
+                    "_id": "6a2b09e58e70cd812c446d9b"
+                },
+                {
+                    "text": "Multitasking",
+                    "categoryId": 0,
+                    "_id": "6a2b09e58e70cd812c446d9c"
+                },
+                {
+                    "text": "A mess on the table",
+                    "categoryId": 0,
+                    "_id": "6a2b09e58e70cd812c446d9d"
+                },
+                {
+                    "text": "Pomodoro technique",
+                    "categoryId": 1,
+                    "_id": "6a2b09e58e70cd812c446d9e"
+                },
+                {
+                    "text": "A clear plan for the day",
+                    "categoryId": 1,
+                    "_id": "6a2b09e58e70cd812c446d9f"
+                },
+                {
+                    "text": "Soft background music",
+                    "categoryId": 1,
+                    "_id": "6a2b09e58e70cd812c446da0"
+                },
+                {
+                    "text": "Regular breaks",
+                    "categoryId": 1,
+                    "_id": "6a2b09e58e70cd812c446da1"
+                }
+            ]
+        }
+    },
+    "diagnostics": {
+        "6a038c2689ecfbd18ed22951": {
+            "text": "How often have you felt tense in the last week?",
+            "options": [
+                "Never",
+                "Rarely",
+                "Often",
+                "Constantly"
+            ]
+        },
+        "6a038c2689ecfbd18ed22952": {
+            "text": "How often do you feel that you are unable to cope with current affairs?",
+            "options": [
+                "Never",
+                "Sometimes",
+                "Most of the time",
+                "Always"
+            ]
+        },
+        "6a038c2689ecfbd18ed22953": {
+            "text": "How hard is it for you to relax after a long day at work?",
+            "options": [
+                "Very easy",
+                "A little difficult",
+                "Hard",
+                "Impossible"
+            ]
+        },
+        "6a038c2689ecfbd18ed22954": {
+            "text": "How easily do you manage to concentrate?",
+            "options": [
+                "Very easy",
+                "Satisfactorily",
+                "Hard",
+                "Almost impossible"
+            ]
+        },
+        "6a038c2689ecfbd18ed22955": {
+            "text": "How often have you made careless mistakes lately?",
+            "options": [
+                "Rarely",
+                "As usual",
+                "More often",
+                "Constantly"
+            ]
+        },
+        "6a038c2689ecfbd18ed22956": {
+            "text": "Do you find it difficult to make everyday decisions?",
+            "options": [
+                "Absolutely not",
+                "Sometimes",
+                "Often",
+                "Very difficult"
+            ]
+        },
+        "6a038c2689ecfbd18ed22957": {
+            "text": "How would you rate the quality of your sleep?",
+            "options": [
+                "Excellent",
+                "Satisfactory",
+                "bad",
+                "Terrible"
+            ]
+        },
+        "6a038c2689ecfbd18ed22958": {
+            "text": "How often do you wake up feeling tired?",
+            "options": [
+                "Never",
+                "Rarely",
+                "Often",
+                "Every morning"
+            ]
+        },
+        "6a038c2689ecfbd18ed22959": {
+            "text": "Have you noticed a change in your appetite?",
+            "options": [
+                "No, everything is stable",
+                "Insignificant",
+                "Yes, significant changes",
+                "Total loss/overeating"
+            ]
+        },
+        "6a038c2689ecfbd18ed2295a": {
+            "text": "Do you feel supported by loved ones?",
+            "options": [
+                "Full",
+                "Partial",
+                "Minimal",
+                "Absolutely not"
+            ]
+        },
+        "6a038c2689ecfbd18ed2295b": {
+            "text": "How often do you feel anxious for no reason?",
+            "options": [
+                "Never",
+                "Rarely",
+                "Often",
+                "Constantly"
+            ]
+        },
+        "6a038c2689ecfbd18ed2295c": {
+            "text": "Are you able to feel joy from ordinary things?",
+            "options": [
+                "Yes, in full",
+                "Part",
+                "Rarely",
+                "Absolutely not"
+            ]
+        },
+        "6a038c2689ecfbd18ed2295d": {
+            "text": "How do you feel about your daily responsibilities?",
+            "options": [
+                "With enthusiasm",
+                "Neutral",
+                "Reluctantly",
+                "With disgust"
+            ]
+        },
+        "6a038c2689ecfbd18ed2295e": {
+            "text": "Do you feel like your efforts are in vain?",
+            "options": [
+                "Never",
+                "Sometimes",
+                "Often",
+                "Always"
+            ]
+        },
+        "6a038c2689ecfbd18ed2295f": {
+            "text": "How quickly do you recover on the weekend?",
+            "options": [
+                "Fully",
+                "Part",
+                "Very slowly",
+                "I do not restore at all"
+            ]
+        }
+    },
+    "advice": {
+        "6a1f4e1a0c46c3d837ea0934": {
+            "title": "The two-minute rule during periods of high anxiety"
+        },
+        "6a1f4e1a0c46c3d837ea0935": {
+            "title": "Delayed Excitement Technique"
+        },
+        "6a1f4e1a0c46c3d837ea0936": {
+            "title": "Decatastrophizing thoughts: questions to yourself"
+        },
+        "6a1f4e1a0c46c3d837ea0937": {
+            "title": "Emotional surfing"
+        },
+        "6a1f4e1a0c46c3d837ea0938": {
+            "title": "Radical acceptance of fatigue"
+        }
+    }
+}

@@ -1,4 +1,5 @@
 import { useEffect, useState, useRef } from "react";
+import { useTranslation } from "react-i18next";
 import { useNavigate, useParams } from "react-router-dom";
 import { api } from "../../infrastructure/api/api";
 import CharacterCompanion from "../../components/characterCompanion/CharacterCompanion";
@@ -6,6 +7,7 @@ import { ArrowLeft, Target, Sparkles, Clock, LayoutGrid } from 'lucide-react';
 import "./updatedSortingPage.css";
 
 export default function UpdatedSortingPage({ isEmbedded, embeddedId, onBack, onComplete, applyResilienceChange }) {
+    const { t } = useTranslation();
     const params = useParams();
     const id = isEmbedded ? embeddedId : params.id;
     const navigate = useNavigate();
@@ -46,7 +48,7 @@ export default function UpdatedSortingPage({ isEmbedded, embeddedId, onBack, onC
                     data = await api.getScenarioById(id).catch(e => null);
                 }
 
-                setScenario(data && !data.message ? data : { name: "Сортування думок" });
+                setScenario(data && !data.message ? data : { name: t('sorting.fallback_title', "Сортування думок") });
                 
                 let dbBoxes = data && !data.message ? (data.content?.categories || data.categories || []) : [];
                 let dbItems = data && !data.message ? (data.content?.items || data.items || []) : [];
@@ -55,46 +57,46 @@ export default function UpdatedSortingPage({ isEmbedded, embeddedId, onBack, onC
                     console.log('Using hardcoded sorting data as fallback');
                     
                     if (id === 'hardcoded-sorting-2') {
-                        setScenario({ name: "Коло контролю" });
+                        setScenario({ name: t('sorting.circle_control', "Коло контролю") });
                         dbBoxes = [
-                            { id: 'in_control', name: 'Мій контроль', color: '#8b5cf6' },
-                            { id: 'out_control', name: 'Поза моїм контролем', color: '#64748b' }
+                            { id: 'in_control', name: t('sorting.my_control', 'Мій контроль'), color: '#8b5cf6' },
+                            { id: 'out_control', name: t('sorting.out_control', 'Поза моїм контролем'), color: '#64748b' }
                         ];
                         dbItems = [
-                            { id: 'i1', text: 'Мої власні вчинки', categoryId: 'in_control' },
-                            { id: 'i2', text: 'Дії інших людей', categoryId: 'out_control' },
-                            { id: 'i3', text: 'Мої слова та реакції', categoryId: 'in_control' },
-                            { id: 'i4', text: 'Погода на вулиці', categoryId: 'out_control' },
-                            { id: 'i5', text: 'Думки інших про мене', categoryId: 'out_control' },
-                            { id: 'i6', text: 'Мої життєві цілі', categoryId: 'in_control' },
+                            { id: 'i1', text: t('sorting.my_actions', 'Мої власні вчинки'), categoryId: 'in_control' },
+                            { id: 'i2', text: t('sorting.others_actions', 'Дії інших людей'), categoryId: 'out_control' },
+                            { id: 'i3', text: t('sorting.my_words', 'Мої слова та реакції'), categoryId: 'in_control' },
+                            { id: 'i4', text: t('sorting.weather', 'Погода на вулиці'), categoryId: 'out_control' },
+                            { id: 'i5', text: t('sorting.others_thoughts', 'Думки інших про мене'), categoryId: 'out_control' },
+                            { id: 'i6', text: t('sorting.my_goals', 'Мої життєві цілі'), categoryId: 'in_control' },
                         ];
                     } else if (id === 'hardcoded-sorting-3') {
-                        setScenario({ name: "Звички" });
+                        setScenario({ name: t('sorting.habits', "Звички") });
                         dbBoxes = [
-                            { id: 'healthy', name: 'Здорові звички', color: '#10b981' },
-                            { id: 'toxic', name: 'Токсичні патерни', color: '#f59e0b' }
+                            { id: 'healthy', name: t('sorting.healthy_habits', 'Здорові звички'), color: '#10b981' },
+                            { id: 'toxic', name: t('sorting.toxic_patterns', 'Токсичні патерни'), color: '#f59e0b' }
                         ];
                         dbItems = [
-                            { id: 'i1', text: 'Регулярний відпочинок', categoryId: 'healthy' },
-                            { id: 'i2', text: 'Порівняння себе з іншими', categoryId: 'toxic' },
-                            { id: 'i3', text: 'Вміння казати «Ні»', categoryId: 'healthy' },
-                            { id: 'i4', text: 'Ігнорування власних емоцій', categoryId: 'toxic' },
-                            { id: 'i5', text: 'Перфекціонізм у всьому', categoryId: 'toxic' },
-                            { id: 'i6', text: 'Фізична активність', categoryId: 'healthy' },
+                            { id: 'i1', text: t('sorting.regular_rest', 'Регулярний відпочинок'), categoryId: 'healthy' },
+                            { id: 'i2', text: t('sorting.comparing_others', 'Порівняння себе з іншими'), categoryId: 'toxic' },
+                            { id: 'i3', text: t('sorting.saying_no', 'Вміння казати «Ні»'), categoryId: 'healthy' },
+                            { id: 'i4', text: t('sorting.ignoring_emotions', 'Ігнорування власних емоцій'), categoryId: 'toxic' },
+                            { id: 'i5', text: t('sorting.perfectionism', 'Перфекціонізм у всьому'), categoryId: 'toxic' },
+                            { id: 'i6', text: t('sorting.physical_activity', 'Фізична активність'), categoryId: 'healthy' },
                         ];
                     } else {
-                        setScenario({ name: "Сортування думок" });
+                        setScenario({ name: t('sorting.sorting_thoughts', "Сортування думок") });
                         dbBoxes = [
-                            { id: 'positive', name: 'Корисні думки', color: '#10b981' },
-                            { id: 'negative', name: 'Деструктивні думки', color: '#f43f5e' }
+                            { id: 'positive', name: t('sorting.useful_thoughts', 'Корисні думки'), color: '#10b981' },
+                            { id: 'negative', name: t('sorting.destructive_thoughts', 'Деструктивні думки'), color: '#f43f5e' }
                         ];
                         dbItems = [
-                            { id: 'i1', text: 'Я зможу це подолати', categoryId: 'positive' },
-                            { id: 'i2', text: 'Все завжди йде не так', categoryId: 'negative' },
-                            { id: 'i4', text: 'Це гарна можливість для росту', categoryId: 'positive' },
-                            { id: 'i5', text: 'Я ніколи не навчуся', categoryId: 'negative' },
-                            { id: 'i7', text: 'Помилки допомагають мені вчитися', categoryId: 'positive' },
-                            { id: 'i8', text: 'Ніхто мене не розуміє', categoryId: 'negative' },
+                            { id: 'i1', text: t('sorting.overcome_this', 'Я зможу це подолати'), categoryId: 'positive' },
+                            { id: 'i2', text: t('sorting.everything_wrong', 'Все завжди йде не так'), categoryId: 'negative' },
+                            { id: 'i4', text: t('sorting.opportunity', 'Це гарна можливість для росту'), categoryId: 'positive' },
+                            { id: 'i5', text: t('sorting.never_learn', 'Я ніколи не навчуся'), categoryId: 'negative' },
+                            { id: 'i7', text: t('sorting.mistakes_help', 'Помилки допомагають мені вчитися'), categoryId: 'positive' },
+                            { id: 'i8', text: t('sorting.nobody_understands', 'Ніхто мене не розуміє'), categoryId: 'negative' },
                         ];
                     }
                 }

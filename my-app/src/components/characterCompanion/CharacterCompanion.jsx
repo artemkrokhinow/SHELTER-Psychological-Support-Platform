@@ -1,4 +1,5 @@
 import { useEffect, useState, useCallback, useRef, useImperativeHandle, forwardRef } from "react";
+import { useTranslation } from "react-i18next";
 import "./characterCompanion.css";
 
 import { ReactComponent as HappyImg } from "../../infrastructure/assets/images/characterCompanion/happy_v2.svg";
@@ -111,6 +112,7 @@ const CharacterCompanion = forwardRef(({
 			speak('achievement');
 		}
 	}));
+	const { t } = useTranslation();
 	const [isVisible, setIsVisible] = useState(false);
 	const [currentPhrase, setCurrentPhrase] = useState("");
 	const [currentEmotion, setCurrentEmotion] = useState('normal');
@@ -135,7 +137,12 @@ const CharacterCompanion = forwardRef(({
 			arr = phrases[phraseType];
 		} else if (phraseType === 'main-hints') {
 			emotion = 'normal';
-			arr = phrases['main-hints'];
+			arr = [
+				t('companion.hint_simulator', "💡 Спробуй вправи в тренажері — це розслабить"),
+				t('companion.hint_library', "📚 Порада: переглянь освітній контент про стрес"),
+				t('companion.hint_sos', "🎯 Натисни SOS якщо потрібна швидка допомога"),
+				t('companion.hint_breathing', "🧘 Дихальні вправи допоможуть заспокоїтися")
+			];
 		} else if (['anxiety', 'stress', 'apathy'].includes(phraseType)) {
 			emotion = 'sad';
 			arr = characterPhrases.sad;

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { api } from '../../infrastructure/api/api';
 import { ShieldCheck, Mail, Lock, User, ChevronLeft, Sparkles } from 'lucide-react';
@@ -8,6 +9,7 @@ import SOSOverlay from '../../components/SOSOverlay/SOSOverlay';
 import BreathingExercise from '../../components/BreathingExercise/BreathingExercise';
 
 export default function AuthPage() {
+    const { t } = useTranslation();
     const [isLogin, setIsLogin] = useState(true);
     const [formData, setFormData] = useState({ email: '', password: '', username: '' });
     const [error, setError] = useState('');
@@ -28,11 +30,11 @@ export default function AuthPage() {
                 localStorage.setItem("dr_current_view", "home");
                 navigate('/main');
             } else {
-                setError(data.message || "Помилка авторизації Google");
+                setError(data.message || t('auth.google_error'));
             }
         } catch (err) {
             console.error('Google Auth Error:', err);
-            setError("Помилка при спробі входу через Google");
+            setError(t('auth.google_try_error'));
         } finally {
             setIsLoading(false);
         }
@@ -72,11 +74,11 @@ export default function AuthPage() {
                 localStorage.setItem("dr_current_view", "home");
                 navigate('/main');
             } else {
-                setError(data.message || "Помилка авторизації");
+                setError(data.message || t('auth.auth_error'));
             }
         } catch (err) {
             console.error('Auth error:', err);
-            setError(err.message || "Помилка з'єднання з сервером");
+            setError(err.message || t('auth.server_error'));
         } finally {
             setIsLoading(false);
         }
@@ -93,11 +95,11 @@ export default function AuthPage() {
                 localStorage.setItem("dr_current_view", "home");
                 navigate('/main');
             } else {
-                setError(data.message || "Помилка входу як гість");
+                setError(data.message || t('auth.guest_error'));
             }
         } catch (err) {
             console.error('Guest login error:', err);
-            setError(err.message || "Помилка входу як гість");
+            setError(err.message || t('auth.guest_error'));
         } finally {
             setIsLoading(false);
         }
@@ -125,7 +127,7 @@ export default function AuthPage() {
                         <ShieldCheck size={36} />
                     </div>
                     <span className="text-3xl font-black text-white italic uppercase tracking-tighter font-montserrat">Shelter</span>
-                    <p className="text-slate-500 text-sm mt-1 font-medium font-comfortaa">Твій простір психологічної підтримки</p>
+                    <p className="text-slate-500 text-sm mt-1 font-medium font-comfortaa">{t('auth.tagline')}</p>
                 </div>
 
                 {}
@@ -140,7 +142,7 @@ export default function AuthPage() {
                                     : 'text-slate-500 hover:text-slate-300'
                             }`}
                         >
-                            Вхід
+                            {t('auth.login')}
                         </button>
                         <button
                             onClick={() => { setIsLogin(false); setError(''); }}
@@ -150,7 +152,7 @@ export default function AuthPage() {
                                     : 'text-slate-500 hover:text-slate-300'
                             }`}
                         >
-                            Реєстрація
+                            {t('auth.register')}
                         </button>
                     </div>
 
@@ -167,7 +169,7 @@ export default function AuthPage() {
                                 <User size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" />
                                 <input
                                     type="text"
-                                    placeholder="Ім'я"
+                                    placeholder={t('auth.username')}
                                     value={formData.username}
                                     onChange={e => setFormData({...formData, username: e.target.value})}
                                     required
@@ -190,7 +192,7 @@ export default function AuthPage() {
                             <Lock size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" />
                             <input
                                 type="password"
-                                placeholder="Пароль"
+                                placeholder={t('auth.password')}
                                 value={formData.password}
                                 onChange={e => setFormData({...formData, password: e.target.value})}
                                 required
@@ -204,15 +206,15 @@ export default function AuthPage() {
                             className="w-full bg-emerald-500 hover:bg-emerald-400 disabled:bg-slate-700 disabled:text-slate-500 text-[#0b0f1a] py-4 rounded-2xl font-black text-sm uppercase tracking-widest font-montserrat shadow-xl shadow-emerald-500/20 transition-all transform hover:scale-[1.02] active:scale-95 disabled:cursor-not-allowed mt-2"
                         >
                             {isLoading
-                                ? (isLogin ? 'Входимо...' : 'Створюємо...')
-                                : (isLogin ? 'Увійти' : 'Створити акаунт')
+                                ? (isLogin ? t('auth.signing_in') : t('auth.creating'))
+                                : (isLogin ? t('auth.login') : t('auth.create_account'))
                             }
                         </button>
                     </form>
 
                     <div className="flex items-center gap-4 my-6">
                         <div className="flex-1 h-px bg-slate-800" />
-                        <span className="text-slate-600 text-xs font-bold uppercase tracking-widest font-montserrat">або увійдіть через</span>
+                        <span className="text-slate-600 text-xs font-bold uppercase tracking-widest font-montserrat">{t('auth.or_sign_in_via')}</span>
                         <div className="flex-1 h-px bg-slate-800" />
                     </div>
 
@@ -220,7 +222,7 @@ export default function AuthPage() {
                         <div className="flex justify-center">
                             <GoogleLogin
                                 onSuccess={handleGoogleSuccess}
-                                onError={() => setError('Помилка авторизації Google')}
+                                onError={() => setError(t('auth.google_error'))}
                                 theme="filled_blue"
                                 shape="pill"
                                 text="continue_with"
@@ -234,7 +236,7 @@ export default function AuthPage() {
                             className="w-full bg-transparent border border-slate-700 hover:border-slate-500 text-slate-400 hover:text-white py-4 rounded-2xl font-bold text-xs uppercase tracking-widest font-montserrat transition-all flex items-center justify-center gap-2 disabled:opacity-50"
                         >
                             <Sparkles size={16} />
-                            Увійти як гість
+                            {t('auth.guest_mode')}
                         </button>
                     </div>
                 </div>
@@ -242,7 +244,7 @@ export default function AuthPage() {
                 {}
                 <div className="mt-8 text-center">
                     <HoldSOSButton onActivate={handleSosClick}>
-                        SOS — Потрібна допомога
+                        {t('auth.sos_help')}
                     </HoldSOSButton>
                 </div>
             </div>
@@ -258,7 +260,7 @@ export default function AuthPage() {
                 <BreathingExercise 
                     onExit={() => setShowBreathing(false)}
                     autoStart={true}
-                    title="Техніка дихання"
+                    title={t('auth.breathing_technique')}
                     showControls={true}
                 />
             )}

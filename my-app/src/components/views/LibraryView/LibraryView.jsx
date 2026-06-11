@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { ChevronRight, Wind, Play, Pause, Camera, Volume2, Music } from 'lucide-react';
 import { api } from '../../../infrastructure/api/api';
 import { useNavigate } from 'react-router-dom';
@@ -24,6 +25,14 @@ const LibraryView = ({
     resilience
 }) => {
     const navigate = useNavigate();
+    const { t } = useTranslation();
+
+    const filterLabels = {
+        'Всі': t('library.all'),
+        'Аудіо': t('library.audio'),
+        'Відео': t('library.video'),
+        'Стаття': t('library.article')
+    };
     const [activeNoise, setActiveNoise] = useState(null);
     const [isNoisePlaying, setIsNoisePlaying] = useState(false);
     const [volume, setVolume] = useState(0.1);
@@ -238,12 +247,12 @@ const LibraryView = ({
 
     const memoizedPhotos = React.useMemo(() => {
         return [
-            { title: 'Ранковий вітер у травах', img: grounding6 },
-            { title: 'Мерехтіння води', img: grounding5 },
-            { title: 'Лісовий туман', img: grounding4 },
-            { title: 'Гірський струмок', img: grounding2 },
-            { title: 'Вечірнє багаття', img: grounding1 },
-            { title: 'Дощ за склом', img: grounding3 }
+            { title: t('library.morning_wind'), img: grounding6 },
+            { title: t('library.water_shimmer'), img: grounding5 },
+            { title: t('library.forest_fog'), img: grounding4 },
+            { title: t('library.mountain_stream'), img: grounding2 },
+            { title: t('library.evening_campfire'), img: grounding1 },
+            { title: t('library.rain_behind_glass'), img: grounding3 }
         ].map((photo, i) => (
             <div key={i} className="relative aspect-[16/10] rounded-[32px] overflow-hidden group shadow-2xl border border-slate-800 bg-slate-900">
                 <img 
@@ -254,7 +263,7 @@ const LibraryView = ({
                 <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-80 group-hover:opacity-60 transition-opacity"></div>
                 <div className="absolute bottom-0 left-0 p-6 w-full text-left">
                     <p className="text-[9px] font-black text-emerald-400 uppercase tracking-widest mb-1 opacity-80 flex items-center gap-2">
-                        <Camera size={10} /> Фото-заземлення
+                        <Camera size={10} /> {t('library.photo_grounding_label')}
                     </p>
                     <h5 className="text-lg font-black text-white force-white uppercase tracking-tight leading-none">{photo.title}</h5>
                 </div>
@@ -282,12 +291,12 @@ const LibraryView = ({
                                 <p className="text-[10px] font-black uppercase tracking-widest">{item.type}</p>
                                 {item.type === 'Стаття' && !item.url && (
                                     <span className="text-[8px] font-black bg-slate-800 px-2 py-0.5 rounded-md uppercase tracking-wider">
-                                        {checkIsShortArticle(item) ? 'Швидке читання' : 'Розгорнуто'}
+                                        {checkIsShortArticle(item) ? t('common.quick_read') : t('common.expanded')}
                                     </span>
                                 )}
                             </div>
                             <h4 className="text-xl font-bold tracking-tight uppercase leading-snug">{item.title}</h4>
-                            <div className="mt-auto pt-6 flex items-center gap-2 text-xs font-bold uppercase">Відкрити контент</div>
+                            <div className="mt-auto pt-6 flex items-center gap-2 text-xs font-bold uppercase">{t('common.open_content')}</div>
                         </div>
                     </div>
 
@@ -307,7 +316,7 @@ const LibraryView = ({
                                 <p className="text-[10px] font-black text-emerald-500 uppercase tracking-widest">{item.type}</p>
                                 {item.type === 'Стаття' && !item.url && (
                                     <span className="text-[8px] font-black bg-slate-800 text-slate-300 px-2 py-0.5 rounded-md uppercase tracking-wider">
-                                        {checkIsShortArticle(item) ? 'Швидке читання' : 'Розгорнуто'}
+                                        {checkIsShortArticle(item) ? t('common.quick_read') : t('common.expanded')}
                                     </span>
                                 )}
                             </div>
@@ -321,7 +330,7 @@ const LibraryView = ({
                             </div>
 
                             <div className={`mt-auto pt-6 flex items-center gap-2 text-xs font-bold uppercase transition-colors ${isExpanded ? 'text-emerald-500/55 hover:text-emerald-400' : 'text-slate-500 group-hover:gap-4 group-hover:text-slate-400'}`}>
-                                {isExpanded ? 'Згорнути контент' : 'Відкрити контент'} 
+                                {isExpanded ? t('common.collapse_content') : t('common.open_content')} 
                                 <ChevronRight size={14} className={`transition-transform duration-300 ${isExpanded ? '-rotate-90' : ''}`} />
                             </div>
                         </div>
@@ -335,10 +344,10 @@ const LibraryView = ({
       <div className="p-8 space-y-16 animate-in fade-in slide-in-from-bottom-4 duration-500 pb-24">
         {}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
-          <h2 className="text-5xl font-black text-white italic uppercase tracking-tighter leading-none">Бібліотека спокою</h2>
+          <h2 className="text-5xl font-black text-white italic uppercase tracking-tighter leading-none">{t('library.title')}</h2>
           <div className="flex gap-2 bg-slate-900/50 p-1.5 rounded-2xl border border-slate-800 ">
             {['Всі', 'Аудіо', 'Відео', 'Стаття'].map((f) => (
-              <button key={f} onClick={() => setLibraryFilter(f)} className={`px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${libraryFilter === f ? 'bg-emerald-500 text-[#0b0f1a]' : 'text-slate-500 hover:text-white'}`}>{f}</button>
+              <button key={f} onClick={() => setLibraryFilter(f)} className={`px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${libraryFilter === f ? 'bg-emerald-500 text-[#0b0f1a]' : 'text-slate-500 hover:text-white'}`}>{filterLabels[f] || f}</button>
             ))}
           </div>
         </div>
@@ -348,7 +357,7 @@ const LibraryView = ({
             <section className="space-y-8">
                 <div className="flex items-center gap-3">
                     <div className="w-2 h-8 bg-blue-500 rounded-full"></div>
-                    <h3 className="text-2xl font-black text-white uppercase tracking-tighter">Звукові ландшафти</h3>
+                    <h3 className="text-2xl font-black text-white uppercase tracking-tighter">{t('library.soundscapes')}</h3>
                 </div>
                 <div className="bg-slate-900/40 border border-slate-800 p-8 rounded-[40px]  relative overflow-hidden group">
                     <div className="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-20 transition-opacity">
@@ -358,16 +367,16 @@ const LibraryView = ({
                     <div className="flex flex-col lg:flex-row gap-12 items-center relative z-10">
                         <div className="space-y-6 flex-1">
                             <div>
-                                <h4 className="text-3xl font-black text-white uppercase tracking-tighter mb-2">Кольори шуму</h4>
-                                <p className="text-slate-400 max-w-md">Оберіть частотний діапазон, який найкраще підходить для вашого стану.</p>
+                                <h4 className="text-3xl font-black text-white uppercase tracking-tighter mb-2">{t('library.noise_colors')}</h4>
+                                <p className="text-slate-400 max-w-md">{t('library.noise_desc')}</p>
                             </div>
                             
                             <div className="flex flex-col xl:flex-row gap-10 items-center">
                                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 flex-1 w-full">
                                     {[
-                                        { name: 'Білий', desc: 'Фокус та концентрація', color: 'bg-white/10', border: 'hover:border-white' },
-                                        { name: 'Рожевий', desc: 'Заспокоєння та релакс', color: 'bg-rose-500/10', border: 'hover:border-rose-500' },
-                                        { name: 'Коричневий', desc: 'Глибокий сон', color: 'bg-amber-900/20', border: 'hover:border-amber-700' }
+                                        { name: 'Білий', label: t('library.white'), desc: t('library.white_desc'), color: 'bg-white/10', border: 'hover:border-white' },
+                                        { name: 'Рожевий', label: t('library.pink'), desc: t('library.pink_desc'), color: 'bg-rose-500/10', border: 'hover:border-rose-500' },
+                                        { name: 'Коричневий', label: t('library.brown'), desc: t('library.brown_desc'), color: 'bg-amber-900/20', border: 'hover:border-amber-700' }
                                     ].map((noise) => (
                                         <button 
                                             key={noise.name} 
@@ -376,7 +385,7 @@ const LibraryView = ({
                                             }}
                                             className={`p-6 rounded-[32px] border transition-all ${activeNoise === noise.name && isNoisePlaying ? 'border-blue-500 bg-blue-500/10' : 'border-slate-800 ' + noise.color + ' ' + noise.border} text-left group`}
                                         >
-                                            <p className="text-lg font-black text-white uppercase mb-1">{noise.name}</p>
+                                            <p className="text-lg font-black text-white uppercase mb-1">{noise.label}</p>
                                             <p className="text-[10px] text-slate-500 font-bold uppercase">{noise.desc}</p>
                                         </button>
                                     ))}
@@ -472,7 +481,7 @@ const LibraryView = ({
                                 }}
                                 className={`w-full py-3 ${isNoisePlaying ? 'bg-rose-600' : 'bg-blue-600'} hover:opacity-90 text-white rounded-2xl font-black uppercase text-[10px] tracking-widest transition-all shadow-lg flex items-center justify-center gap-2`}
                             >
-                                {isNoisePlaying ? <><Pause size={14} /> Вимкнути</> : <><Play size={14} /> Активувати звук</>}
+                                {isNoisePlaying ? <><Pause size={14} /> {t('library.turn_off')}</> : <><Play size={14} /> {t('library.activate_sound')}</>}
                             </button>
                         </div>
                     </div>
@@ -485,7 +494,7 @@ const LibraryView = ({
             <section className="space-y-8">
                 <div className="flex items-center gap-3">
                     <div className="w-2 h-8 bg-emerald-500 rounded-full"></div>
-                    <h3 className="text-2xl font-black text-white uppercase tracking-tighter">Фото заземлення</h3>
+                    <h3 className="text-2xl font-black text-white uppercase tracking-tighter">{t('library.photo_grounding')}</h3>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {memoizedPhotos}
@@ -497,7 +506,7 @@ const LibraryView = ({
         <section className="space-y-8">
             <div className="flex items-center gap-3">
                 <div className="w-2 h-8 bg-purple-500 rounded-full"></div>
-                <h3 className="text-2xl font-black text-white uppercase tracking-tighter">Всі матеріали</h3>
+                <h3 className="text-2xl font-black text-white uppercase tracking-tighter">{t('library.all_materials')}</h3>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {memoizedFilteredMedia}

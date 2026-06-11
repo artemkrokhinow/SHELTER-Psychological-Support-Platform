@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Lightbulb, CheckCircle, ExternalLink } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { api } from '../../../infrastructure/api/api';
 import { useNavigate } from 'react-router-dom';
 import './AdviceView.css';
@@ -10,6 +11,7 @@ const hasRichContent = (m) => {
 };
 
 const AdviceView = ({ resilience = 50 }) => {
+    const { t } = useTranslation();
     const [advices, setAdvices] = useState([]);
     const [materials, setMaterials] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -89,8 +91,8 @@ const AdviceView = ({ resilience = 50 }) => {
     return (
         <div className="p-4 md:p-8 space-y-6 md:space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-1000 pb-20">
             <header className="space-y-4">
-                <h2 className="text-2xl md:text-5xl font-black text-white italic uppercase tracking-tighter leading-none">Глибоке вивчення</h2>
-                <p className="text-slate-500 font-medium text-sm md:text-lg">Ці статті підібрані розумним алгоритмом спеціально під ваш поточний рівень стійкості.</p>
+                <h2 className="text-2xl md:text-5xl font-black text-white italic uppercase tracking-tighter leading-none">{t('advice.title')}</h2>
+                <p className="text-slate-500 font-medium text-sm md:text-lg">{t('advice.subtitle')}</p>
             </header>
 
             {materials.length > 0 && (
@@ -98,7 +100,7 @@ const AdviceView = ({ resilience = 50 }) => {
                     <div className="flex items-center justify-between">
                         {readIds.size > 0 && (
                             <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest">
-                                Прочитано: {materials.filter(m => readIds.has(m._id) || readIds.has(m.materialId)).length}/{materials.length}
+                                {t('advice.read_count', { read: materials.filter(m => readIds.has(m._id) || readIds.has(m.materialId)).length, total: materials.length })}
                             </span>
                         )}
                     </div>
@@ -117,7 +119,7 @@ const AdviceView = ({ resilience = 50 }) => {
                                             <h3 className="advice-card-title">{m.title}</h3>
                                         </div>
                                         <div className="advice-card-action">
-                                            ЧИТАТИ СТАТТЮ <span className="advice-card-action-icon">›</span>
+                                            {t('advice.read_article')} <span className="advice-card-action-icon">›</span>
                                         </div>
                                     </div>
 
@@ -149,7 +151,7 @@ const AdviceView = ({ resilience = 50 }) => {
                                         </div>
 
                                         <div className="advice-card-action">
-                                            {isExpanded ? 'ЗГОРНУТИ' : isRead ? 'ПЕРЕГЛЯНУТИ ЩЕ РАЗ' : 'ЧИТАТИ СТАТТЮ'}
+                                            {isExpanded ? t('advice.collapse') : isRead ? t('advice.view_again') : t('advice.read_article')}
                                             {hasRichContent(m)
                                                 ? <span className="advice-card-action-icon">›</span>
                                                 : <ExternalLink size={12} style={{ flexShrink: 0 }} />

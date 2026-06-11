@@ -1,5 +1,6 @@
 import React from 'react';
 import { Search, X, Sun, Moon, LogOut } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import HoldSOSButton from '../HoldSOSButton/HoldSOSButton';
 
 const MainHeader = React.memo(({ 
@@ -11,6 +12,7 @@ const MainHeader = React.memo(({
     username,
     resilience
 }) => {
+    const { t, i18n } = useTranslation();
     const [isLight, setIsLight] = React.useState(() => {
         return localStorage.getItem("dr_theme") === "light";
     });
@@ -27,6 +29,12 @@ const MainHeader = React.memo(({
         }
     };
 
+    const toggleLanguage = () => {
+        const currentLang = i18n.language || 'en';
+        const newLang = currentLang.startsWith('ua') ? 'en' : 'ua';
+        i18n.changeLanguage(newLang);
+    };
+
     const showSearch = currentView === 'home' || currentView === 'library';
 
     return (
@@ -36,7 +44,7 @@ const MainHeader = React.memo(({
                     <Search size={18} className="text-slate-500 group-focus-within:text-emerald-500 transition-colors" />
                     <input
                         type="text"
-                        placeholder="Пошук..."
+                        placeholder={t('header.search')}
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                         className="bg-transparent border-none outline-none text-sm w-full text-white placeholder:text-slate-600 font-medium"
@@ -53,8 +61,8 @@ const MainHeader = React.memo(({
                         {username ? username.charAt(0).toUpperCase() : 'G'}
                     </div>
                     <div className="flex flex-col">
-                        <span className="text-[10px] font-black text-white leading-none mb-1 max-w-[100px] truncate">{username || 'Гість'}</span>
-                        <span className="text-[8px] text-emerald-400 uppercase font-bold tracking-widest leading-none whitespace-nowrap">Стійкість: {Math.round(resilience || 0)}%</span>
+                        <span className="text-[10px] font-black text-white leading-none mb-1 max-w-[100px] truncate">{username === 'Гість' ? t('header.guest') : username}</span>
+                        <span className="text-[8px] text-emerald-400 uppercase font-bold tracking-widest leading-none whitespace-nowrap">{t('header.resilience')}: {Math.round(resilience || 0)}%</span>
                     </div>
                 </div>
             )}
@@ -63,15 +71,22 @@ const MainHeader = React.memo(({
                     <button
                         onClick={logout}
                         className="md:hidden p-3 rounded-2xl border border-slate-800 bg-slate-900/40 text-slate-400 hover:text-rose-500 hover:bg-rose-500/10 transition-all flex items-center justify-center cursor-pointer"
-                        title="Вийти з акаунта"
+                        title={t('header.logout')}
                     >
                         <LogOut size={18} />
                     </button>
                 )}
                 <button
+                    onClick={toggleLanguage}
+                    className="w-10 h-10 rounded-2xl border border-slate-800 bg-slate-900/40 text-slate-400 hover:text-white hover:border-emerald-500 transition-all flex items-center justify-center cursor-pointer text-[10px] font-black uppercase"
+                    title="Change language / Змінити мову"
+                >
+                    {i18n.language ? i18n.language.slice(0,2).toUpperCase() : 'EN'}
+                </button>
+                <button
                     onClick={toggleTheme}
                     className="p-3 rounded-2xl border border-slate-800 bg-slate-900/40 text-slate-400 hover:text-white hover:border-emerald-500 transition-all flex items-center justify-center cursor-pointer"
-                    title={isLight ? "Увімкнути темну тему" : "Увімкнути світлу тему"}
+                    title={isLight ? t('header.theme_dark') : t('header.theme_light')}
                 >
                     {isLight ? <Moon size={18} /> : <Sun size={18} />}
                 </button>

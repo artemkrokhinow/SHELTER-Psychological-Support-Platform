@@ -1,5 +1,6 @@
 import React from 'react';
-import { ChevronLeft, LayoutGrid } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
+import { ChevronLeft } from 'lucide-react';
 
 
 const FlipSidebarItem = ({ 
@@ -14,6 +15,7 @@ const FlipSidebarItem = ({
     onBackAction = () => {},
     tourStep = '0'
 }) => {
+  const { t } = useTranslation();
   const [actuallyFlipped, setActuallyFlipped] = React.useState(false);
 
   React.useEffect(() => {
@@ -101,7 +103,7 @@ const FlipSidebarItem = ({
           {isDashboard && (
             <>
               <ChevronLeft size={22} className="shrink-0" />
-              <span className="font-bold text-sm tracking-wide">Назад</span>
+              <span className="font-bold text-sm tracking-wide">{t('common.back')}</span>
             </>
           )}
         </div>

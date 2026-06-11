@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { api } from '../../infrastructure/api/api';
+import { useTranslation } from 'react-i18next';
 import CharacterCompanion from '../../components/characterCompanion/CharacterCompanion';
 import { Bot, User, MessageSquare, Sparkles, ChevronRight, Play, LayoutGrid, ChevronLeft, Clock, Zap, Target, AlertCircle } from 'lucide-react';
 import './mainChat.css';
@@ -33,6 +34,7 @@ const getFourOptions = (options, nodeId) => {
 
 
 export default function MainChat({ onBack, username, resilience, onComplete, onMistakesSuggested, onStartMistakesAnalysis, initialScenarioId }) {
+    const { t } = useTranslation();
     const [chatView, setChatView] = useState(initialScenarioId ? "loading" : "selection"); 
     const [messages, setMessages] = useState([]);
     const [isTyping, setIsTyping] = useState(false);
@@ -247,8 +249,8 @@ export default function MainChat({ onBack, username, resilience, onComplete, onM
                                 <MessageSquare className="w-6 h-6" />
                             </div>
                             <div>
-                                <h2 className="dr-chat-title">Чат-тренажери</h2>
-                                <p className="dr-chat-subtitle">Оберіть тему розмови</p>
+                                <h2 className="dr-chat-title">{t('chat.title', 'Чат-тренажери')}</h2>
+                                <p className="dr-chat-subtitle">{t('chat.subtitle', 'Оберіть тему розмови')}</p>
                             </div>
                         </div>
                     </div>
@@ -257,13 +259,13 @@ export default function MainChat({ onBack, username, resilience, onComplete, onM
                 <div className="dr-chat-selection-container p-8 overflow-y-auto max-h-[calc(100vh-96px)] flex flex-col gap-6">
                     <div className="dr-chat-hero bg-slate-900/40 border border-slate-800 p-8 rounded-[32px] flex items-center justify-between gap-6 max-w-[1200px] mx-auto w-full">
                         <div className="max-w-2xl">
-                            <h3 className="text-2xl font-black text-white italic uppercase tracking-tight mb-2">Інтерактивні чат-тренажери</h3>
+                            <h3 className="text-2xl font-black text-white italic uppercase tracking-tight mb-2">{t('chat.interactive_title', 'Інтерактивні чат-тренажери')}</h3>
                             <p className="text-slate-400 text-sm leading-relaxed">
-                                Відпрацюйте складні життєві та робочі ситуації у безпечному середовищі. Оберіть один із сценаріїв, щоб навчитися розпізнавати когнітивні спотворення, виражати емпатію та знаходити конструктивний вихід із конфліктів разом із помічником.
+                                {t('chat.interactive_desc', 'Відпрацюйте складні життєві та робочі ситуації у безпечному середовищі. Оберіть один із сценаріїв, щоб навчитися розпізнавати когнітивні спотворення, виражати емпатію та знаходити конструктивний вихід із конфліктів разом із помічником.')}
                             </p>
                         </div>
                         <div className="dr-hero-stats bg-slate-900/60 p-5 rounded-2xl border border-slate-800 text-center min-w-[160px]">
-                            <span className="text-[10px] text-slate-500 uppercase tracking-widest font-black block mb-1">Доступно тем</span>
+                            <span className="text-[10px] text-slate-500 uppercase tracking-widest font-black block mb-1">{t('chat.available_topics', 'Доступно тем')}</span>
                             <span className="text-4xl font-black text-emerald-500 italic block">{scenariosList.length}</span>
                         </div>
                     </div>
@@ -277,9 +279,9 @@ export default function MainChat({ onBack, username, resilience, onComplete, onM
                             >
                                 <div className="dr-card-icon"><Target size={24} /></div>
                                 <h3>{s.name}</h3>
-                                <p>Відпрацюйте конкретну ситуацію: {s.category || 'загальне'}</p>
-                                <div className="dr-card-footer">
-                                    <span className="tag"><Clock size={12} className="inline mr-1" /> {s.duration || '5 хв'}</span>
+                                <p>{t('chat.practice_situation', 'Відпрацюйте конкретну ситуацію:')} {t(`categories.${s.category}`, s.category || 'General')}</p>
+                                <div className="dr-scenario-tags">
+                                    <span className="tag"><Clock size={12} className="inline mr-1" /> {s.duration ? s.duration.replace('хв', t('common.min', 'хв')) : `5 ${t('common.min', 'хв')}`}</span>
                                     <span className="tag"><Zap size={12} className="inline mr-1 text-amber-500" /> {s.difficulty || 50}%</span>
                                     <button className="start-btn">Тренуватись <Play size={14} fill="currentColor" /></button>
                                 </div>
@@ -306,7 +308,7 @@ export default function MainChat({ onBack, username, resilience, onComplete, onM
                         </div>
                         <div>
                             <h2 className="dr-chat-title">{scenario?.name}</h2>
-                            <p className="dr-chat-subtitle">Сценарій тренування</p>
+                            <p className="dr-chat-subtitle">{t('chat.training_scenario', 'Сценарій тренування')}</p>
                         </div>
                     </div>
                 </div>
@@ -318,9 +320,9 @@ export default function MainChat({ onBack, username, resilience, onComplete, onM
                         key={message.id}
                         className={`dr-message ${message.sender === 'user' ? 'user' : 'bot'} ${message.isSystem ? 'system' : ''}`}
                     >
-                        <div className="dr-message-header">
-                            {message.sender === 'bot' ? 'Помічник' : username}
-                        </div>
+                        <span className="font-bold text-[10px] text-slate-500 uppercase tracking-widest block mb-2">
+                            {message.sender === 'bot' ? t('chat.assistant', 'Помічник') : username}
+                        </span>
                         <div className="dr-message-content">
                             {message.text}
                         </div>

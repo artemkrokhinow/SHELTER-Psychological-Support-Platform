@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useCallback } from "react";
+import { useTranslation } from 'react-i18next';
 import { api } from "../../../infrastructure/api/api";
 import { getDiagnosticConfig } from "../../../infrastructure/utils/diagnosticLogic";
 import { Check, Lock, Play, MapPin, Grid3X3, Trophy, Sparkles } from 'lucide-react';
@@ -30,6 +31,7 @@ const QuestsView = ({
     onMaterialComplete,
     lastCompletedActivity
 }) => {
+    const { t } = useTranslation();
     const [pageType, setPageType] = useState("default");
     const [quests, setQuests] = useState([]);
     const [currentDay, setCurrentDay] = useState(1);
@@ -50,10 +52,10 @@ const QuestsView = ({
         });
 
         const typeLabels = {
-            'video': 'відео-сценарій',
-            'audio': 'аудіо-практика',
-            'sorting': 'тренажер',
-            'dialogue': 'чат-тренажер'
+            'video': t('quests.video_scenario'),
+            'audio': t('quests.audio_practice'),
+            'sorting': t('quests.trainer'),
+            'dialogue': t('quests.chat_trainer')
         };
 
         const allScenarios = [
@@ -73,9 +75,9 @@ const QuestsView = ({
                 questsList.push({
                     id: `exercise-${scenario._id || scenario.scenarioId || i}`,
                     day: dayCounter++,
-                    title: scenario.name || scenario.title || `Вправа дня ${dayCounter}`,
-                    thought: thoughts[(dayCounter - 2) % thoughts.length],
-                    task: `${typeLabels[scenario.type] || 'вправа'} \u2022 ${scenario.duration || "5"} хв`,
+                    title: scenario.name || scenario.title || t('quests.exercise_of_day', { day: dayCounter }),
+                    thought: t('quests_thoughts.' + ((dayCounter - 2) % 10)),
+                    task: `${typeLabels[scenario.type] || t('quests.exercise')} \u2022 ${scenario.duration || "5"} ${t('common.min')}`,
                     scenarioId: scenario.scenarioId || scenario._id,
                     type: scenario.type,
                     questType,
@@ -88,9 +90,9 @@ const QuestsView = ({
                 questsList.push({
                     id: isDiary ? `task-diary-${i}` : `task-breath-${i}`,
                     day: dayCounter++,
-                    title: isDiary ? "Рефлексія дня" : "Хвилина спокою",
-                    thought: isDiary ? "Записане слово має силу звільнення." : "Твій подих — твій якір.",
-                    task: isDiary ? "запис у щоденнику" : "дихальна вправа",
+                    title: isDiary ? t('quests.reflection_day') : t('quests.minute_of_calm'),
+                    thought: isDiary ? t('quests.written_word_power') : t('quests.breath_is_anchor'),
+                    task: isDiary ? t('quests.diary_entry') : t('quests.breathing_exercise'),
                     questType: isDiary ? "diary_task" : "breathing_task",
                     status: "locked"
                 });
@@ -101,9 +103,9 @@ const QuestsView = ({
                 questsList.push({
                     id: `material-${material._id || i}`,
                     day: dayCounter++,
-                    title: material.title || `Матеріал дня ${dayCounter}`,
-                    thought: thoughts[(dayCounter - 2) % thoughts.length],
-                    task: `${material.type === 'video' ? 'відео' : material.type === 'audio' ? 'аудіо' : 'стаття'} \u2022 ${material.duration || "5 хв"}`,
+                    title: material.title || t('quests.material_of_day', { day: dayCounter }),
+                    thought: t('quests_thoughts.' + ((dayCounter - 2) % 10)),
+                    task: `${material.type === 'video' ? t('quests.video') : material.type === 'audio' ? t('quests.audio') : t('quests.article')} \u2022 ${material.duration || "5 " + t('common.min')}`,
                     materialId: material?.materialId || material?._id,
                     questType: "material",
                     material: material,
@@ -249,12 +251,12 @@ const QuestsView = ({
         <div className="p-4 md:p-8 space-y-6 md:space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-700 pb-24">
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 md:gap-6 mb-6 md:mb-12">
                 <div className="space-y-3 md:space-y-4 w-full md:w-auto flex-1">
-                    <h2 className="text-2xl md:text-5xl font-black text-white italic uppercase tracking-tighter leading-none">Квести Стійкості</h2>
+                    <h2 className="text-2xl md:text-5xl font-black text-white italic uppercase tracking-tighter leading-none">{t('quests.title')}</h2>
                     
                     <div className="w-full max-w-md space-y-2">
                         <div className="flex justify-between text-[10px] font-black uppercase tracking-widest text-slate-400">
-                            <span>Прогрес місій</span>
-                            <span className="text-amber-500">{quests.filter(q => q.status === 'completed').length} / {quests.length} виконано</span>
+                            <span>{t('quests.mission_progress')}</span>
+                            <span className="text-amber-500">{quests.filter(q => q.status === 'completed').length} / {quests.length} {t('quests.completed')}</span>
                         </div>
                         <div className="h-2 md:h-3 w-full bg-slate-800/80 rounded-full overflow-hidden shadow-inner">
                             <div 
@@ -268,7 +270,7 @@ const QuestsView = ({
                 </div>
                 <div className="hidden md:flex items-center gap-3 bg-amber-500/10 px-4 py-2 rounded-2xl border border-amber-500/20 shrink-0">
                     <Trophy className="text-amber-500" size={20} />
-                    <p className="text-amber-500 font-bold text-xs uppercase tracking-widest">Один день — один маленький крок.</p>
+                    <p className="text-amber-500 font-bold text-xs uppercase tracking-widest">{t('quests.motto')}</p>
                 </div>
             </div>
 
@@ -304,7 +306,7 @@ const QuestsView = ({
                                         <div className="flex flex-row items-center gap-3 md:gap-6">
                                             <div className="flex-1 min-w-0">
                                                 <div className="flex flex-wrap md:flex-nowrap items-center gap-2 w-full mb-1 md:mb-2">
-                                                    <span className="text-[8px] md:text-[10px] font-black text-emerald-500 uppercase tracking-widest bg-emerald-500/10 px-2 py-0.5 md:py-1 rounded-md md:rounded-lg shrink-0">Д {quest.day}</span>
+                                                    <span className="text-[8px] md:text-[10px] font-black text-emerald-500 uppercase tracking-widest bg-emerald-500/10 px-2 py-0.5 md:py-1 rounded-md md:rounded-lg shrink-0">{t('quests.day')} {quest.day}</span>
                                                     <h3 className="text-sm md:text-2xl font-black text-white uppercase tracking-tighter truncate leading-none">{quest.title}</h3>
                                                 </div>
                                                 
@@ -315,7 +317,7 @@ const QuestsView = ({
 
                                                 <div className="hidden md:flex items-center gap-2 text-slate-500 text-[10px] font-bold uppercase tracking-wide mt-2">
                                                     <Sparkles size={12} className="text-amber-500" />
-                                                    Завдання: {quest.task}
+                                                    {t('quests.task')}: {quest.task}
                                                 </div>
                                             </div>
                                             
@@ -329,7 +331,7 @@ const QuestsView = ({
                                                     >
                                                         {quest.status === 'completed' ? <Check className="w-5 h-5 md:hidden" strokeWidth={3} /> : <Play className="w-4 h-4 md:hidden ml-1" />}
                                                         <span className="hidden md:flex items-center gap-2">
-                                                            {quest.status === 'completed' ? <><Check className="w-5 h-5" /> Пройдено</> : <><Play className="w-5 h-5" /> Почати</>}
+                                                            {quest.status === 'completed' ? <><Check className="w-5 h-5" /> {t('quests.passed')}</> : <><Play className="w-5 h-5" /> {t('quests.start')}</>}
                                                         </span>
                                                     </button>
                                                 )}
@@ -382,7 +384,7 @@ const QuestsView = ({
                                                         }}
                                                         className="w-full bg-emerald-500 hover:bg-emerald-400 text-[#0b0f1a] py-4 rounded-xl font-black uppercase tracking-widest text-[10px] transition-all shadow-lg shadow-emerald-500/20"
                                                     >
-                                                        Завершити ознайомлення
+                                                        {t('quests.finish_reading')}
                                                     </button>
                                                 )}
                                             </div>

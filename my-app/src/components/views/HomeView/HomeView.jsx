@@ -3,26 +3,28 @@ import {
     Wind, Brain, Lightbulb, PenLine, MessageCircle, Search, Layout, Activity,
     CheckCircle, Sparkles, TrendingUp, Clock, Trophy, Grid3X3
 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { api } from '../../../infrastructure/api/api';
 
-const getDaysWord = (count) => {
+const getDaysWord = (count, t) => {
     const lastDigit = count % 10;
     const lastTwoDigits = count % 100;
 
     if (lastTwoDigits >= 11 && lastTwoDigits <= 14) {
-        return 'днів';
+        return t('common.days');
     }
 
     if (lastDigit === 1) {
-        return 'день';
+        return t('common.day');
     }
 
     if (lastDigit >= 2 && lastDigit <= 4) {
-        return 'дні';
+        return t('common.days_genitive');
     }
 
-    return 'днів';
+    return t('common.days');
 };
+
 const HomeView = ({ 
     searchTerm, 
     navigateTo, 
@@ -40,6 +42,7 @@ const HomeView = ({
     mediaLibraryData,
     showStabilizationHint
 }) => {
+    const { t } = useTranslation();
     
     const catTranslations = {
         'anxiety': 'Тривога',
@@ -53,11 +56,11 @@ const HomeView = ({
     };
 
     const moods = [
-        { id: 'anxiety', label: 'Тривога', emoji: '😰', color: 'from-blue-400 to-blue-600', resilienceMod: -5 },
-        { id: 'stress', label: 'Стрес', emoji: '😫', color: 'from-emerald-400 to-emerald-600', resilienceMod: -2 },
-        { id: 'calm', label: 'Спокій', emoji: '😌', color: 'from-purple-400 to-purple-600', resilienceMod: 5 },
-        { id: 'happy', label: 'Радість', emoji: '😊', color: 'from-amber-400 to-amber-600', resilienceMod: 10 },
-        { id: 'exhausted', label: 'Втома', emoji: '😴', color: 'from-indigo-400 to-indigo-600', resilienceMod: -3 },
+        { id: 'anxiety', label: t('moods.anxiety'), emoji: '😰', color: 'from-blue-400 to-blue-600', resilienceMod: -5 },
+        { id: 'stress', label: t('moods.fatigue'), emoji: '😫', color: 'from-emerald-400 to-emerald-600', resilienceMod: -2 },
+        { id: 'calm', label: t('moods.calm'), emoji: '😌', color: 'from-purple-400 to-purple-600', resilienceMod: 5 },
+        { id: 'happy', label: t('moods.calm'), emoji: '😊', color: 'from-amber-400 to-amber-600', resilienceMod: 10 },
+        { id: 'exhausted', label: t('moods.fatigue'), emoji: '😴', color: 'from-indigo-400 to-indigo-600', resilienceMod: -3 },
     ];
     
     
@@ -107,11 +110,11 @@ const HomeView = ({
     const recommendations = getRecommendations();
 
     const baseCards = [
-      { title: "Дихання", cat: "Практика", icon: <Wind/>, color: "from-emerald-500 to-emerald-600", onClick: () => navigateTo('practice') },
-      { title: "Діагностика", cat: "Тестування", icon: <Brain/>, color: "from-blue-500 to-blue-600", onClick: () => navigateTo('testing') },
-      { title: "Поради", cat: "Корисні поради", icon: <Lightbulb/>, color: "from-orange-500 to-orange-600", onClick: () => navigateTo('advice') },
-      { title: "Щоденник", cat: "Рефлексія", icon: <PenLine/>, color: "from-purple-500 to-purple-600", onClick: () => navigateTo('diary') },
-      { title: "Чат-тренування", cat: "Практика", icon: <MessageCircle/>, color: "from-rose-500 to-rose-600", onClick: () => navigateTo('chat') }
+      { title: t('practices.breathing'), cat: t('categories.ПРАКТИКА'), icon: <Wind/>, color: "from-emerald-500 to-emerald-600", onClick: () => navigateTo('practice') },
+      { title: t('practices.diagnostics'), cat: t('categories.АНАЛІТИКА'), icon: <Brain/>, color: "from-blue-500 to-blue-600", onClick: () => navigateTo('testing') },
+      { title: t('practices.advice'), cat: t('categories.КОРИСНО'), icon: <Lightbulb/>, color: "from-orange-500 to-orange-600", onClick: () => navigateTo('advice') },
+      { title: t('practices.diary'), cat: t('categories.РЕФЛЕКСІЯ'), icon: <PenLine/>, color: "from-purple-500 to-purple-600", onClick: () => navigateTo('diary') },
+      { title: t('practices.chat'), cat: t('categories.ПРАКТИКА'), icon: <MessageCircle/>, color: "from-rose-500 to-rose-600", onClick: () => navigateTo('chat') }
     ];
 
     const simulatorCards = simulatorScenariosList
@@ -220,8 +223,8 @@ const HomeView = ({
 
         if (resilience < 40) {
             const cards = [
-                { title: "Дихання", cat: "СТАБІЛІЗАЦІЯ", icon: <Wind/>, color: "from-rose-500 to-rose-600", onClick: () => navigateTo('practice') },
-                { title: "Чат-підтримка", cat: "СТАБІЛІЗАЦІЯ", icon: <MessageCircle/>, color: "from-blue-500 to-blue-600", onClick: () => navigateTo('chat') },
+                { title: t('practices.breathing'), cat: "СТАБІЛІЗАЦІЯ", icon: <Wind/>, color: "from-rose-500 to-rose-600", onClick: () => navigateTo('practice') },
+                { title: t('practices.chat'), cat: "СТАБІЛІЗАЦІЯ", icon: <MessageCircle/>, color: "from-blue-500 to-blue-600", onClick: () => navigateTo('chat') },
 
                 { title: "Звуки спокою", cat: "СТАБІЛІЗАЦІЯ", icon: <Activity/>, color: "from-emerald-500 to-emerald-600", onClick: () => navigateTo('library') }
             ];
@@ -231,19 +234,19 @@ const HomeView = ({
 
         if (resilience >= 40 && resilience <= 70) {
             const cards = [
-                { title: "Щоденник", cat: "РЕФЛЕКСІЯ", icon: <PenLine/>, color: "from-purple-500 to-purple-600", onClick: () => navigateTo('diary') },
+                { title: t('practices.diary'), cat: t('categories.РЕФЛЕКСІЯ'), icon: <PenLine/>, color: "from-purple-500 to-purple-600", onClick: () => navigateTo('diary') },
 
-                { title: "Поради", cat: "КОРИСНО", icon: <Lightbulb/>, color: "from-orange-500 to-orange-600", onClick: () => navigateTo('advice') }
+                { title: t('practices.advice'), cat: t('categories.КОРИСНО'), icon: <Lightbulb/>, color: "from-orange-500 to-orange-600", onClick: () => navigateTo('advice') }
             ];
             if (impostorCard) cards.push(impostorCard);
-            return [...cards, ...baseCards.filter(c => c.title === "Дихання"), ...simulatorCards.slice(0, 2)];
+            return [...cards, ...baseCards.filter(c => c.title === t('practices.breathing')), ...simulatorCards.slice(0, 2)];
         }
 
         const cards = [
-            { title: "Квести Стійкості", cat: "РОЗВИТОК", icon: <Trophy className="text-amber-400"/>, color: "from-amber-500 to-amber-600", onClick: () => navigateTo('quests') },
+            { title: t('practices.quests'), cat: t('categories.РОЗВИТОК'), icon: <Trophy className="text-amber-400"/>, color: "from-amber-500 to-amber-600", onClick: () => navigateTo('quests') },
 
-            { title: "Глибока діагностика", cat: "АНАЛІТИКА", icon: <Brain/>, color: "from-indigo-500 to-indigo-600", onClick: () => navigateTo('testing') },
-            ...baseCards.filter(c => c.title !== "Діагностика")
+            { title: t('practices.diagnostics'), cat: t('categories.АНАЛІТИКА'), icon: <Brain/>, color: "from-indigo-500 to-indigo-600", onClick: () => navigateTo('testing') },
+            ...baseCards.filter(c => c.title !== t('practices.diagnostics'))
         ];
         if (impostorCard) cards.push(impostorCard);
         if (burnoutCard) cards.push(burnoutCard);
@@ -262,14 +265,14 @@ const HomeView = ({
                         <Activity size={28} />
                     </div>
                     <div className="flex-1 text-center md:text-left space-y-2">
-                        <h2 className="text-2xl md:text-3xl font-black text-white uppercase tracking-tighter leading-none">Потрібна підтримка?</h2>
-                        <p className="text-rose-200/60 font-medium">Ваш рівень стійкості зараз низький. Рекомендуємо коротку практику заземлення для відновлення ресурсу.</p>
+                        <h2 className="text-2xl md:text-3xl font-black text-white uppercase tracking-tighter leading-none">{t('home.support_title')}</h2>
+                        <p className="text-rose-200/60 font-medium">{t('home.support_text')}</p>
                     </div>
                     <button 
                         onClick={() => navigateTo('practice')}
                         className="px-6 py-4 md:px-10 md:py-5 bg-white text-rose-600 rounded-xl md:rounded-2xl font-black uppercase text-xs tracking-widest hover:bg-rose-50 transition-all shadow-xl whitespace-nowrap"
                     >
-                        Почати зараз
+                        {t('home.start_now')}
                     </button>
                 </div>
                 {}
@@ -281,18 +284,18 @@ const HomeView = ({
         <section className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
           <div className="space-y-4">
             <h1 className="text-4xl md:text-7xl font-black text-white italic uppercase tracking-tighter leading-none">
-              {searchTerm ? `Пошук: "${searchTerm}"` : `Привіт, ${username}`}
+              {searchTerm ? t('home.search_results', { term: searchTerm }) : t('home.greeting', { username })}
             </h1>
             
           </div>
           
           <div className="flex w-full md:w-auto gap-3 md:gap-4 mt-2 md:mt-0">
             <div className="flex-1 md:w-[140px] bg-slate-900/40 p-3 md:p-4 rounded-2xl md:rounded-3xl border border-slate-800  text-center shrink-0">
-                <p className="text-[9px] md:text-[10px] font-black text-slate-500 uppercase tracking-widest mb-1 truncate">Серія</p>
-                <p className="text-2xl md:text-3xl font-black text-white truncate">{streak} {getDaysWord(streak)}</p>
+                <p className="text-[9px] md:text-[10px] font-black text-slate-500 uppercase tracking-widest mb-1 truncate">{t('home.streak')}</p>
+                <p className="text-2xl md:text-3xl font-black text-white truncate">{streak} {getDaysWord(streak, t)}</p>
             </div>
             <div className="flex-1 md:w-[140px] bg-emerald-500/10 p-3 md:p-4 rounded-2xl md:rounded-3xl border border-emerald-500/20  text-center shrink-0">
-                <p className="text-[9px] md:text-[10px] font-black text-emerald-500 uppercase tracking-widest mb-1 truncate">Стійкість</p>
+                <p className="text-[9px] md:text-[10px] font-black text-emerald-500 uppercase tracking-widest mb-1 truncate">{t('home.resilience')}</p>
                 <p className="text-2xl md:text-3xl font-black text-emerald-400 truncate">{Math.round(resilience)}%</p>
             </div>
           </div>
@@ -303,7 +306,7 @@ const HomeView = ({
             <section className="space-y-6">
                 <div className="flex items-center gap-3">
                     <div className="w-2 h-8 bg-blue-500 rounded-full"></div>
-                    <h2 className="text-xl md:text-2xl font-black text-white uppercase tracking-tighter">Як пройшов ваш ранок?</h2>
+                    <h2 className="text-xl md:text-2xl font-black text-white uppercase tracking-tighter">{t('home.morning_question')}</h2>
                 </div>
                 <div className="flex flex-wrap gap-4">
                     {moods.map((mood) => (
@@ -338,7 +341,7 @@ const HomeView = ({
                 <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
                         <div className="w-2 h-8 bg-amber-500 rounded-full"></div>
-                        <h2 className="text-xl md:text-2xl font-black text-white uppercase tracking-tighter">Рекомендовано для вас</h2>
+                        <h2 className="text-xl md:text-2xl font-black text-white uppercase tracking-tighter">{t('home.recommended')}</h2>
                     </div>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-6">
@@ -378,7 +381,7 @@ const HomeView = ({
             <div className="flex items-center gap-3">
                 <div className="w-2 h-8 bg-purple-500 rounded-full"></div>
                 <h2 className="text-xl md:text-2xl font-black text-white uppercase tracking-tighter">
-                    {searchTerm ? 'Результати пошуку' : 'Всі практики'}
+                    {searchTerm ? t('home.search_title') : t('home.all_practices')}
                 </h2>
             </div>
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-8">
